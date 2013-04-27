@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/impl/consierge/consierge.iml" filepath="$PROJECT_DIR$/impl/consierge/consierge.iml" group="impl" />
+      <module fileurl="file://$PROJECT_DIR$/impl/equinox/equinox.iml" filepath="$PROJECT_DIR$/impl/equinox/equinox.iml" group="impl" />
+      <module fileurl="file://$PROJECT_DIR$/impl/felix/felix.iml" filepath="$PROJECT_DIR$/impl/felix/felix.iml" group="impl" />
+      <module fileurl="file://$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" filepath="$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" group="impl" />
       <module fileurl="file://$PROJECT_DIR$/manifest/manifest.iml" filepath="$PROJECT_DIR$/manifest/manifest.iml" />
       <module fileurl="file://$PROJECT_DIR$/osmorc2.iml" filepath="$PROJECT_DIR$/osmorc2.iml" />
     </modules>
