@@ -1,0 +1,10 @@
+<idea-plugin version="2">
+  <id>org.osmorc</id>
+  <name>OSGi support</name>
+  <version>2.0</version>
+  <depends>org.osmorc.manifest</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+</idea-plugin>
