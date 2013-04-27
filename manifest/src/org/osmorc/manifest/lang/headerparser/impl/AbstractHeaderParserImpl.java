@@ -33,9 +33,7 @@ import org.osmorc.manifest.lang.psi.HeaderValuePart;
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public class AbstractHeaderParserImpl implements HeaderParser {
-  public static final AbstractHeaderParserImpl SIMPLE = new AbstractHeaderParserImpl();
-
+public abstract class AbstractHeaderParserImpl implements HeaderParser {
   public Object getValue(@NotNull HeaderValuePart headerValuePart) {
     return headerValuePart.getUnwrappedText();
   }

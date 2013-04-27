@@ -25,8 +25,6 @@
 
 package org.osmorc.manifest.lang.headerparser;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A match describes how good a header known to a particular header provider matches a given header.
  * The name of the given header may contain typos and so there may be no perfect match. A perfect match will
@@ -35,17 +33,14 @@ import org.jetbrains.annotations.NotNull;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class HeaderNameMatch implements Comparable<HeaderNameMatch> {
-  public HeaderNameMatch(int distance, @NotNull HeaderParserProvider provider) {
+  private final int _distance;
+
+  public HeaderNameMatch(int distance) {
     _distance = distance;
-    _provider = provider;
   }
 
   public int getDistance() {
     return _distance;
-  }
-
-  public HeaderParserProvider getProvider() {
-    return _provider;
   }
 
   /**
@@ -69,16 +64,12 @@ public class HeaderNameMatch implements Comparable<HeaderNameMatch> {
 
     HeaderNameMatch that = (HeaderNameMatch)o;
 
-    return _distance == that._distance && _provider.equals(that._provider);
+    return _distance == that._distance;
   }
 
   @Override
   public int hashCode() {
-    int result = _distance;
-    result = 31 * result + _provider.hashCode();
-    return result;
+    return _distance;
   }
 
-  private final int _distance;
-  private final HeaderParserProvider _provider;
 }

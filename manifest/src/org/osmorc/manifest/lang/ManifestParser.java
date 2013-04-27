@@ -27,18 +27,19 @@ package org.osmorc.manifest.lang;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.headerparser.HeaderParser;
-import org.osmorc.manifest.lang.headerparser.HeaderParserRepository;
+import org.osmorc.manifest.lang.headerparser.HeaderUtil;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
 class ManifestParser implements PsiParser {
   private boolean currentHeaderIsSimpleHeader;
-  private final HeaderParserRepository headerParserRepository;
+
   private PsiBuilder.Marker headerValuePartMarker;
   private PsiBuilder.Marker sectionMarker;
   private PsiBuilder.Marker headerMarker;
@@ -46,16 +47,9 @@ class ManifestParser implements PsiParser {
   private PsiBuilder.Marker assignmentMarker;
   private IElementType assignmentMarkerType;
 
-  @SuppressWarnings({"UseOfArchaicSystemPropertyAccessors"})
-  private static final boolean DEBUG_MODE = Boolean.getBoolean("Osmorc.debug");
-
-  ManifestParser(@NotNull final HeaderParserRepository headerParserRepository) {
-    this.headerParserRepository = headerParserRepository;
-  }
-
   @NotNull
   public ASTNode parse(IElementType root, PsiBuilder builder) {
-    builder.setDebugMode(DEBUG_MODE /*|| ApplicationManager.getApplication().isUnitTestMode()*/);
+    builder.setDebugMode(ApplicationManager.getApplication().isInternal());
     final PsiBuilder.Marker rootMarker = builder.mark();
 
     while (!builder.eof()) {
@@ -215,7 +209,7 @@ class ManifestParser implements PsiParser {
     headerMarker = builder.mark();
     String currentHeaderName = builder.getTokenText();
 
-    HeaderParser headerParser = headerParserRepository.getHeaderParser(currentHeaderName);
+    HeaderParser headerParser = HeaderUtil.getHeaderParser(currentHeaderName);
     currentHeaderIsSimpleHeader = headerParser == null || headerParser.isSimpleHeader();
 
     builder.advanceLexer();

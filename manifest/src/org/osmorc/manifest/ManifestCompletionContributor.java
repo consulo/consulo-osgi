@@ -32,7 +32,7 @@ import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.ManifestLanguage;
 import org.osmorc.manifest.lang.ManifestTokenType;
-import org.osmorc.manifest.lang.headerparser.HeaderParserRepository;
+import org.osmorc.manifest.lang.headerparser.HeaderParserEP;
 
 /**
  * Completion contributor which adds the name of all known headers to the autocomplete list.
@@ -49,8 +49,11 @@ public class ManifestCompletionContributor extends CompletionContributor {
              public void addCompletions(@NotNull CompletionParameters completionparameters,
                                         ProcessingContext processingcontext,
                                         @NotNull CompletionResultSet completionresultset) {
-               for (String availableHeader : HeaderParserRepository.getInstance().getAllHeaderNames()) {
-                 completionresultset.addElement(LookupElementBuilder.create(availableHeader));
+               for (HeaderParserEP ep : HeaderParserEP.EP_NAME.getExtensions()) {
+                 if(ep.key.isEmpty()) {  //dont show default ep
+                   continue;
+                 }
+                 completionresultset.addElement(LookupElementBuilder.create(ep.key));
                }
              }
            });

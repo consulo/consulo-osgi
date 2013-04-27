@@ -26,14 +26,13 @@
 package org.osmorc.manifest.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.stubs.IStubElementType;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.headerparser.HeaderParser;
-import org.osmorc.manifest.lang.headerparser.HeaderParserRepository;
+import org.osmorc.manifest.lang.headerparser.HeaderUtil;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.ManifestToken;
 import org.osmorc.manifest.lang.psi.stub.HeaderValuePartStub;
@@ -42,16 +41,12 @@ import org.osmorc.manifest.lang.psi.stub.HeaderValuePartStub;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub> implements HeaderValuePart {
-  private final HeaderParserRepository headerParserRepository;
-
   public HeaderValuePartImpl(HeaderValuePartStub stub, @NotNull IStubElementType nodeType) {
     super(stub, nodeType);
-    headerParserRepository = ServiceManager.getService(HeaderParserRepository.class);
   }
 
   public HeaderValuePartImpl(ASTNode node) {
     super(node);
-    headerParserRepository = ServiceManager.getService(HeaderParserRepository.class);
   }
 
 
@@ -86,7 +81,7 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
   }
 
   public Object getConvertedValue() {
-    HeaderParser headerParser = headerParserRepository.getHeaderParser(this);
+    HeaderParser headerParser = HeaderUtil.getHeaderParser(this);
     if (headerParser != null) {
       return headerParser.getValue(this);
     }
@@ -96,7 +91,7 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
   @NotNull
   @Override
   public PsiReference[] getReferences() {
-    HeaderParser headerParser = headerParserRepository.getHeaderParser(this);
+    HeaderParser headerParser = HeaderUtil.getHeaderParser(this);
     if (headerParser != null) {
       return headerParser.getReferences(this);
     }

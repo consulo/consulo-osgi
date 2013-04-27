@@ -34,19 +34,13 @@ import org.osmorc.manifest.lang.psi.HeaderValuePart;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class HeaderAnnotator implements Annotator {
-  public HeaderAnnotator(HeaderParserRepository repository) {
-    _repository = repository;
-  }
-
   public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder holder) {
     if (psiElement instanceof HeaderValuePart) {
       HeaderValuePart headerValue = (HeaderValuePart)psiElement;
-      HeaderParser headerParser = _repository.getHeaderParser(headerValue);
+      HeaderParser headerParser = HeaderUtil.getHeaderParser(headerValue);
       if (headerParser != null) {
         headerParser.annotate(headerValue, holder);
       }
     }
   }
-
-  private final HeaderParserRepository _repository;
 }

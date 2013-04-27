@@ -28,7 +28,6 @@ import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
@@ -38,7 +37,6 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiUtil;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.manifest.lang.headerparser.HeaderParserRepository;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestStubElementTypes;
 import org.osmorc.manifest.lang.psi.elementtype.AbstractManifestStubElementType;
@@ -55,7 +53,7 @@ public class ManifestParserDefinition implements ParserDefinition {
   }
 
   public PsiParser createParser(Project project) {
-    return new ManifestParser(ServiceManager.getService(HeaderParserRepository.class));
+    return new ManifestParser();
   }
 
   public IFileElementType getFileNodeType() {
