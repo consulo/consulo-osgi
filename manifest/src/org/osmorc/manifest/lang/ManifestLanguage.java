@@ -33,6 +33,11 @@ public class ManifestLanguage extends Language {
   public static final ManifestLanguage INSTANCE = new ManifestLanguage();
 
   public ManifestLanguage() {
-    super("Manifest");
+    super("MANIFEST");
+  }
+
+  @Override
+  public String getDisplayName() {
+    return "Manifest";
   }
 }

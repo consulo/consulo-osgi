@@ -37,7 +37,7 @@ import org.osmorc.manifest.lang.ManifestLanguage;
  */
 public abstract class AbstractManifestStubElementType<StubT extends StubElement, PsiT extends PsiElement>
   extends IStubElementType<StubT, PsiT> {
-  private static final String ETERNAL_ID_PREFIX = "Osmorc.Manifest.";
+  private static final String ETERNAL_ID_PREFIX = "manifest.";
   private final String externalId;
 
   public AbstractManifestStubElementType(@NotNull final String debugName) {

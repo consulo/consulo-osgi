@@ -45,7 +45,7 @@ public class ManifestFileType extends LanguageFileType {
   @NotNull
   @NonNls
   public String getName() {
-    return "Manifest";
+    return "MANIFEST";
   }
 
   @NotNull
