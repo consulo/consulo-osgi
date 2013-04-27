@@ -34,6 +34,8 @@ import org.osmorc.manifest.lang.psi.stub.HeaderStub;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public interface Header extends PsiNamedElement, StubBasedPsiElement<HeaderStub> {
+  Header[] EMPTY_ARRAY = new Header[0];
+
   ManifestToken getNameToken();
 
   ManifestToken getColonToken();

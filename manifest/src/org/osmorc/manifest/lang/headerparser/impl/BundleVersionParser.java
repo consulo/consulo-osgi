@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.valueparser.ValueParser;
 import org.osmorc.manifest.lang.valueparser.impl.VersionParser;
-import org.osmorc.manifest.valueobject.Version;
+import org.osmorc.manifest.lang.valueparser.impl.valueobject.Version;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)

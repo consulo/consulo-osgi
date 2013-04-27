@@ -26,14 +26,12 @@ package org.osmorc.manifest.lang;
 
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.manifest.ManifestFileTypeFactory;
 import org.osmorc.manifest.ManifestIcons;
 
 import javax.swing.*;
@@ -44,6 +42,30 @@ import java.util.Map;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ManifestColorsAndFontsPage implements ColorSettingsPage {
+
+  private static final AttributesDescriptor[] ATTRIBUTE_DESCRIPTORS;
+  private static final Map<String, TextAttributesKey> ADDITIONAL_HIGHLIGHTING;
+
+  static {
+    ATTRIBUTE_DESCRIPTORS = new AttributesDescriptor[]{new AttributesDescriptor("Header name", ManifestColorsAndFonts.HEADER_NAME_KEY),
+      new AttributesDescriptor("Header assignment", ManifestColorsAndFonts.HEADER_ASSIGNMENT_KEY),
+      new AttributesDescriptor("Header value", ManifestColorsAndFonts.HEADER_VALUE_KEY),
+      new AttributesDescriptor("Directive name", ManifestColorsAndFonts.DIRECTIVE_NAME_KEY),
+      new AttributesDescriptor("Directive assignment", ManifestColorsAndFonts.DIRECTIVE_ASSIGNMENT_KEY),
+      new AttributesDescriptor("Attribute name", ManifestColorsAndFonts.ATTRIBUTE_NAME_KEY),
+      new AttributesDescriptor("Attribute assignment", ManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY),
+      new AttributesDescriptor("Clause separator", ManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY),
+      new AttributesDescriptor("Parameter separator", ManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY)};
+
+    ADDITIONAL_HIGHLIGHTING = new HashMap<String, TextAttributesKey>();
+    ADDITIONAL_HIGHLIGHTING.put("headerAssignment", ManifestColorsAndFonts.HEADER_ASSIGNMENT_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("directiveName", ManifestColorsAndFonts.DIRECTIVE_NAME_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("directiveAssignment", ManifestColorsAndFonts.DIRECTIVE_ASSIGNMENT_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("attributeName", ManifestColorsAndFonts.ATTRIBUTE_NAME_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("attributeAssignment", ManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("clauseSeparator", ManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY);
+    ADDITIONAL_HIGHLIGHTING.put("parameterSeparator", ManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY);
+  }
 
   @NotNull
   public String getDisplayName() {
@@ -72,7 +94,7 @@ public class ManifestColorsAndFontsPage implements ColorSettingsPage {
 
   @NotNull
   public SyntaxHighlighter getHighlighter() {
-    return SyntaxHighlighterFactory.getSyntaxHighlighter(ManifestFileTypeFactory.MANIFEST, null, null);
+    return new ManifestSyntaxHighlighter();
   }
 
   @NonNls
@@ -80,33 +102,10 @@ public class ManifestColorsAndFontsPage implements ColorSettingsPage {
   public String getDemoText() {
     return "Manifest-Version<headerAssignment>:</headerAssignment> 1.0\n" +
            "Bundle-ManifestVersion<headerAssignment>:</headerAssignment> 2\n" +
-           "Bundle-Name<headerAssignment>:</headerAssignment> Osmorc Test\n" +
-           "Bundle-SymbolicName<headerAssignment>:</headerAssignment> org.osmorc.test<parameterSeparator>;</parameterSeparator> <directiveName>singleton</directiveName><directiveAssignment>:=</directiveAssignment>true\n" +
+           "Bundle-Name<headerAssignment>:</headerAssignment> Manifest Test\n" +
+           "Bundle-SymbolicName<headerAssignment>:</headerAssignment> org.manifest.test<parameterSeparator>;</parameterSeparator> <directiveName>singleton</directiveName><directiveAssignment>:=</directiveAssignment>true\n" +
            "Bundle-Version<headerAssignment>:</headerAssignment> 0.1.0\n" +
            "Require-Bundle<headerAssignment>:</headerAssignment> some.bundle<parameterSeparator>;</parameterSeparator><attributeName>bundle-version</attributeName><attributeAssignment>=</attributeAssignment>2.0.0<clauseSeparator>,</clauseSeparator>\n" +
            " other.bundle";
-  }
-
-  private static final AttributesDescriptor[] ATTRIBUTE_DESCRIPTORS;
-  private static final Map<String, TextAttributesKey> ADDITIONAL_HIGHLIGHTING;
-
-  static {
-    ATTRIBUTE_DESCRIPTORS = new AttributesDescriptor[]{new AttributesDescriptor("Header name", ManifestColorsAndFonts.HEADER_NAME_KEY),
-      new AttributesDescriptor("Header assignment", ManifestColorsAndFonts.HEADER_ASSIGNMENT_KEY),
-      new AttributesDescriptor("Header value", ManifestColorsAndFonts.HEADER_VALUE_KEY),
-      new AttributesDescriptor("Directive name", ManifestColorsAndFonts.DIRECTIVE_NAME_KEY),
-      new AttributesDescriptor("Directive assignment", ManifestColorsAndFonts.DIRECTIVE_ASSIGNMENT_KEY),
-      new AttributesDescriptor("Attribute name", ManifestColorsAndFonts.ATTRIBUTE_NAME_KEY),
-      new AttributesDescriptor("Attribute assignment", ManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY),
-      new AttributesDescriptor("Clause separator", ManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY),
-      new AttributesDescriptor("Parameter separator", ManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY)};
-    ADDITIONAL_HIGHLIGHTING = new HashMap<String, TextAttributesKey>();
-    ADDITIONAL_HIGHLIGHTING.put("headerAssignment", ManifestColorsAndFonts.HEADER_ASSIGNMENT_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("directiveName", ManifestColorsAndFonts.DIRECTIVE_NAME_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("directiveAssignment", ManifestColorsAndFonts.DIRECTIVE_ASSIGNMENT_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("attributeName", ManifestColorsAndFonts.ATTRIBUTE_NAME_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("attributeAssignment", ManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("clauseSeparator", ManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY);
-    ADDITIONAL_HIGHLIGHTING.put("parameterSeparator", ManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY);
   }
 }

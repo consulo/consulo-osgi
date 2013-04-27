@@ -29,7 +29,8 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.manifest.ManifestFileTypeFactory;
+import org.osmorc.manifest.lang.ManifestFileType;
+import org.osmorc.manifest.lang.ManifestLanguage;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -42,15 +43,14 @@ import java.util.List;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ManifestFileImpl extends PsiFileBase implements ManifestFile {
-  private static final Header[] EMPTY_ARRAY = new Header[0];
 
   public ManifestFileImpl(FileViewProvider viewProvider) {
-    super(viewProvider, ManifestFileTypeFactory.MANIFEST.getLanguage());
+    super(viewProvider, ManifestLanguage.INSTANCE);
   }
 
   @NotNull
   public FileType getFileType() {
-    return ManifestFileTypeFactory.MANIFEST;
+    return ManifestFileType.INSTANCE;
   }
 
   @Override
@@ -62,7 +62,7 @@ public class ManifestFileImpl extends PsiFileBase implements ManifestFile {
   @Override
   public Header[] getHeaders() {
     Header[] childrenOfType = PsiTreeUtil.getChildrenOfType(getFirstChild(), Header.class);
-    return childrenOfType == null ? EMPTY_ARRAY : childrenOfType;
+    return childrenOfType == null ? Header.EMPTY_ARRAY : childrenOfType;
   }
 
   @Override

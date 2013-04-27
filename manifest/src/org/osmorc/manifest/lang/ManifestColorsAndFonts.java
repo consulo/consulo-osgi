@@ -31,26 +31,23 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public class ManifestColorsAndFonts {
-  static final TextAttributesKey HEADER_NAME_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.headerName", DefaultLanguageHighlighterColors.KEYWORD);
-  static final TextAttributesKey HEADER_VALUE_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.headerValue", DefaultLanguageHighlighterColors.STRING);
-  static final TextAttributesKey DIRECTIVE_NAME_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.directiveName", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
-  static final TextAttributesKey ATTRIBUTE_NAME_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.attributeName", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
-  static final TextAttributesKey HEADER_ASSIGNMENT_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.headerAssignment", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  static final TextAttributesKey ATTRIBUTE_ASSIGNMENT_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.attributeAssignment", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  static final TextAttributesKey DIRECTIVE_ASSIGNMENT_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.directiveAssignment", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  static final TextAttributesKey CLAUSE_SEPARATOR_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.clauseSeparator", DefaultLanguageHighlighterColors.COMMA);
-  static final TextAttributesKey PARAMETER_SEPARATOR_KEY =
-    TextAttributesKey.createTextAttributesKey("osmorc.parameterSeparator", DefaultLanguageHighlighterColors.SEMICOLON);
-
-  private ManifestColorsAndFonts() {
-  }
+public interface ManifestColorsAndFonts {
+  TextAttributesKey HEADER_NAME_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_HEADER_NAME_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+  TextAttributesKey HEADER_VALUE_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_HEADER_VALUE_KEY", DefaultLanguageHighlighterColors.STRING);
+  TextAttributesKey DIRECTIVE_NAME_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_DIRECTIVE_NAME_KEY", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
+  TextAttributesKey ATTRIBUTE_NAME_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_ATTRIBUTE_NAME_KEY", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
+  TextAttributesKey HEADER_ASSIGNMENT_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_HEADER_ASSIGNMENT_KEY", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+  TextAttributesKey ATTRIBUTE_ASSIGNMENT_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_ATTRIBUTE_ASSIGNMENT_KEY", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+  TextAttributesKey DIRECTIVE_ASSIGNMENT_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_DIRECTIVE_ASSIGNMENT_KEY", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+  TextAttributesKey CLAUSE_SEPARATOR_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_CLAUSE_SEPARATOR_KEY", DefaultLanguageHighlighterColors.COMMA);
+  TextAttributesKey PARAMETER_SEPARATOR_KEY =
+    TextAttributesKey.createTextAttributesKey("MANIFEST_PARAMETER_SEPARATOR_KEY", DefaultLanguageHighlighterColors.SEMICOLON);
 }

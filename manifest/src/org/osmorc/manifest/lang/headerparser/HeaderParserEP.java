@@ -18,16 +18,17 @@ public class HeaderParserEP {
 
   @NotNull
   @Attribute("implementationClass")
-  public Class<? extends HeaderParser> implementationClass;
+  public String implementationClass;
 
   private HeaderParser myParserInstance;
 
   public HeaderParser getParserInstance() {
     if(myParserInstance == null) {
       try {
-        myParserInstance = ReflectionUtil.createInstance(implementationClass.getConstructor());
+        Class<?> clazz = Class.forName(implementationClass);
+        myParserInstance = (HeaderParser)ReflectionUtil.createInstance(clazz.getConstructor());
       }
-      catch (NoSuchMethodException e) {
+      catch (Exception e) {
         throw new RuntimeException(e);
       }
     }

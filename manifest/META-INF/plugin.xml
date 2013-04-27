@@ -84,7 +84,7 @@
     <headerParser key="Bundle-Version" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleVersionParser"/>
     <headerParser key="Export-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ExportPackageParser"/>
     <headerParser key="Import-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ImportPackageParser"/>
-    <headerParser key="Require-Bundle" implementationClass="org.osmorc.manifest.lang.headerparser.impl.RequireBundleParser"/>
+    <!--<headerParser key="Require-Bundle" implementationClass="org.osmorc.manifest.lang.headerparser.impl.RequireBundleParser"/>  -->\
     <headerParser key="Bundle-RequiredExecutionEnvironment"
                   implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
     <headerParser key="Fragment-Host" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
@@ -117,5 +117,6 @@
     <lang.elementManipulator forClass="org.osmorc.manifest.lang.psi.HeaderValuePart"
                              implementationClass="org.osmorc.manifest.lang.psi.HeaderValuePartManipulator"/>
     <lang.ast.factory language="Manifest" implementationClass="org.osmorc.manifest.lang.psi.impl.ManifestASTFactory"/>
+    <fileTypeFactory implementation="org.osmorc.manifest.lang.ManifestFileTypeFactory" />
   </extensions>
 </idea-plugin>

@@ -30,7 +30,7 @@ import com.intellij.lang.Language;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.manifest.ManifestFileTypeFactory;
+import org.osmorc.manifest.lang.ManifestLanguage;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
@@ -47,6 +47,6 @@ public abstract class ManifestElementBase<T extends StubElement> extends StubBas
 
   @NotNull
   public Language getLanguage() {
-    return ManifestFileTypeFactory.MANIFEST.getLanguage();
+    return ManifestLanguage.INSTANCE;
   }
 }
