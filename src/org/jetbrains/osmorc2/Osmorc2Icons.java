@@ -9,6 +9,8 @@ import javax.swing.*;
  * @since 17:25/27.04.13
  */
 public interface Osmorc2Icons {
-  Icon FACET_ICON = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osmorc2Facet.png");
-  Icon LINE_MARKER_ICON = FACET_ICON;
+  Icon FacetType = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osmorc2Facet.png");
+  Icon BundleActivator = FacetType;     //TODO [VISTALL]
+  Icon ExportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/exportPackage.png");
+  Icon ImportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/importPackage.png");
 }

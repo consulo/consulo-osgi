@@ -140,6 +140,27 @@ public class BundleManifestImpl implements BundleManifest {
       return Collections.emptyList();
     }
     Clause[] clauses = header.getClauses();
+    if(clauses.length == 0) {
+      return Collections.emptyList();
+    }
+    List<String> result = new ArrayList<String>(clauses.length);
+    for (Clause clause : clauses) {
+      result.add(clause.getClauseText());
+    }
+    return result;
+  }
+
+  @NotNull
+  @Override
+  public List<String> getExports() {
+    Header header = myManifestFile.getHeaderByName(EXPORT_PACKAGE);
+    if (header == null) {
+      return Collections.emptyList();
+    }
+    Clause[] clauses = header.getClauses();
+    if(clauses.length == 0) {
+      return Collections.emptyList();
+    }
     List<String> result = new ArrayList<String>(clauses.length);
     for (Clause clause : clauses) {
       result.add(clause.getClauseText());

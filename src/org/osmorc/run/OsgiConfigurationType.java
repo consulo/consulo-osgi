@@ -68,7 +68,7 @@ public class OsgiConfigurationType implements ConfigurationType {
   }
 
   public Icon getIcon() {
-    return Osmorc2Icons.FACET_ICON;
+    return Osmorc2Icons.FacetType;
   }
 
   @NotNull

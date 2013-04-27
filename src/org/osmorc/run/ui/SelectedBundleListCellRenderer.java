@@ -48,7 +48,7 @@ public class SelectedBundleListCellRenderer extends DefaultListCellRenderer {
       component.setIcon(AllIcons.Nodes.Module);
     }
     else if (selectedBundle.getBundleType() == SelectedBundle.BundleType.FrameworkBundle) {
-      component.setIcon(Osmorc2Icons.FACET_ICON);
+      component.setIcon(Osmorc2Icons.FacetType);
     }
     else {
       component.setIcon(PlatformIcons.JAR_ICON);

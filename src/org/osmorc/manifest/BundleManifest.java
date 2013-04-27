@@ -88,6 +88,9 @@ public interface BundleManifest {
   @NotNull
   List<String> getImports();
 
+  @NotNull
+  List<String> getExports();
+
   /**
    * Returns a list of bundle specs which represent the bundles, that this bundle requires. Each bundle spec can be fed to
    * {@link #isRequiredBundle(String)} of another bundle to find out if the other bundle is the required bundle.

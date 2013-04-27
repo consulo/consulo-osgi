@@ -1,4 +1,4 @@
-package org.osmorc;
+package org.jetbrains.osmorc2.ide;
 
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author VISTALL
  * @since 19:08/26.04.13
  */
-public class OsmorcLineMarkerProvider implements LineMarkerProvider {
+public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
   @Nullable
   @Override
   public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement element) {
@@ -42,7 +42,7 @@ public class OsmorcLineMarkerProvider implements LineMarkerProvider {
         if (nameIdentifier == null) {
           return null;
         }
-        return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), Osmorc2Icons.LINE_MARKER_ICON,
+        return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), Osmorc2Icons.BundleActivator,
                                               Pass.UPDATE_ALL, new Function<PsiElement, String>() {
           @Override
           public String fun(PsiElement element) {
