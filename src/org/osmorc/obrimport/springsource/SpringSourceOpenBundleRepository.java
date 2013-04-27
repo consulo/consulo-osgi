@@ -32,7 +32,7 @@ import com.intellij.openapi.util.io.StreamUtil;
 import com.intellij.util.io.UrlConnectionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.obrimport.MavenRepository;
-import org.osmorc.obrimport.Obr;
+import org.osmorc.obrimport.OpenBundleRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,12 +45,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link org.osmorc.obrimport.Obr} for the springsource bundle repository.
+ * Implementation of {@link org.osmorc.obrimport.OpenBundleRepository} for the springsource bundle repository.
  *
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  * @version $Id:$
  */
-public class SpringSourceObr implements Obr {
+public class SpringSourceOpenBundleRepository implements OpenBundleRepository {
 
   public String getDisplayName() {
     return "Springsource Enterprise Bundle Repository";

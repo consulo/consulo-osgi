@@ -25,7 +25,7 @@
 
 package org.osmorc.facet;
 
-import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.refactoring.listeners.RefactoringElementAdapter;
@@ -38,25 +38,19 @@ import org.jetbrains.annotations.Nullable;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class OsmorcFacetRefactoringListenerProvider implements RefactoringElementListenerProvider {
-  private final OsmorcFacetUtil osmorcFacetUtil;
-  private final Application application;
-
-  public OsmorcFacetRefactoringListenerProvider(final OsmorcFacetUtil osmorcFacetUtil,
-                                                final Application application) {
-    this.osmorcFacetUtil = osmorcFacetUtil;
-    this.application = application;
+  public OsmorcFacetRefactoringListenerProvider() {
   }
 
   @Nullable
   public RefactoringElementListener getListener(final PsiElement element) {
-    if (element instanceof PsiClass && osmorcFacetUtil.hasOsmorcFacet(element)) {
-      OsmorcFacet osmorcFacet = osmorcFacetUtil.getOsmorcFacet(element);
+    if (element instanceof PsiClass && OsmorcFacet.hasOsmorcFacet(element)) {
+      OsmorcFacet osmorcFacet = OsmorcFacet.getInstance(element);
       OsmorcFacetConfiguration osmorcFacetConfiguration = osmorcFacet.getConfiguration();
       PsiClass psiClass = (PsiClass)element;
       if (osmorcFacetConfiguration.isOsmorcControlsManifest() &&
           osmorcFacetConfiguration.getBundleActivator() != null &&
           osmorcFacetConfiguration.getBundleActivator().equals(psiClass.getQualifiedName())) {
-        return new ActivatorClassRefactoringListener(osmorcFacetConfiguration, application);
+        return new ActivatorClassRefactoringListener(osmorcFacetConfiguration);
       }
     }
 
@@ -65,16 +59,13 @@ public class OsmorcFacetRefactoringListenerProvider implements RefactoringElemen
 
   private static final class ActivatorClassRefactoringListener extends RefactoringElementAdapter {
     private final OsmorcFacetConfiguration osmorcFacetConfiguration;
-    private final Application application;
 
-    private ActivatorClassRefactoringListener(final OsmorcFacetConfiguration osmorcFacetConfiguration,
-                                              final Application application) {
+    private ActivatorClassRefactoringListener(final OsmorcFacetConfiguration osmorcFacetConfiguration) {
       this.osmorcFacetConfiguration = osmorcFacetConfiguration;
-      this.application = application;
     }
 
     public void elementRenamedOrMoved(@NotNull final PsiElement newElement) {
-      application.runWriteAction(new Runnable() {
+      ApplicationManager.getApplication().runWriteAction(new Runnable() {
         public void run() {
           osmorcFacetConfiguration.setBundleActivator(((PsiClass)newElement).getQualifiedName());
         }
@@ -83,7 +74,7 @@ public class OsmorcFacetRefactoringListenerProvider implements RefactoringElemen
 
     @Override
     public void undoElementMovedOrRenamed(@NotNull PsiElement newElement, @NotNull final String oldQualifiedName) {
-      application.runWriteAction(new Runnable() {
+      ApplicationManager.getApplication().runWriteAction(new Runnable() {
         @Override
         public void run() {
           osmorcFacetConfiguration.setBundleActivator(oldQualifiedName);

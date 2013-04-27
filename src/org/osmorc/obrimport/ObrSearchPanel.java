@@ -25,7 +25,6 @@
 
 package org.osmorc.obrimport;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.progress.util.ProgressIndicatorBase;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.CollectionListModel;
@@ -64,9 +63,9 @@ public class ObrSearchPanel extends ProgressIndicatorBase {
       }
     });
 
-    _obrBox.setRenderer(new ListCellRendererWrapper<Obr>() {
+    _obrBox.setRenderer(new ListCellRendererWrapper<OpenBundleRepository>() {
       @Override
-      public void customize(JList list, Obr value, int index, boolean selected, boolean hasFocus) {
+      public void customize(JList list, OpenBundleRepository value, int index, boolean selected, boolean hasFocus) {
         setText(value.getDisplayName());
       }
     });
@@ -83,7 +82,7 @@ public class ObrSearchPanel extends ProgressIndicatorBase {
   private void search() {
     Thread t = new Thread(new Runnable() {
       public void run() {
-        final Obr selectedObr = (Obr)_obrBox.getSelectedItem();
+        final OpenBundleRepository selectedObr = (OpenBundleRepository)_obrBox.getSelectedItem();
         if (selectedObr != null) {
           start();
           switch (_queryType) {
@@ -159,10 +158,8 @@ public class ObrSearchPanel extends ProgressIndicatorBase {
   }
 
   private void updateObrs() {
-    ObrProvider provider = ServiceManager.getService(ObrProvider.class);
-    Obr[] obrs = provider.getAvailableObrs();
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    for (Obr obr : obrs) {
+    for (OpenBundleRepository obr : OpenBundleRepository.EP_NAME.getExtensions()) {
       switch (_queryType) {
         case Maven:
           if (obr.supportsMaven()) {

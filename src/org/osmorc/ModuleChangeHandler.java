@@ -26,14 +26,19 @@
 package org.osmorc;
 
 import com.intellij.ProjectTopics;
+import com.intellij.execution.RunManager;
+import com.intellij.execution.configurations.ConfigurationTypeUtil;
+import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.ModuleAdapter;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBusConnection;
 import org.jetbrains.annotations.NotNull;
+import org.osmorc.run.OsgiConfigurationType;
+import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.ui.SelectedBundle;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,14 +52,10 @@ public class ModuleChangeHandler implements ProjectComponent {
   private final Project project;
   @NotNull
   private final Map<Module, String> moduleNames;
-  @NotNull
-  private final ModuleChangeListener[] moduleChangeListeners;
 
   public ModuleChangeHandler(@NotNull Project project) {
     this.project = project;
     moduleNames = new HashMap<Module, String>();
-    moduleChangeListeners = Extensions
-      .getExtensions(new ExtensionPointName<ModuleChangeListener>("Osmorc.moduleChangeListener"));
   }
 
   public void projectOpened() {
@@ -80,7 +81,6 @@ public class ModuleChangeHandler implements ProjectComponent {
       public void moduleRemoved(Project project, Module module) {
         if (ModuleChangeHandler.this.project == project) {
           moduleNames.remove(module);
-          fireModuleRemoved(module);
         }
       }
 
@@ -102,15 +102,22 @@ public class ModuleChangeHandler implements ProjectComponent {
     });
   }
 
-  private void fireModuleRemoved(@NotNull Module module) {
-    for (ModuleChangeListener listener : moduleChangeListeners) {
-      listener.moduleRemoved(module);
-    }
-  }
-
-  private void fireModuleRenamed(@NotNull Module module, @NotNull String oldName) {
-    for (ModuleChangeListener listener : moduleChangeListeners) {
-      listener.moduleRenamed(module, oldName);
+  private void fireModuleRenamed(@NotNull final Module module, @NotNull String oldName) {
+    Project project = module.getProject();
+    RunConfiguration[] runConfigurations = RunManager.getInstance(project).getConfigurations(ConfigurationTypeUtil.findConfigurationType(OsgiConfigurationType.class));
+    for (RunConfiguration runConfiguration : runConfigurations) {
+      OsgiRunConfiguration osgiRunConfiguration = (OsgiRunConfiguration)runConfiguration;
+      List<SelectedBundle> bundleList = osgiRunConfiguration.getBundlesToDeploy();
+      for (final SelectedBundle selectedBundle : bundleList) {
+        if (oldName.equals(selectedBundle.getName())) {
+          ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            public void run() {
+              selectedBundle.setName(module.getName());
+            }
+          });
+          break;
+        }
+      }
     }
   }
 

@@ -26,21 +26,50 @@
 package org.osmorc.obrimport;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
+import com.intellij.openapi.progress.ProgressIndicator;
+import org.jetbrains.annotations.NotNull;
+import org.osmorc.obrimport.springsource.ObrMavenResult;
+
+import java.io.IOException;
 
 /**
- * Application component which provides the available bundle repositories.
+ * A query interface for an Open Bundle Repository.
  *
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  * @version $Id:$
  */
-public class ObrProvider {
+public interface OpenBundleRepository {
+  ExtensionPointName<OpenBundleRepository> EP_NAME = ExtensionPointName.create("org.osmorc2.core.openBundleRepository");
   /**
-   * Returns all available Obrs
-   *
-   * @return a list of known obrs.
+   * @return the name of the Obr, which is displayed to the user.
    */
-  public Obr[] getAvailableObrs() {
-    return Extensions.getExtensions(new ExtensionPointName<Obr>("Osmorc.obr"));
-  }
+  public String getDisplayName();
+
+  /**
+   * @return true, if the repository supports maven, false otherwise.
+   */
+  public boolean supportsMaven();
+
+  /**
+   * Queries the remote repository and returns information about possibly matching maven dependencies.
+   *
+   * @param queryString       the query string. This is usually the name of the bundle that should be found.
+   * @param progressIndicator a progress indicator, to show progress on the querying action.
+   * @return a list of results. If nothing is found an empty array is returned.
+   * @throws IOException if the connection to the bundle repository failed.
+   */
+  public
+  @NotNull
+  ObrMavenResult[] queryForMavenArtifact(@NotNull String queryString,
+                                         @NotNull ProgressIndicator progressIndicator) throws
+                                                                                       IOException;
+
+  /**
+   * Returns a list of maven repositories where artifacts which are returned by this OBR can be retrieved.
+   *
+   * @return a list of repositories or an empty array if this obr does not support maven.
+   */
+  public
+  @NotNull
+  MavenRepository[] getMavenRepositories();
 }

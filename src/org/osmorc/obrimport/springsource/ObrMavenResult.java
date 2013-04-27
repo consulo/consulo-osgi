@@ -25,7 +25,7 @@
 
 package org.osmorc.obrimport.springsource;
 
-import org.osmorc.obrimport.Obr;
+import org.osmorc.obrimport.OpenBundleRepository;
 
 /**
  * A query result which represents a maven dependency.
@@ -35,7 +35,7 @@ import org.osmorc.obrimport.Obr;
  */
 public class ObrMavenResult {
   public ObrMavenResult(String groupId, String artifactId, String version, String classifier,
-                        Obr bundleRepository) {
+                        OpenBundleRepository bundleRepository) {
     this._artifactId = artifactId;
     this._groupId = groupId;
     this._version = version;
@@ -81,11 +81,11 @@ public class ObrMavenResult {
     return _groupId + ":" + _artifactId + ":" + _version;
   }
 
-  public Obr getBundleRepository() {
+  public OpenBundleRepository getBundleRepository() {
     return _bundleRepository;
   }
 
-  public void setBundleRepository(Obr bundleRepository) {
+  public void setBundleRepository(OpenBundleRepository bundleRepository) {
     _bundleRepository = bundleRepository;
   }
 
@@ -93,5 +93,5 @@ public class ObrMavenResult {
   private String _groupId;
   private String _version;
   private String _classifier;
-  private Obr _bundleRepository;
+  private OpenBundleRepository _bundleRepository;
 }

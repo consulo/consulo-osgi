@@ -5,8 +5,32 @@
   <depends>org.osmorc.manifest</depends>
   <depends>org.jetbrains.idea.maven</depends>
 
+  <project-components>
+    <component>
+      <implementation-class>org.osmorc.OsmorcProjectComponent</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.osmorc.ModuleChangeHandler</implementation-class>
+    </component>
+  </project-components>
+
+  <module-components>
+    <component>
+      <implementation-class>org.osmorc.OsmorcModuleComponent</implementation-class>
+    </component>
+  </module-components>
+
+  <actions>
+    <group id="osmorc.viewGeneratedManifests" class="org.osmorc.make.ViewGeneratedManifestGroup" popup="true"
+           text="View Generated Manifest" description="View the manifest of a recently generated OSGi bundle"
+           icon="OsmorcIdeaIcons.Osmorc_Icon_16x16">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+    </group>
+  </actions>
+
   <extensionPoints>
     <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator" />
+    <extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository" />
   </extensionPoints>
 
   <extensions defaultExtensionNs="org.osmorc2.core">
@@ -14,18 +38,18 @@
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator" />
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator" />
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishIntegrator" />
+
+    <openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository" />
+  </extensions>
+
+  <extensions defaultExtensionNs="org.jetbrains.idea.maven">
+    <importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
     <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     <applicationService serviceInterface="org.osmorc.settings.ApplicationSettings"
                         serviceImplementation="org.osmorc.settings.ApplicationSettings"/>
-
-    <!-- Other application services -->
-    <applicationService serviceInterface="org.osmorc.facet.OsmorcFacetUtil"
-                        serviceImplementation="org.osmorc.facet.impl.OsmorcFacetUtilImpl"/>
-    <applicationService serviceInterface="org.osmorc.obrimport.ObrProvider"
-                        serviceImplementation="org.osmorc.obrimport.ObrProvider"/>
 
     <!-- Module services -->
     <moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
@@ -62,6 +86,8 @@
                      enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
     <!--<localInspection shortName="osmorcClassUnavailable" displayName="Class not available" groupName="OSGi"-->
     <!--enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassUnavailableInspection"/>-->
+    <localInspection shortName="osmorcNonOsgiMavenDependency" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
+                     level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
 
     <facetType implementation="org.osmorc.facet.OsmorcFacetType"/>
     <framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>
