@@ -97,6 +97,7 @@ public class ManifestFileImpl extends PsiFileBase implements ManifestFile {
     return value instanceof String ? (String)value : null;
   }
 
+  @NotNull
   @Override
   public List<String> getValuesByKey(@NotNull String key) {
     Header header = getHeaderByName(key);

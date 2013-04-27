@@ -59,6 +59,6 @@ public interface ManifestFile extends PsiFile {
   @Nullable
   String getStringValueByKey(@NotNull String key);
 
-  @Nullable
+  @NotNull
   List<String> getValuesByKey(@NotNull String key);
 }
