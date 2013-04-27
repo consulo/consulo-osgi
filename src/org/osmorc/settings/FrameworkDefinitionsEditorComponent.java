@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
-import org.osmorc.frameworkintegration.FrameworkIntegratorRegistry;
+import org.osmorc.frameworkintegration.FrameworkIntegratorUtil;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -52,13 +52,11 @@ public class FrameworkDefinitionsEditorComponent {
   private JLabel myFrameworkInstanceName;
   private JLabel myVersion;
   private JPanel myFrameworkInstancesPanel;
-  private FrameworkIntegratorRegistry myFrameworkIntegratorRegistry;
   private FrameworkInstanceDefinition mySelectedFrameworkInstance;
   private boolean myModified;
   private DefaultListModel myModel;
 
-  public FrameworkDefinitionsEditorComponent(FrameworkIntegratorRegistry frameworkIntegratorRegistry) {
-    myFrameworkIntegratorRegistry = frameworkIntegratorRegistry;
+  public FrameworkDefinitionsEditorComponent() {
     myModel = new DefaultListModel();
     myFrameworkInstances = new JBList(myModel);
     myFrameworkInstances.getEmptyText().setText("No frameworks configured");
@@ -125,7 +123,7 @@ public class FrameworkDefinitionsEditorComponent {
     //    frameworkInstanceNameForCreation = selectedFrameworkInstanceForProject;
     //}
 
-    CreateFrameworkInstanceDialog dialog = new CreateFrameworkInstanceDialog(myFrameworkIntegratorRegistry, frameworkInstanceNameForCreation);
+    CreateFrameworkInstanceDialog dialog = new CreateFrameworkInstanceDialog(frameworkInstanceNameForCreation);
     dialog.pack();
     dialog.show();
 
@@ -158,7 +156,7 @@ public class FrameworkDefinitionsEditorComponent {
     }
 
     CreateFrameworkInstanceDialog dialog =
-      new CreateFrameworkInstanceDialog(myFrameworkIntegratorRegistry, frameworkInstanceDefinition.getName());
+      new CreateFrameworkInstanceDialog(frameworkInstanceDefinition.getName());
     dialog.setIntegratorName(frameworkInstanceDefinition.getFrameworkIntegratorName());
     dialog.setBaseFolder(frameworkInstanceDefinition.getBaseFolder());
     dialog.setVersion(frameworkInstanceDefinition.getVersion());
@@ -184,9 +182,9 @@ public class FrameworkDefinitionsEditorComponent {
 
   @Nullable
   private FrameworkInstanceManager getFrameworkInstanceManager(FrameworkInstanceDefinition instanceDefinition) {
-    FrameworkIntegrator frameworkIntegrator = myFrameworkIntegratorRegistry.findIntegratorByInstanceDefinition(instanceDefinition);
+    FrameworkIntegrator frameworkIntegrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(instanceDefinition);
     if (frameworkIntegrator != null) {
-      return frameworkIntegrator.getFrameworkInstanceManager();
+      return frameworkIntegrator.getInstanceManager();
     }
     else {
       return null;

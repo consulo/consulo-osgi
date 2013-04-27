@@ -4,17 +4,14 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.frameworkintegration.FrameworkIntegratorRegistry;
 
 import javax.swing.*;
 
 
 public class FrameworkDefinitionsEditor implements SearchableConfigurable {
   private FrameworkDefinitionsEditorComponent myComponent;
-  private final FrameworkIntegratorRegistry myRegistry;
 
-  public FrameworkDefinitionsEditor(FrameworkIntegratorRegistry registry) {
-    myRegistry = registry;
+  public FrameworkDefinitionsEditor() {
   }
 
   @Nls
@@ -36,7 +33,7 @@ public class FrameworkDefinitionsEditor implements SearchableConfigurable {
   }
 
   public JComponent createComponent() {
-    myComponent = new FrameworkDefinitionsEditorComponent(myRegistry);
+    myComponent = new FrameworkDefinitionsEditorComponent();
     return myComponent.getMainPanel();
   }
 

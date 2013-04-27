@@ -22,47 +22,43 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.osmorc.frameworkintegration;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+package org.osmorc.frameworkintegration.impl.knopflerfish.ui;
+
+import com.intellij.openapi.options.ConfigurationException;
+import org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishRunProperties;
+import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.ui.FrameworkRunPropertiesEditor;
+import org.osmorc.run.ui.GenericRunPropertiesEditor;
+
+import javax.swing.*;
+import java.util.HashMap;
 
 /**
- * Author: Robert F. Beeger (robert@beeger.net)
+ * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  */
-public class FrameworkIntegratorRegistry {
-  public FrameworkIntegratorRegistry() {
-    _frameworkIntegrators =
-      Extensions.getExtensions(new ExtensionPointName<FrameworkIntegrator>("Osmorc.frameworkIntegrator"));
+public class KnopflerfishRunPropertiesEditor implements FrameworkRunPropertiesEditor {
+  private JPanel _mainPanel;
+  private GenericRunPropertiesEditor _genericRunPropertiesEditor;
+
+  public KnopflerfishRunPropertiesEditor() {
+
   }
 
-  public FrameworkIntegrator[] getFrameworkIntegrators() {
-    FrameworkIntegrator[] result = new FrameworkIntegrator[_frameworkIntegrators.length];
-    System.arraycopy(_frameworkIntegrators, 0, result, 0, _frameworkIntegrators.length);
-    return result;
+  public void resetEditorFrom(OsgiRunConfiguration osgiRunConfiguration) {
+    _genericRunPropertiesEditor.resetEditorFrom(osgiRunConfiguration);
   }
 
-  @Nullable
-  public FrameworkIntegrator findIntegratorByName(@NotNull final String name) {
-    FrameworkIntegrator result = null;
-
-    for (FrameworkIntegrator frameworkIntegrator : _frameworkIntegrators) {
-      if (frameworkIntegrator.getDisplayName().equals(name)) {
-        result = frameworkIntegrator;
-        break;
-      }
-    }
-
-    return result;
+  public void applyEditorTo(OsgiRunConfiguration osgiRunConfiguration) throws ConfigurationException {
+    _genericRunPropertiesEditor.applyEditorTo(osgiRunConfiguration);
   }
 
-  @Nullable
-  public FrameworkIntegrator findIntegratorByInstanceDefinition(
-    @NotNull final FrameworkInstanceDefinition frameworkInstanceDefinition) {
-    return findIntegratorByName(frameworkInstanceDefinition.getFrameworkIntegratorName());
+  public JPanel getUI() {
+    return _mainPanel;
   }
 
-  private final FrameworkIntegrator[] _frameworkIntegrators;
+  private void createUIComponents() {
+    _genericRunPropertiesEditor =
+      new GenericRunPropertiesEditor<KnopflerfishRunProperties>(new KnopflerfishRunProperties(new HashMap<String, String>()));
+  }
 }

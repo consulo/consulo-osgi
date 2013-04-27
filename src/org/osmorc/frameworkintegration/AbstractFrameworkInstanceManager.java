@@ -12,18 +12,6 @@ import java.text.MessageFormat;
  */
 public abstract class AbstractFrameworkInstanceManager implements FrameworkInstanceManager {
 
-
-  private LocalFileSystem myLocalFileSystem;
-
-  /**
-   * Ctor.
-   *
-   * @param localFileSystem in instance of {@link LocalFileSystem}
-   */
-  public AbstractFrameworkInstanceManager(LocalFileSystem localFileSystem) {
-    myLocalFileSystem = localFileSystem;
-  }
-
   /**
    * PAX runner can download framework instances from the net. These have a distinct directory structure, which differs from the
    * structure of the regular downloads available from the framework vendors. Since PAX's structure is equal for all frameworks
@@ -38,7 +26,7 @@ public abstract class AbstractFrameworkInstanceManager implements FrameworkInsta
       return "The framework is not downloaded by Pax Runner.";
     }
 
-    VirtualFile installFolder = myLocalFileSystem.findFileByPath(frameworkInstanceDefinition.getBaseFolder());
+    VirtualFile installFolder = LocalFileSystem.getInstance().findFileByPath(frameworkInstanceDefinition.getBaseFolder());
     if (installFolder == null || !installFolder.isDirectory()) {
       return MessageFormat
         .format("The download location {0} does not exist or is not a directory.", frameworkInstanceDefinition.getBaseFolder());
@@ -50,10 +38,5 @@ public abstract class AbstractFrameworkInstanceManager implements FrameworkInsta
                                   frameworkInstanceDefinition.getBaseFolder());
     }
     return null;
-  }
-
-
-  protected LocalFileSystem getLocalFileSystem() {
-    return myLocalFileSystem;
   }
 }

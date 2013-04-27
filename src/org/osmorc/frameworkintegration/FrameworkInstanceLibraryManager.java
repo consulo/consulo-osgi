@@ -26,7 +26,6 @@
 package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.application.Application;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -151,12 +150,11 @@ public class FrameworkInstanceLibraryManager {
    * @param instanceName the instance
    */
   private void rebuildLibraryEntries(@Nullable final String instanceName) {
-    FrameworkIntegratorRegistry registry = ServiceManager.getService(myProject, FrameworkIntegratorRegistry.class);
     FrameworkInstanceDefinition frameworkInstance = myApplicationSettings.getFrameworkInstance(instanceName);
     if (frameworkInstance != null) {
-      FrameworkIntegrator integrator = registry.findIntegratorByInstanceDefinition(frameworkInstance);
+      FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(frameworkInstance);
       if (integrator != null) {
-        integrator.getFrameworkInstanceManager().collectLibraries(frameworkInstance, new JarFileLibraryCollector() {
+        integrator.getInstanceManager().collectLibraries(frameworkInstance, new JarFileLibraryCollector() {
 
           @Override
           protected void collectFrameworkJars(@NotNull final Collection<VirtualFile> jarFiles,

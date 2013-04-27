@@ -36,7 +36,6 @@ import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
-import org.osmorc.frameworkintegration.FrameworkIntegratorRegistry;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -72,8 +71,7 @@ public class CreateFrameworkInstanceDialog extends DialogWrapper implements Pane
   }
 
 
-  public CreateFrameworkInstanceDialog(FrameworkIntegratorRegistry frameworkIntegratorRegistry,
-                                       String frameworkInstanceName) {
+  public CreateFrameworkInstanceDialog(String frameworkInstanceName) {
     super(true);
     setTitle("OSGi Framework Instance");
     setModal(true);
@@ -82,7 +80,7 @@ public class CreateFrameworkInstanceDialog extends DialogWrapper implements Pane
       myNameTextField.setText(frameworkInstanceName);
     }
 
-    FrameworkIntegrator[] integrators = frameworkIntegratorRegistry.getFrameworkIntegrators();
+    FrameworkIntegrator[] integrators = FrameworkIntegrator.EP_NAME.getExtensions();
     myIntegratorComboBox.removeAllItems();
     for (FrameworkIntegrator integrator : integrators) {
       myIntegratorComboBox.addItem(integrator);
@@ -194,7 +192,7 @@ public class CreateFrameworkInstanceDialog extends DialogWrapper implements Pane
       definition.setBaseFolder(getBaseFolder());
       definition.setVersion(getVersion());
       definition.setDownloadedByPaxRunner(isDownload());
-      String errorInfoText = integrator.getFrameworkInstanceManager().checkValidity(definition);
+      String errorInfoText = integrator.getInstanceManager().checkValidity(definition);
       ((MyErrorText)myErrorText).setError(errorInfoText);
       isFrameworkDefinitionValid = (errorInfoText == null || errorInfoText.length() == 0);
     }

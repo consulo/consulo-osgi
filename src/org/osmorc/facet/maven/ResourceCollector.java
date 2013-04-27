@@ -3,9 +3,9 @@ package org.osmorc.facet.maven;
 import aQute.lib.osgi.Analyzer;
 import aQute.lib.osgi.Constants;
 import com.intellij.openapi.ui.MessageType;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.ArrayUtil;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.model.MavenResource;
 import org.jetbrains.idea.maven.project.MavenProject;
@@ -40,7 +40,7 @@ public class ResourceCollector {
           }
         }
         else {
-          String combinedResource = StringUtils
+          String combinedResource = StringUtil
             .replace(includeResource, MAVEN_RESOURCES, mavenResourcePaths);
           analyzer.setProperty(Constants.INCLUDE_RESOURCE, combinedResource);
         }

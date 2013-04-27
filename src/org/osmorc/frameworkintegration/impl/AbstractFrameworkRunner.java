@@ -28,7 +28,6 @@ package org.osmorc.frameworkintegration.impl;
 import com.intellij.execution.configurations.DebuggingRunnerData;
 import com.intellij.execution.configurations.RunnerSettings;
 import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -165,11 +164,10 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     final List<VirtualFile> result = new ArrayList<VirtualFile>();
 
     FrameworkInstanceDefinition definition = getRunConfiguration().getInstanceToUse();
-    FrameworkIntegratorRegistry registry = ServiceManager.getService(getProject(), FrameworkIntegratorRegistry.class);
     if (definition != null) {
-      FrameworkIntegrator integrator = registry.findIntegratorByInstanceDefinition(definition);
+      FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(definition);
       if (integrator != null) {
-        FrameworkInstanceManager frameworkInstanceManager = integrator.getFrameworkInstanceManager();
+        FrameworkInstanceManager frameworkInstanceManager = integrator.getInstanceManager();
         final Pattern starterClasspathPattern = getFrameworkStarterClasspathPattern();
 
         frameworkInstanceManager.collectLibraries(definition, new JarFileLibraryCollector() {

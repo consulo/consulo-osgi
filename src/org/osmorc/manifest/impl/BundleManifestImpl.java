@@ -37,7 +37,7 @@ import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Directive;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
-import org.osmorc.valueobject.Version;
+import org.osmorc.manifest.lang.valueparser.impl.valueobject.Version;
 
 import java.util.ArrayList;
 import java.util.Arrays;

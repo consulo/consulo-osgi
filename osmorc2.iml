@@ -17,6 +17,7 @@
     <orderEntry type="library" exported="" name="binding" level="project" />
     <orderEntry type="library" name="biz.aQute.bndlib" level="project" />
     <orderEntry type="library" name="org.eclipse.osgi" level="project" />
+    <orderEntry type="library" name="pax-runner" level="project" />
   </component>
 </module>
 

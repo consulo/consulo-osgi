@@ -30,7 +30,6 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.frameworkintegration.FrameworkIntegratorRegistry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,8 +40,11 @@ import java.awt.*;
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  */
 public class ApplicationSettingsEditor implements SearchableConfigurable, Configurable.Composite {
-  public ApplicationSettingsEditor(FrameworkIntegratorRegistry registry) {
-    this.frameworkDefinitionsEditor = new FrameworkDefinitionsEditor(registry);
+  private FrameworkDefinitionsEditor frameworkDefinitionsEditor;
+  private LibraryBundlingEditor libraryBundlingEditor;
+
+  public ApplicationSettingsEditor() {
+    this.frameworkDefinitionsEditor = new FrameworkDefinitionsEditor();
     this.libraryBundlingEditor = new LibraryBundlingEditor();
   }
 
@@ -86,7 +88,4 @@ public class ApplicationSettingsEditor implements SearchableConfigurable, Config
   public Configurable[] getConfigurables() {
     return new Configurable[]{frameworkDefinitionsEditor, libraryBundlingEditor};
   }
-
-  private FrameworkDefinitionsEditor frameworkDefinitionsEditor;
-  private LibraryBundlingEditor libraryBundlingEditor;
 }

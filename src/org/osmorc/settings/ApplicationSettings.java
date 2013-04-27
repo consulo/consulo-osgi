@@ -45,9 +45,9 @@ import java.util.List;
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  */
 @State(
-  name = "Osmorc",
+  name = "Osmorc2",
   storages = {@Storage(
-    file = StoragePathMacros.APP_CONFIG + "/osmorc.xml")})
+    file = StoragePathMacros.APP_CONFIG + "/osmorc2.xml")})
 public class ApplicationSettings implements PersistentStateComponent<ApplicationSettings> {
   private List<FrameworkInstanceDefinition> _frameworkInstanceDefinitions = new ArrayList<FrameworkInstanceDefinition>();
   private List<LibraryBundlificationRule> _libraryBundlificationRules = new ArrayList<LibraryBundlificationRule>();

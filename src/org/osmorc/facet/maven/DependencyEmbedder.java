@@ -23,7 +23,7 @@ package org.osmorc.facet.maven;
  */
 
 import aQute.lib.osgi.Analyzer;
-import org.codehaus.plexus.util.StringUtils;
+import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.idea.maven.model.MavenArtifact;
 
 import java.io.File;
@@ -83,7 +83,7 @@ public final class DependencyEmbedder extends AbstractDependencyFilter {
     myEmbeddedArtifacts.clear();
 
     String embedDependencyHeader = analyzer.getProperty(EMBED_DEPENDENCY);
-    if (StringUtils.isNotEmpty(embedDependencyHeader)) {
+    if (StringUtil.isNotEmpty(embedDependencyHeader)) {
       myEmbedDirectory = analyzer.getProperty(EMBED_DIRECTORY);
       myEmbedStripGroup = analyzer.getProperty(EMBED_STRIP_GROUP, "true");
       myEmbedStripVersion = analyzer.getProperty(EMBED_STRIP_VERSION);
@@ -159,12 +159,12 @@ public final class DependencyEmbedder extends AbstractDependencyFilter {
       targetFileName.append(dependency.getArtifactId());
       if (!Boolean.valueOf(myEmbedStripVersion).booleanValue()) {
         targetFileName.append('-').append(dependency.getVersion());
-        if (StringUtils.isNotEmpty(dependency.getClassifier())) {
+        if (StringUtil.isNotEmpty(dependency.getClassifier())) {
           targetFileName.append('-').append(dependency.getClassifier());
         }
       }
       String extension = dependency.getExtension();
-      if (StringUtils.isNotEmpty(extension)) {
+      if (StringUtil.isNotEmpty(extension)) {
         targetFileName.append('.').append(extension);
       }
 
@@ -199,7 +199,7 @@ public final class DependencyEmbedder extends AbstractDependencyFilter {
       embeddedArtifacts.append("g=\"").append(dependency.getGroupId()).append('"');
       embeddedArtifacts.append(";a=\"").append(dependency.getArtifactId()).append('"');
       embeddedArtifacts.append(";v=\"").append(dependency.getVersion()).append('"');
-      if (StringUtils.isNotEmpty(dependency.getClassifier())) {
+      if (StringUtil.isNotEmpty(dependency.getClassifier())) {
         embeddedArtifacts.append(";c=\"").append(dependency.getClassifier()).append('"');
       }
     }
@@ -231,7 +231,7 @@ public final class DependencyEmbedder extends AbstractDependencyFilter {
     * similar algorithm to {maven-resources} but default behaviour here is to append rather than override
     */
     final String instruction = analyzer.getProperty(directiveName);
-    if (StringUtils.isNotEmpty(instruction)) {
+    if (StringUtil.isNotEmpty(instruction)) {
       if (instruction.contains(MAVEN_DEPENDENCIES)) {
         // if there are no embeddded dependencies, we do a special treatment and replace
         // every occurance of MAVEN_DEPENDENCIES and a following comma with an empty string
@@ -240,7 +240,7 @@ public final class DependencyEmbedder extends AbstractDependencyFilter {
           analyzer.setProperty(directiveName, cleanInstruction);
         }
         else {
-          String mergedInstruction = StringUtils.replace(instruction, MAVEN_DEPENDENCIES, mavenDependencies);
+          String mergedInstruction = StringUtil.replace(instruction, MAVEN_DEPENDENCIES, mavenDependencies);
           analyzer.setProperty(directiveName, mergedInstruction);
         }
       }

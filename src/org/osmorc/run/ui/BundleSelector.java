@@ -25,7 +25,6 @@
 
 package org.osmorc.run.ui;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -132,9 +131,8 @@ public class BundleSelector extends JDialog {
     }
     // add all framework bundles, if there are some.
     if (usedFramework != null) {
-      FrameworkIntegratorRegistry registry = ServiceManager.getService(FrameworkIntegratorRegistry.class);
-      FrameworkIntegrator integrator = registry.findIntegratorByInstanceDefinition(usedFramework);
-      integrator.getFrameworkInstanceManager().collectLibraries(usedFramework, new JarFileLibraryCollector() {
+      FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(usedFramework);
+      integrator.getInstanceManager().collectLibraries(usedFramework, new JarFileLibraryCollector() {
         @Override
         protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
                                             @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {

@@ -2,8 +2,8 @@ package org.osmorc.facet.maven;
 
 import aQute.lib.osgi.Analyzer;
 import aQute.lib.osgi.Constants;
+import com.intellij.openapi.util.text.StringUtil;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -84,7 +84,7 @@ public class LocalPackageCollector {
     else {
       String exported = analyzer.getProperty(Constants.EXPORT_PACKAGE);
       if (exported.contains(LOCAL_PACKAGES)) {
-        String newExported = StringUtils.replace(exported, LOCAL_PACKAGES, exportedPkgs.toString());
+        String newExported = StringUtil.replace(exported, LOCAL_PACKAGES, exportedPkgs.toString());
         analyzer.setProperty(Constants.EXPORT_PACKAGE, newExported);
       }
     }
@@ -100,7 +100,7 @@ public class LocalPackageCollector {
       }
     }
     else if (internal.contains(LOCAL_PACKAGES)) {
-      String newInternal = StringUtils.replace(internal, LOCAL_PACKAGES, privatePkgs.toString());
+      String newInternal = StringUtil.replace(internal, LOCAL_PACKAGES, privatePkgs.toString());
       analyzer.setProperty(Constants.PRIVATE_PACKAGE, newInternal);
     }
   }

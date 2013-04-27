@@ -25,21 +25,10 @@
 package org.osmorc.inspection;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInspection.*;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
+import com.intellij.codeInspection.LocalInspectionTool;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.manifest.lang.headerparser.HeaderNameMatch;
-import org.osmorc.manifest.lang.headerparser.HeaderParserRepository;
-import org.osmorc.manifest.lang.psi.Header;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
@@ -72,7 +61,7 @@ public class MisspelledHeaderNameInspection extends LocalInspectionTool {
     return "osmorcMisspelledHeaderName";
   }
 
-  @NotNull
+ /* @NotNull
   public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
     return new PsiElementVisitor() {
       public void visitElement(PsiElement element) {
@@ -100,13 +89,6 @@ public class MisspelledHeaderNameInspection extends LocalInspectionTool {
     };
   }
 
-  HeaderParserRepository getHeaderParserRepository() {
-    if (_headerParserRepository == null) {
-      _headerParserRepository = ServiceManager.getService(HeaderParserRepository.class);
-    }
-    return _headerParserRepository;
-  }
-
   private static class HeaderNameSpellingQuickFix implements LocalQuickFix {
     private final Header header;
     private final HeaderNameMatch match;
@@ -129,7 +111,5 @@ public class MisspelledHeaderNameInspection extends LocalInspectionTool {
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
       header.setName(match.getProvider().getHeaderName());
     }
-  }
-
-  private HeaderParserRepository _headerParserRepository;
+  }  */
 }

@@ -71,7 +71,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
     // pax does it's own magic, so the only lib we need, is the pax lib.
     // XXX: ask anton if there is some better way to do this..
     @SuppressWarnings({"ConstantConditions"}) final String paxLib =
-      PluginManager.getPlugin(PluginId.getId("Osmorc")).getPath().getPath() + "/lib/" + PaxRunnerLib;
+      PluginManager.getPlugin(PluginId.getId("org.osmorc2.core")).getPath().getPath() + "/lib/" + PaxRunnerLib;
     List<VirtualFile> libs = new ArrayList<VirtualFile>(1);
     VirtualFile path = LocalFileSystem.getInstance().findFileByPath(paxLib);
     if (path == null) {

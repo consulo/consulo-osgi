@@ -36,7 +36,6 @@ import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.compiler.DummyCompileContext;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -101,8 +100,7 @@ public class OsgiRunState extends JavaCommandLineState {
     }
     setConsoleBuilder(new TextConsoleBuilderImpl(project));
     FrameworkInstanceDefinition definition = runConfiguration.getInstanceToUse();
-    FrameworkIntegratorRegistry registry = ServiceManager.getService(project, FrameworkIntegratorRegistry.class);
-    FrameworkIntegrator integrator = registry.findIntegratorByInstanceDefinition(definition);
+    FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(definition);
     runner = integrator.createFrameworkRunner();
     runner.init(project, runConfiguration, getRunnerSettings());
   }

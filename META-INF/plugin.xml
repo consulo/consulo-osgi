@@ -1,10 +1,85 @@
 <idea-plugin version="2">
-  <id>org.osmorc.core</id>
+  <id>org.osmorc2.core</id>
   <name>OSGi support</name>
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
+  <depends>org.jetbrains.idea.maven</depends>
+
+  <extensionPoints>
+    <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator" />
+  </extensionPoints>
+
+  <extensions defaultExtensionNs="org.osmorc2.core">
+    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.felix.FelixIntegrator" />
+    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator" />
+    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator" />
+    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishIntegrator" />
+  </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+    <applicationService serviceInterface="org.osmorc.settings.ApplicationSettings"
+                        serviceImplementation="org.osmorc.settings.ApplicationSettings"/>
+
+    <!-- Other application services -->
+    <applicationService serviceInterface="org.osmorc.facet.OsmorcFacetUtil"
+                        serviceImplementation="org.osmorc.facet.impl.OsmorcFacetUtilImpl"/>
+    <applicationService serviceInterface="org.osmorc.obrimport.ObrProvider"
+                        serviceImplementation="org.osmorc.obrimport.ObrProvider"/>
+
+    <!-- Module services -->
+    <moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
+                   serviceImplementation="org.osmorc.manifest.impl.ModuleManifestHolderImpl"/>
+    <moduleService serviceInterface="org.osmorc.AdditionalJARContentsWatcherManager"
+                   serviceImplementation="org.osmorc.impl.AdditionalJARContentsWatcherManagerImpl"/>
+    <moduleService serviceInterface="org.osmorc.ModuleDependencySynchronizer"
+                   serviceImplementation="org.osmorc.ModuleDependencySynchronizer"/>
+    <!-- Project services -->
+    <!-- Project settings and editors -->
+    <projectService serviceInterface="org.osmorc.settings.ProjectSettings"
+                    serviceImplementation="org.osmorc.settings.ProjectSettings"/>
+
+    <!-- Other project services -->
+    <projectService serviceInterface="org.osmorc.BundleManager"
+                    serviceImplementation="org.osmorc.impl.MyBundleManager"/>
+    <projectService serviceInterface="org.osmorc.manifest.ManifestHolderRegistry"
+                    serviceImplementation="org.osmorc.manifest.impl.ManifestHolderRegistryImpl"/>
+    <projectService serviceInterface="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"
+                    serviceImplementation="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"/>
+
+    <configurationType implementation="org.osmorc.run.OsgiConfigurationType"/>
+
+    <project.converterProvider
+        implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxRunConfigurationConverterProvider"/>
+
+    <!---<localInspection shortName="osmorcMisspelledHeaderName" displayName="Unknown or Misspelled Header Name" groupName="OSGi"
+                     enabledByDefault="true" level="WARNING" implementationClass="org.osmorc.inspection.MisspelledHeaderNameInspection"/> -->
+    <localInspection shortName="osmorcUnregisteredActivator" displayName="Bundle Activator not registered" groupName="OSGi"
+                     enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.UnregisteredActivatorInspection"/>
+    <localInspection shortName="osmorcMissingFinalNewline" displayName="Missing Final New Line" groupName="OSGi" enabledByDefault="true"
+                     level="ERROR" implementationClass="org.osmorc.inspection.MissingFinalNewlineInspection"/>
+    <localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
+                     enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
+    <!--<localInspection shortName="osmorcClassUnavailable" displayName="Class not available" groupName="OSGi"-->
+    <!--enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassUnavailableInspection"/>-->
+
+    <facetType implementation="org.osmorc.facet.OsmorcFacetType"/>
+    <framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>
+    <compiler implementation="org.osmorc.make.BundleCompiler"/>
+    <refactoring.elementListenerProvider implementation="org.osmorc.facet.OsmorcFacetRefactoringListenerProvider"/>
+
+    <projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
+                         displayName="OSGi"/>
+
+    <applicationConfigurable instance="org.osmorc.settings.ApplicationSettingsEditor" id="osmorc.ide.settings" displayName="OSGi">
+      <configurable instance="org.osmorc.settings.FrameworkDefinitionsEditor" id="reference.settings.project.osgi.framework.definitions"
+                    displayName="Framework Definitions"/>
+      <configurable instance="org.osmorc.settings.LibraryBundlingEditor" id="reference.settings.project.osgi.library.bundling"
+                    displayName="Library Bundling"/>
+    </applicationConfigurable>
+
+    <editorNotificationProvider implementation="org.osmorc.ManifestChangeWatcher"/>
+    <editorNotificationProvider implementation="org.osmorc.BundleIndexModificationWatcher"/>
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.osmorc.OsmorcLineMarkerProvider"/>
   </extensions>
 </idea-plugin>

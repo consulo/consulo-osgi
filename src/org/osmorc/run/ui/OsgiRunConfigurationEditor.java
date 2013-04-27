@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
-import org.osmorc.frameworkintegration.FrameworkIntegratorRegistry;
+import org.osmorc.frameworkintegration.FrameworkIntegratorUtil;
 import org.osmorc.run.OsgiRunConfiguration;
 import org.osmorc.run.OsgiRunConfigurationChecker;
 import org.osmorc.run.OsgiRunConfigurationCheckerProvider;
@@ -170,8 +170,7 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
       FrameworkInstanceDefinition frameworkInstanceDefinition = (FrameworkInstanceDefinition)frameworkInstances.getSelectedItem();
 
       // we got a framework instance, get the integrator
-      FrameworkIntegratorRegistry registry = ServiceManager.getService(FrameworkIntegratorRegistry.class);
-      FrameworkIntegrator integrator = registry.findIntegratorByInstanceDefinition(frameworkInstanceDefinition);
+      FrameworkIntegrator<?> integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(frameworkInstanceDefinition);
 
       // clear the panel
       additionalFrameworkPropertiesPanel.removeAll();
