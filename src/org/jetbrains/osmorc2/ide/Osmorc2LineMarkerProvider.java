@@ -80,7 +80,7 @@ public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
     PsiAnnotation annotation = AnnotationUtil.findAnnotation(psiClass, Component.class.getName());
     if (annotation != null) {
       return new LineMarkerInfo<PsiElement>(nameElement, nameElement.getTextRange(), Osmorc2Icons.OsgiComponent,
-                                            Pass.UPDATE_ALL, new ConstantFunction<PsiElement, String>("OSGi component"),
+                                            Pass.UPDATE_OVERRIDEN_MARKERS, new ConstantFunction<PsiElement, String>("OSGi component"),
                                             null, GutterIconRenderer.Alignment.LEFT);
     }
     return null;
@@ -116,7 +116,7 @@ public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
     }
 
     return needLineMarker ? new LineMarkerInfo<PsiElement>(nameElement, nameElement.getTextRange(), Osmorc2Icons.OsgiBundleActivator,
-                                                           Pass.UPDATE_ALL, new ConstantFunction<PsiElement, String>("Bundle activator"),
+                                                           Pass.UPDATE_OVERRIDEN_MARKERS, new ConstantFunction<PsiElement, String>("Bundle activator"),
                                                            null, GutterIconRenderer.Alignment.LEFT) : null;
   }
 }
