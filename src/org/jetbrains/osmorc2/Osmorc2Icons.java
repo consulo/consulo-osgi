@@ -13,4 +13,5 @@ public interface Osmorc2Icons {
   Icon BundleActivator = FacetType;     //TODO [VISTALL]
   Icon ExportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/exportPackage.png");
   Icon ImportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/importPackage.png");
+  Icon ServiceFile = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/serviceFile.png");
 }
