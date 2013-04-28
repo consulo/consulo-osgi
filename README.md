@@ -5,6 +5,7 @@
  * Rewrite manifest holding - make different impl for different Facet settings. It ill remove this hardcode
  * Remove dependent 'apache-felix'
  * support IDEA-75423
+ * IDEA-100812
 
 ```java
   OsmorcFacetConfiguration configuration = OsmorcFacet.getInstance(element).getConfiguration();
