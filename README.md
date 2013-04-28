@@ -1,10 +1,10 @@
 ### Roadmap
 
  * Bnd file support (parsing, highlight, etc) - check is correct work with manifest plugin
- * Service-Component xml file support(DOM) (IDEA-71982/IDEA-65524)
+ * [In Progress] Service-Component xml file support(DOM) (IDEA-71982/IDEA-65524)
  * Rewrite manifest holding - make different impl for different Facet settings. It ill remove this hardcode
  * Remove dependent 'pax-runner'
- * IDEA-75423
+ * [DONE] IDEA-75423
  * IDEA-100812
 
 ```java
