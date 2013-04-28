@@ -25,9 +25,13 @@
 package org.osmorc;
 
 import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleServiceManager;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.*;
 import com.intellij.openapi.roots.impl.libraries.LibraryEx;
@@ -75,7 +79,7 @@ public class ModuleDependencySynchronizer {
    * @param project the project the project that should be synchronized.
    */
   public static void resynchronizeAll(@NotNull final Project project) {
-   /* ApplicationManager.getApplication().invokeLater(new Runnable() {
+     ApplicationManager.getApplication().invokeLater(new Runnable() {
       @Override
       public void run() {
         new Task.Backgroundable(project, "Synchronizing OSGi dependencies", false) {
@@ -91,7 +95,7 @@ public class ModuleDependencySynchronizer {
           }
         }.queue();
       }
-    }, project.getDisposed());*/
+    }, project.getDisposed());
   }
 
   /**
