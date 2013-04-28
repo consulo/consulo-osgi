@@ -36,6 +36,7 @@ import com.intellij.openapi.module.ModuleServiceManager;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.*;
 import com.intellij.ui.PanelWithAnchor;
@@ -44,6 +45,7 @@ import com.intellij.ui.UserActivityWatcher;
 import com.intellij.ui.components.JBLabel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osmorc2.OsgiConstants;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 import org.osmorc.facet.OsmorcFacetConfiguration;
@@ -88,6 +90,7 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
   private JBLabel myBndFileLocationJBLabel;
   private JBLabel myBundlorFileLocationJBLabel;
   private JBLabel myManifestFileLocationJBLabel;
+  private TextFieldWithBrowseButton myOsgiInfPane;
   private boolean myModified;
   private final FacetEditorContext myEditorContext;
   private final Module myModule;
@@ -112,6 +115,13 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
     myBundlorFile.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         selectBuildFile(myBundlorFile);
+      }
+    });
+
+    myOsgiInfPane.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        selectOsgiInfo(myOsgiInfPane);
       }
     });
 
@@ -212,7 +222,6 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
     myManifestFileLocationJBLabel.setAnchor(anchor);
   }
 
-
   private static VirtualFile[] getContentRoots(Module module) {
     return ModuleRootManager.getInstance(module).getContentRoots();
   }
@@ -228,6 +237,31 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
 
   public boolean isModified() {
     return myModified;
+  }
+
+  private void selectOsgiInfo(TextFieldWithBrowseButton field) {
+      VirtualFile[] roots = getContentRoots(myModule);
+      VirtualFile currentFile = findFileInContentRoots(field.getText(), myModule);
+
+    VirtualFile fileLocation =
+      FileChooser.chooseFile(FileChooserDescriptorFactory.createSingleFolderDescriptor(), myEditorContext.getProject(), currentFile);
+
+    if (fileLocation != null) {
+      for (VirtualFile root : roots) {
+        String relativePath = VfsUtilCore
+          .getRelativePath(fileLocation, root, File.separatorChar);
+        if (relativePath != null) {
+          if(relativePath.equals(OsgiConstants.OSGI_INFO_ROOT)) {
+            relativePath = "";
+          }
+          else if(relativePath.endsWith(OsgiConstants.OSGI_INFO_ROOT)) {
+            relativePath = relativePath.substring(0, relativePath.length() - OsgiConstants.OSGI_INFO_ROOT.length() - 1);
+          }
+          field.setText(relativePath);
+          break;
+        }
+      }
+    }
   }
 
   private void selectBuildFile(TextFieldWithBrowseButton field) {
@@ -262,13 +296,9 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
 
     configuration.setManifestLocation(myManifestFileChooser.getText());
     configuration.setUseProjectDefaultManifestFileLocation(myUseProjectDefaultManifestFileLocation.isSelected());
-    String bndFileLocation = myBndFile.getText();
-    bndFileLocation = bndFileLocation.replace('\\', '/');
-    configuration.setBndFileLocation(bndFileLocation);
-
-    String bundlorFileLocation = myBundlorFile.getText();
-    bundlorFileLocation = bundlorFileLocation.replace('\\', '/');
-    configuration.setBundlorFileLocation(bundlorFileLocation);
+    configuration.setBndFileLocation(FileUtil.toSystemIndependentName(myBndFile.getText()));
+    configuration.setBundlorFileLocation(FileUtil.toSystemIndependentName(myBundlorFile.getText()));
+    configuration.setOsgiInfLocation(FileUtil.toSystemIndependentName(myOsgiInfPane.getText()));
     configuration.setDoNotSynchronizeWithMaven(myDoNotSynchronizeFacetCheckBox.isSelected());
   }
 
@@ -295,8 +325,9 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
     else {
       myUseModuleSpecificManifestFileLocation.setSelected(true);
     }
-    myBndFile.setText(configuration.getBndFileLocation());
-    myBundlorFile.setText(configuration.getBundlorFileLocation());
+    myBndFile.setText(FileUtil.toSystemDependentName(configuration.getBndFileLocation()));
+    myBundlorFile.setText(FileUtil.toSystemDependentName(configuration.getBundlorFileLocation()));
+    myOsgiInfPane.setText(FileUtil.toSystemDependentName(configuration.getOsgiInfLocation()));
     myDoNotSynchronizeFacetCheckBox.setSelected(configuration.isDoNotSynchronizeWithMaven());
     updateGui();
   }

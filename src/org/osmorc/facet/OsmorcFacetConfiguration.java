@@ -70,6 +70,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
   private OsmorcFacet myFacet;
   private String myManifestLocation;
   private String myJarFileLocation;
+  private String myOsgiInfLocation;
   private String myBundleSymbolicName;
   private String myBundleActivator;
   private String myBundleVersion;
@@ -96,6 +97,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
   private static final String BUNDLE_ACTIVATOR = "bundleActivator";
   private static final String BUNDLE_SYMBOLIC_NAME = "bundleSymbolicName";
   private static final String BUNDLE_VERSION = "bundleVersion";
+  private static final String OSGI_INF_LOCATION = "osgiInfLocation";
   private static final String USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION = "useProjectDefaultManifestFileLocation";
   private static final String ADDITIONAL_PROPERTIES = "additionalProperties";
   private static final String IGNORE_FILE_PATTERN = "ignoreFilePattern";
@@ -164,6 +166,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     setBundleActivator(element.getAttributeValue(BUNDLE_ACTIVATOR));
     setBundleSymbolicName(element.getAttributeValue(BUNDLE_SYMBOLIC_NAME));
     setBundleVersion(element.getAttributeValue(BUNDLE_VERSION));
+    setOsgiInfLocation(element.getAttributeValue(OSGI_INF_LOCATION));
     setIgnoreFilePattern(element.getAttributeValue(IGNORE_FILE_PATTERN));
     setUseProjectDefaultManifestFileLocation(Boolean.parseBoolean(element.getAttributeValue(
       USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION, "true")));
@@ -214,6 +217,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     element.setAttribute(BUNDLE_SYMBOLIC_NAME, getBundleSymbolicName());
     element.setAttribute(BUNDLE_VERSION, getBundleVersion());
     element.setAttribute(IGNORE_FILE_PATTERN, getIgnoreFilePattern());
+    element.setAttribute(OSGI_INF_LOCATION, getOsgiInfLocation());
     element.setAttribute(USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION,
                          String.valueOf(isUseProjectDefaultManifestFileLocation()));
     element.setAttribute(ALWAYS_REBUILD_BUNDLE_JAR,
@@ -586,7 +590,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
 
   @NotNull
   public String getBndFileLocation() {
-    return myBndFileLocation != null ? myBndFileLocation : "";
+    return StringUtil.notNullize(myBndFileLocation);
   }
 
   public void setBndFileLocation(String bndFileLocation) {
@@ -596,7 +600,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
 
   @NotNull
   public String getBundlorFileLocation() {
-    return myBundlorFileLocation != null ? myBundlorFileLocation : "";
+    return StringUtil.notNullize(myBundlorFileLocation);
   }
 
   public void setBundlorFileLocation(String _bundlorFileLocation) {
@@ -621,7 +625,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
 
   @NotNull
   public String getIgnoreFilePattern() {
-    return myIgnoreFilePattern != null ? myIgnoreFilePattern : "";
+    return StringUtil.notNullize(myIgnoreFilePattern);
   }
 
   public boolean isAlwaysRebuildBundleJAR() {
@@ -668,6 +672,14 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
    */
   public void setFacet(OsmorcFacet facet) {
     myFacet = facet;
+  }
+
+  public String getOsgiInfLocation() {
+    return StringUtil.notNullize(myOsgiInfLocation);
+  }
+
+  public void setOsgiInfLocation(String osgiInfLocation) {
+    myOsgiInfLocation = osgiInfLocation;
   }
 
   /**
