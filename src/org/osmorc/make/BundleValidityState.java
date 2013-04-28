@@ -40,6 +40,7 @@ import gnu.trove.TObjectLongHashMap;
 import gnu.trove.TObjectLongProcedure;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.LibraryBundlificationRule;
 import org.osmorc.settings.ApplicationSettings;
 
@@ -69,8 +70,8 @@ public class BundleValidityState implements ValidityState {
     moduleName = module.getName();
     jarUrl = BundleCompiler.getJarFileName(module);
 
-    final OsmorcFacet osmorcFacet = OsmorcFacet.getInstance(module);
-    alwaysRebuildBundleJAR = OsmorcFacet.hasOsmorcFacet(module) &&
+    final OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(module);
+    alwaysRebuildBundleJAR = OsmorcFacetUtil.hasOsmorcFacet(module) &&
                              osmorcFacet.getConfiguration().isAlwaysRebuildBundleJAR();
 
     if (alwaysRebuildBundleJAR) {

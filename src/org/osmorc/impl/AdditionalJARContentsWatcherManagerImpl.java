@@ -33,6 +33,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.osmorc.AdditionalJARContentsWatcherManager;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 
 import java.util.*;
 
@@ -50,8 +51,8 @@ public class AdditionalJARContentsWatcherManagerImpl implements AdditionalJARCon
   }
 
   public void updateWatcherSetup() {
-    if (OsmorcFacet.hasOsmorcFacet(_module)) {
-      OsmorcFacet osmorcFacet = OsmorcFacet.getInstance(_module);
+    if (OsmorcFacetUtil.hasOsmorcFacet(_module)) {
+      OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(_module);
       List<VirtualFile> newAdditionalJARContents = new ArrayList<VirtualFile>();
 
       OsmorcFacetConfiguration osmorcFacetConfiguration = osmorcFacet.getConfiguration();

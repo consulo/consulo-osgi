@@ -51,7 +51,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.PathsList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.make.BundleCompiler;
 import org.osmorc.run.ui.SelectedBundle;
@@ -194,7 +194,7 @@ public class OsgiRunState extends JavaCommandLineState {
                   return;
                 }
 
-                if (!OsmorcFacet.hasOsmorcFacet(module)) {
+                if (!OsmorcFacetUtil.hasOsmorcFacet(module)) {
                   // actually this should not happen, but it seemed to happen once, so we check this here.
                   showErrorMessage("Module '" + selectedBundle.getName() +
                                    "' has no OSGi facet, but should have. Please re-add the OSGi facet to this module.");

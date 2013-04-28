@@ -14,6 +14,7 @@ import com.intellij.util.Alarm;
 import com.intellij.util.messages.MessageBus;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.lang.ManifestFileType;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import org.osmorc.settings.ProjectSettings;
@@ -52,7 +53,7 @@ public class ManifestChangeWatcher extends EditorNotifications.Provider<Manifest
             // find out if the file belongs to an osmorc facet
             final PsiFile psiFile = PsiManager.getInstance(myProject).findFile(virtualFile);
             if (psiFile instanceof ManifestFile) {
-              OsmorcFacet of = OsmorcFacet.getInstance(psiFile);
+              OsmorcFacet of = OsmorcFacetUtil.getInstance(psiFile);
               // check if the facet is manually edited and if the file is the manifest file for the facet.
               if (of != null && of.getConfiguration().isManifestManuallyEdited() && of.isManifestForThisFacet(virtualFile)) {
                 // cancel all pending requests
@@ -97,7 +98,7 @@ public class ManifestChangeWatcher extends EditorNotifications.Provider<Manifest
       return null;
     }
 
-    OsmorcFacet facet = OsmorcFacet.getInstance(psiFile);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(psiFile);
     if (facet == null) { // not under osmorc control, ignore
       return null;
     }

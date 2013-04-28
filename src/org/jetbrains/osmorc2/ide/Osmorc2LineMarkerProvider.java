@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osmorc2.Osmorc2Icons;
 import org.osmorc.BundleManager;
-import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 
 import java.util.Collection;
@@ -29,7 +29,7 @@ public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
   @Nullable
   @Override
   public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement element) {
-    if (element instanceof PsiClass && OsmorcFacet.hasOsmorcFacet(element)) {
+    if (element instanceof PsiClass && OsmorcFacetUtil.hasOsmorcFacet(element)) {
       Module module = ModuleUtil.findModuleForPsiElement(element);
       assert module != null;
 
@@ -37,7 +37,7 @@ public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
       if (qualifiedName == null) {
         return null;
       }
-      OsmorcFacetConfiguration configuration = OsmorcFacet.getInstance(element).getConfiguration();
+      OsmorcFacetConfiguration configuration = OsmorcFacetUtil.getInstance(element).getConfiguration();
       if(configuration.isManifestManuallyEdited()) {
         BundleManager bundleManager = BundleManager.getInstance(element.getProject());
 

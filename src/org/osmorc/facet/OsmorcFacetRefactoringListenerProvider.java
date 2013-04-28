@@ -43,8 +43,8 @@ public class OsmorcFacetRefactoringListenerProvider implements RefactoringElemen
 
   @Nullable
   public RefactoringElementListener getListener(final PsiElement element) {
-    if (element instanceof PsiClass && OsmorcFacet.hasOsmorcFacet(element)) {
-      OsmorcFacet osmorcFacet = OsmorcFacet.getInstance(element);
+    if (element instanceof PsiClass && OsmorcFacetUtil.hasOsmorcFacet(element)) {
+      OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(element);
       OsmorcFacetConfiguration osmorcFacetConfiguration = osmorcFacet.getConfiguration();
       PsiClass psiClass = (PsiClass)element;
       if (osmorcFacetConfiguration.isOsmorcControlsManifest() &&

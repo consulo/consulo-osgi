@@ -33,7 +33,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.DocumentAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.i18n.OsmorcBundle;
 import org.osmorc.make.BundleCompiler;
@@ -121,7 +121,7 @@ public class BundleSelector extends JDialog {
     // add all the modules
     Module[] modules = ModuleManager.getInstance(project).getModules();
     for (Module module : modules) {
-      if (OsmorcFacet.hasOsmorcFacet(module)) {
+      if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
         SelectedBundle selectedBundle = new SelectedBundle(module.getName(), null, SelectedBundle.BundleType.Module);
 
         // treeset produced weird results here... so i gotta take the slow approach.

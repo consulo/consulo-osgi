@@ -44,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.facet.maven.LocalPackageCollector;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager;
@@ -100,7 +101,7 @@ public class BundleCompiler implements PackagingCompiler {
 
         List<ProcessingItem> result = new ArrayList<ProcessingItem>();
         for (Module affectedModule : affectedModules) {
-          if (OsmorcFacet.hasOsmorcFacet(affectedModule)) {
+          if (OsmorcFacetUtil.hasOsmorcFacet(affectedModule)) {
             result.add(new BundleProcessingItem(affectedModule));
           }
         }
@@ -160,7 +161,7 @@ public class BundleCompiler implements PackagingCompiler {
     }.execute().getResultObject();
 
     //final BndWrapper wrapper = new BndWrapper();
-    OsmorcFacet osmorcFacet = OsmorcFacet.getInstance(module);
+    OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(module);
     final OsmorcFacetConfiguration configuration = osmorcFacet.getConfiguration();
     final List<String> classPaths = new ArrayList<String>();
 
@@ -347,7 +348,7 @@ public class BundleCompiler implements PackagingCompiler {
    */
   @Nullable
   public static VirtualFile getManifestFile(@NotNull Module module) {
-    OsmorcFacet facet = OsmorcFacet.getInstance(module);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(module);
     // FIXES Exception (http://ea.jetbrains.com/browser/ea_problems/17161)
     if (facet == null) {
       return null;
@@ -495,7 +496,7 @@ public class BundleCompiler implements PackagingCompiler {
    */
   @Nullable
   public static String getJarFileName(@NotNull final Module module) {
-    final OsmorcFacet facet = OsmorcFacet.getInstance(module);
+    final OsmorcFacet facet = OsmorcFacetUtil.getInstance(module);
     if (facet != null) {
       return facet.getConfiguration().getJarFileLocation();
     }

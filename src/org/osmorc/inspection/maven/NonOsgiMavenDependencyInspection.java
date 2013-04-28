@@ -42,7 +42,7 @@ import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
 import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.utils.MavenArtifactUtil;
-import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.obrimport.MavenRepository;
 import org.osmorc.obrimport.ObrSearchDialog;
@@ -89,7 +89,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
     return new XmlElementVisitor() {
       public void visitXmlTag(XmlTag xmltag) {
         // suppress inspection for projects not having an OSGi context.
-        if (!OsmorcFacet.hasOsmorcFacet(xmltag)) {
+        if (!OsmorcFacetUtil.hasOsmorcFacet(xmltag)) {
           return;
         }
         // get the dependency
@@ -129,7 +129,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
   public ProblemDescriptor[] checkFile(@NotNull PsiFile psiFile, @NotNull InspectionManager inspectionManager,
                                        boolean b) {
     // only run this for POM files in osmorc-controlled projects, its a waste of resources on other XML file types
-    if (!MavenDomUtil.isMavenFile(psiFile) || !OsmorcFacet.hasOsmorcFacet(psiFile)) {
+    if (!MavenDomUtil.isMavenFile(psiFile) || !OsmorcFacetUtil.hasOsmorcFacet(psiFile)) {
       return new ProblemDescriptor[0];
     }
     else {

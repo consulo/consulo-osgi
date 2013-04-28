@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 
 import javax.swing.*;
@@ -44,7 +45,7 @@ public abstract class Osmorc2PackageIconLayerProvider implements IconLayerProvid
       if(module == null) {
         return null;
       }
-      final OsmorcFacet instance = OsmorcFacet.getInstance(module);
+      final OsmorcFacet instance = OsmorcFacetUtil.getInstance(module);
       if(instance == null) {
         return null;
       }

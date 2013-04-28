@@ -38,6 +38,7 @@ import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -120,7 +121,7 @@ public class ModuleDependencySynchronizer {
    * If the two prerequisites are not met, this method will do nothing.
    */
   public void syncDependenciesFromManifest() {
-    OsmorcFacet facet = OsmorcFacet.getInstance(myModule);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
     if (facet != null && facet.getConfiguration().isManifestManuallyEdited()) {
       myApplication.invokeAndWait(new Runnable() {
         public void run() {
@@ -254,7 +255,7 @@ public class ModuleDependencySynchronizer {
       if (orderEntry instanceof ModuleOrderEntry) {
         ModuleOrderEntry moduleOrderEntry = (ModuleOrderEntry)orderEntry;
         Module module = moduleOrderEntry.getModule();
-        if (module != null && OsmorcFacet.hasOsmorcFacet(module)) {
+        if (module != null && OsmorcFacetUtil.hasOsmorcFacet(module)) {
           boolean export = myBundleManager.isReExported(moduleOrderEntry.getModule(), myModule);
           if (export != moduleOrderEntry.isExported()) {
             moduleOrderEntry.setExported(export);

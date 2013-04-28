@@ -11,6 +11,7 @@ import com.intellij.util.Alarm;
 import com.intellij.util.messages.MessageBus;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.impl.BundleModificationListener;
 import org.osmorc.impl.MyBundleManager;
 import org.osmorc.settings.ProjectSettings;
@@ -64,7 +65,7 @@ public class BundleIndexModificationWatcher extends EditorNotifications.Provider
   private boolean isAtLeastOneModuleManuallyEdited() {
     Module[] modules = ModuleManager.getInstance(myProject).getModules();
     for (Module module : modules) {
-      OsmorcFacet instance = OsmorcFacet.getInstance(module);
+      OsmorcFacet instance = OsmorcFacetUtil.getInstance(module);
       if (instance != null && instance.getConfiguration().isManifestManuallyEdited()) {
         return true;
       }

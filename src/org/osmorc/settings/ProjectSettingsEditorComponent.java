@@ -43,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osmorc.ModuleDependencySynchronizer;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 
 import javax.swing.*;
@@ -134,7 +135,7 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
       public void run() {
         Module[] modules = ModuleManager.getInstance(myProject).getModules();
         for (Module module : modules) {
-          OsmorcFacet facet = OsmorcFacet.getInstance(module);
+          OsmorcFacet facet = OsmorcFacetUtil.getInstance(module);
           if (facet != null) {
             OsmorcFacetConfiguration facetConfiguration = facet.getConfiguration();
             facetConfiguration

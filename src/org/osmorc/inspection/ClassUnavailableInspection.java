@@ -41,6 +41,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 
 /**
  * Inspection which will check, if a class or package is available inside the osgi context.
@@ -82,7 +83,7 @@ public class ClassUnavailableInspection extends LocalInspectionTool {
       @Override
       public void visitNewExpression(PsiNewExpression expression) {
         // only check this if the manifest is manually edited
-        OsmorcFacet instance = OsmorcFacet.getInstance(expression);
+        OsmorcFacet instance = OsmorcFacetUtil.getInstance(expression);
         if (instance != null && instance.getConfiguration().isManifestManuallyEdited()) {
           PsiJavaCodeReferenceElement classReference = expression.getClassReference();
           if (classReference != null) {
@@ -97,7 +98,7 @@ public class ClassUnavailableInspection extends LocalInspectionTool {
       @Override
       public void visitVariable(PsiVariable variable) {
         // only check this if the manifest is manually edited
-        OsmorcFacet instance = OsmorcFacet.getInstance(variable);
+        OsmorcFacet instance = OsmorcFacetUtil.getInstance(variable);
         if (instance != null && instance.getConfiguration().isManifestManuallyEdited()) {
           PsiClass psiClass = null;
           PsiType psiType = variable.getType();
@@ -115,7 +116,7 @@ public class ClassUnavailableInspection extends LocalInspectionTool {
       @Override
       public void visitImportStatement(PsiImportStatement statement) {
         // only check this if the manifest is manually edited
-        OsmorcFacet instance = OsmorcFacet.getInstance(statement);
+        OsmorcFacet instance = OsmorcFacetUtil.getInstance(statement);
         if (instance != null && instance.getConfiguration().isManifestManuallyEdited()) {
           PsiElement element = statement.resolve();
 

@@ -32,7 +32,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.make.BundleCompiler;
 import org.osmorc.run.LegacyOsgiRunConfigurationLoader;
@@ -75,7 +75,7 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
   private void addModuleBundles(List<SelectedBundle> bundlesToDeploy, Project project) {
     Module[] modules = ModuleManager.getInstance(project).getModules();
     for (Module module : modules) {
-      if (OsmorcFacet.hasOsmorcFacet(module)) {
+      if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
         SelectedBundle bundle = new SelectedBundle(module.getName(), null, SelectedBundle.BundleType.Module);
         bundle.setStartLevel(4);
         bundlesToDeploy.add(bundle);

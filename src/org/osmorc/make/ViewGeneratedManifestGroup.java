@@ -35,6 +35,7 @@ import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class ViewGeneratedManifestGroup extends ActionGroup {
     Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
     if (project != null) {
       for (Module m : ModuleManager.getInstance(project).getModules()) {
-        if (OsmorcFacet.hasOsmorcFacet(m)) {
+        if (OsmorcFacetUtil.hasOsmorcFacet(m)) {
           enabled = true;
           break;
         }
@@ -77,8 +78,8 @@ public class ViewGeneratedManifestGroup extends ActionGroup {
     final List<AnAction> actions = new ArrayList<AnAction>();
     final Module[] modules = ModuleManager.getInstance(project).getModules();
     for (Module module : modules) {
-      if (OsmorcFacet.hasOsmorcFacet(module)) {
-        OsmorcFacet facet = OsmorcFacet.getInstance(module);
+      if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
+        OsmorcFacet facet = OsmorcFacetUtil.getInstance(module);
         if (facet == null) continue;
         String jarFile = facet.getConfiguration().getJarFileLocation();
         File theFile = new File(jarFile);

@@ -33,6 +33,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -65,7 +66,7 @@ public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl {
     }
 
     // only try to load the manifest if we have an osmorc facet for that module
-    OsmorcFacet facet = OsmorcFacet.getInstance(myModule);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
     if (myBundleManifest == null && facet != null) {
       // and only if this manifest is manually edited
       if (facet.getConfiguration().isManifestManuallyEdited()) {
@@ -100,7 +101,7 @@ public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl {
   private
   @Nullable
   VirtualFile getManifestFile() {
-    OsmorcFacet facet = OsmorcFacet.getInstance(myModule);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
     return facet != null ? facet.getManifestFile() : null;
   }
 

@@ -38,6 +38,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetType;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager;
 
 /**
@@ -107,7 +108,7 @@ public class OsmorcModuleComponent implements ModuleComponent {
    * Runs over the module which has a manually edited manifest and refreshes it's information in the bundle manager.
    */
   private void buildManuallyEditedManifestIndex() {
-    final OsmorcFacet facet = OsmorcFacet.getInstance(myModule);
+    final OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
     if (facet != null && facet.getConfiguration().isManifestManuallyEdited()) {
       myApplication.invokeLater(new Runnable() {
         public void run() {

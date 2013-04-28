@@ -38,8 +38,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.BundleActivator;
 import org.osmorc.BundleManager;
-import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Header;
@@ -87,12 +87,12 @@ public class UnregisteredActivatorInspection extends LocalInspectionTool {
     return new JavaElementVisitor() {
       @Override
       public void visitClass(PsiClass psiClass) {
-        if (OsmorcFacet.hasOsmorcFacet(psiClass)) {
+        if (OsmorcFacetUtil.hasOsmorcFacet(psiClass)) {
           PsiType[] types = psiClass.getSuperTypes();
           for (PsiType type : types) {
             if (type.equalsToText(BundleActivator.class.getName())) {
               // okay extends bundle activator
-              OsmorcFacetConfiguration configuration = OsmorcFacet.getInstance(psiClass).getConfiguration();
+              OsmorcFacetConfiguration configuration = OsmorcFacetUtil.getInstance(psiClass).getConfiguration();
 
               String activatorName = psiClass.getQualifiedName();
               // if manifest is manually written, look it up in the manifest file

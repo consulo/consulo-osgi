@@ -39,6 +39,7 @@ import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 
 import java.text.MessageFormat;
@@ -55,7 +56,7 @@ class ReportingBuilder extends Builder {
   public ReportingBuilder(CompileContext context, String sourceFileName, Module module) {
     super();
     myContext = context;
-    OsmorcFacet facet = OsmorcFacet.getInstance(module);
+    OsmorcFacet facet = OsmorcFacetUtil.getInstance(module);
     mySourceFileName = sourceFileName;
     // link back to the original manifest if it's manually edited
     if (facet != null) {

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import org.osmorc.BundleManager;
-import org.osmorc.facet.OsmorcFacet;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
@@ -102,7 +102,7 @@ public class MyBundleManager extends BundleManager {
     }
 
     // if the module has an osmorc facet, treat it as a bundle and add it to the cache
-    if (OsmorcFacet.hasOsmorcFacet(module)) {
+    if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
       ManifestHolder manifestHolder = myManifestHolderRegistry.getManifestHolder(module);
       boolean needsNotification = myBundleCache.updateWith(manifestHolder);
       needsNotification |= myBundleCache.cleanup();
