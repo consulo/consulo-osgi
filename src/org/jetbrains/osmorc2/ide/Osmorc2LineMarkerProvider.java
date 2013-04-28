@@ -13,8 +13,10 @@ import com.intellij.util.Function;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osmorc2.Osmorc2Icons;
+import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
+import org.osmorc.manifest.BundleManifest;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,26 +38,42 @@ public class Osmorc2LineMarkerProvider implements LineMarkerProvider {
         return null;
       }
       OsmorcFacetConfiguration configuration = OsmorcFacet.getInstance(element).getConfiguration();
+      if(configuration.isManifestManuallyEdited()) {
+        BundleManager bundleManager = BundleManager.getInstance(element.getProject());
 
-      if (qualifiedName.equals(configuration.getBundleActivator())) {
-        final PsiIdentifier nameIdentifier = ((PsiClass)element).getNameIdentifier();
-        if (nameIdentifier == null) {
+        final BundleManifest manifestByObject = bundleManager.getManifestByObject(module);
+        if(manifestByObject == null) {
           return null;
         }
-        return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), Osmorc2Icons.BundleActivator,
-                                              Pass.UPDATE_ALL, new Function<PsiElement, String>() {
-          @Override
-          public String fun(PsiElement element) {
-            return "Bundle activator";
-          }
-        }, null, GutterIconRenderer.Alignment.LEFT);
+        if(qualifiedName.equals(manifestByObject.getBundleActivator())) {
+          return create((PsiClass)element);
+        }
       }
+      else {
 
+        if(configuration.getBundleActivator().equals(qualifiedName)) {
+          return create((PsiClass)element);
+        }
+      }
     }
     return null;
   }
 
+  private LineMarkerInfo<PsiElement> create(PsiClass element) {
+    final PsiIdentifier nameIdentifier = element.getNameIdentifier();
+    if (nameIdentifier == null) {
+      return null;
+    }
+    return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), Osmorc2Icons.BundleActivator,
+                                          Pass.UPDATE_ALL, new Function<PsiElement, String>() {
+      @Override
+      public String fun(PsiElement element) {
+        return "Bundle activator";
+      }
+    }, null, GutterIconRenderer.Alignment.LEFT);
+  }
+
   @Override
-  public void collectSlowLineMarkers(@NotNull List<PsiElement> elements, @NotNull Collection<LineMarkerInfo> result) {
+  public void collectSlowLineMarkers(@NotNull List< PsiElement > elements, @NotNull Collection<LineMarkerInfo> result) {
   }
 }
