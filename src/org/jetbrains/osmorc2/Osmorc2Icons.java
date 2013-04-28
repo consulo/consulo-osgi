@@ -10,8 +10,9 @@ import javax.swing.*;
  */
 public interface Osmorc2Icons {
   Icon FacetType = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osmorc2Facet.png");
-  Icon BundleActivator = FacetType;     //TODO [VISTALL]
   Icon ExportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/exportPackage.png");
   Icon ImportPackage = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/importPackage.png");
-  Icon ServiceFile = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/serviceFile.png");
+  Icon OsgiComponentFile = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osgiComponentFile.png");
+  Icon OsgiComponent = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osgiComponent.png");
+  Icon OsgiBundleActivator = IconLoader.findIcon("/org/jetbrains/osmorc2/icons/osgiBundleActivator.png");
 }

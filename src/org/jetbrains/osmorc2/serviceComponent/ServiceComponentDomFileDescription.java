@@ -39,6 +39,6 @@ public class ServiceComponentDomFileDescription extends DomFileDescription<Compo
   @Nullable
   @Override
   public Icon getFileIcon(@Iconable.IconFlags int flags) {
-    return Osmorc2Icons.ServiceFile;
+    return Osmorc2Icons.OsgiComponentFile;
   }
 }
