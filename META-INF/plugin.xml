@@ -106,7 +106,7 @@
     <editorNotificationProvider implementation="org.osmorc.ManifestChangeWatcher"/>
     <editorNotificationProvider implementation="org.osmorc.BundleIndexModificationWatcher"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osmorc2.ide.Osmorc2LineMarkerProvider"/>
-    <!--<iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ExportPackageIconLayerProvider" />
-    <iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ImportPackageIconLayerProvider" /> -->
+    <iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ExportPackageIconLayerProvider" />
+    <!--<iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ImportPackageIconLayerProvider" /> -->
   </extensions>
 </idea-plugin>
