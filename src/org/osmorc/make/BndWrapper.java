@@ -26,6 +26,7 @@
 package org.osmorc.make;
 
 import aQute.lib.osgi.Analyzer;
+import aQute.lib.osgi.FileResource;
 import aQute.lib.osgi.Jar;
 import aQute.lib.osgi.Verifier;
 import com.intellij.openapi.application.ApplicationManager;
@@ -42,19 +43,20 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osmorc2.OsgiConstants;
 import org.osgi.framework.Constants;
 import org.osmorc.StacktraceUtil;
+import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.LibraryBundlificationRule;
 import org.osmorc.settings.ApplicationSettings;
 import org.osmorc.util.OrderedProperties;
 
 import java.io.*;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
@@ -373,12 +375,25 @@ public class BndWrapper {
     }
 
     Jar jar = builder.build();
+    copyFilesFromOsgiInf(jar, module);
     jar.setName(output.getName());
     jar.write(output);
     builder.close();
     return true;
   }
 
+  private static void copyFilesFromOsgiInf(Jar jar, Module module) {
+    VirtualFile osgiRoot = OsmorcFacetUtil.getOsgiInfRoot(module);
+    if(osgiRoot == null) {
+      return;
+    }
+
+    List<VirtualFile> virtualFiles = new ArrayList<VirtualFile>();
+    VcsUtil.collectFiles(osgiRoot, virtualFiles, true, false);
+    for(VirtualFile virtualFile : virtualFiles) {
+      jar.putResource(OsgiConstants.OSGI_INFO_ROOT + "/" + VfsUtilCore.getRelativePath(virtualFile, osgiRoot, '/'), new FileResource(new File(virtualFile.getPath())), true);
+    }
+  }
   /**
    * Generates a bnd file from the given contents map and returns it.
    *

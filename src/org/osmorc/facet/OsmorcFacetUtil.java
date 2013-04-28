@@ -3,15 +3,37 @@ package org.osmorc.facet;
 import com.intellij.facet.FacetManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osmorc2.OsgiConstants;
 
 /**
  * @author VISTALL
  * @since 13:55/28.04.13
  */
 public class OsmorcFacetUtil {
+  public static VirtualFile getOsgiInfRoot(@NotNull Module module) {
+    OsmorcFacet instance = OsmorcFacetUtil.getInstance(module);
+
+    return OsmorcFacetUtil.findVirtualFileInModuleContentRoots(instance.getConfiguration().getOsgiInfLocation() + "/" + OsgiConstants.OSGI_INFO_ROOT, module);
+  }
+
+  @Nullable
+  public static VirtualFile findVirtualFileInModuleContentRoots(String file, Module module) {
+    ModuleRootManager manager = ModuleRootManager.getInstance(module);
+    for (VirtualFile root : manager.getContentRoots()) {
+      VirtualFile result = VfsUtil.findRelativeFile(file, root);
+      if (result != null) {
+        return result;
+      }
+    }
+    return null;
+  }
+
   /**
    * Returns the Osmorc facet for the given module.
    *

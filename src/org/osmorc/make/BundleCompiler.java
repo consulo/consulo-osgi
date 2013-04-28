@@ -50,8 +50,14 @@ import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager;
 import org.osmorc.util.OrderedProperties;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a compiler step that builds up a bundle. Depending on user settings the compiler either uses a user-edited
