@@ -45,8 +45,8 @@ import org.osmorc.manifest.BundleManifest;
 import java.text.MessageFormat;
 
 /**
- * Created by IntelliJ IDEA. User: kork Date: Jul 20, 2009 Time: 9:51:18 PM To change this template use File | Settings
- * | File Templates.
+ * @author kork
+ * @since Jul 20, 2009 9:51:18 PM
  */
 class ReportingBuilder extends Builder {
   private final CompileContext myContext;
