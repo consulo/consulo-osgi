@@ -46,12 +46,6 @@
     <headerParser key="JavaFX-Preloader-Class" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
     <headerParser key="JavaFX-Fallback-Class" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
 
-    <!--[OSGi] Bnd futures-->
-    <headerParser key="Private-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Tool" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Bnd-LastModified" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Include-Resource" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-
     <!--[SpringDM] Spring futures-->
     <headerParser key="Spring-Context" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
     <headerParser key="Import-Library" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
@@ -67,43 +61,6 @@
     <headerParser key="Web-ContextPath" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
     <headerParser key="Web-DispatcherServletUrlPatterns"
                   implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-
-    <!--[OSGi] Equinox futures-->
-    <headerParser key="Eclipse-PlatformFilter" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Eclipse-BuddyPolicy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Eclipse-RegisterBuddy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Eclipse-ExtensibleAPI" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Eclipse-GenericCapability"
-                  implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Eclipse-GenericRequire" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-
-    <!--[OSGi] OSGi futures-->
-    <headerParser key="Bundle-ManifestVersion" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Name" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-SymbolicName" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleSymbolicNameParser"/>
-    <headerParser key="Bundle-Version" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleVersionParser"/>
-    <headerParser key="Export-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ExportPackageParser"/>
-    <headerParser key="Import-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ImportPackageParser"/>
-    <!--<headerParser key="Require-Bundle" implementationClass="org.osmorc.manifest.lang.headerparser.impl.RequireBundleParser"/>  -->\
-    <headerParser key="Bundle-RequiredExecutionEnvironment"
-                  implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <headerParser key="Fragment-Host" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-ActivationPolicy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Activator" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleActivatorParser"/>
-    <headerParser key="Bundle-Category" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-ClassPath" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-ContactAddress" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Copyright" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Description" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-DocURL" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Localization" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-NativeCode" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-UpdateLocation" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Bundle-Vendor" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="DynamicImport-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Export-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Import-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Service-Component" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
