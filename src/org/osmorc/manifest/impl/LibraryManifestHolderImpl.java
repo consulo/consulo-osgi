@@ -117,7 +117,7 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl {
    * @return the manifest holders
    */
   @NotNull
-  protected static synchronized Collection<ManifestHolder> createForLibrary(@NotNull Library library, @NotNull Project project) {
+  public static synchronized Collection<ManifestHolder> createForLibrary(@NotNull Library library, @NotNull Project project) {
     cleanupHolderCache();
     List<ManifestHolder> result = new ArrayList<ManifestHolder>();
     if (isLibraryDisposed(library) || project.isDisposed()) {

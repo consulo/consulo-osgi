@@ -3,6 +3,7 @@
  * Bnd file support (parsing, highlight, etc)
  * Service-Component xml file support(DOM) (IDEA-71982/IDEA-65524)
  * Rewrite manifest holding - make different impl for different Facet settings. It ill remove this hardcode
+ * Remove dependent 'apache-felix'
 
 ```java
   OsmorcFacetConfiguration configuration = OsmorcFacet.getInstance(element).getConfiguration();

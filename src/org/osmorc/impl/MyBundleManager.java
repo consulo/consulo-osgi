@@ -3,6 +3,7 @@ package org.osmorc.impl;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.module.ModuleServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.impl.libraries.ProjectLibraryTable;
@@ -16,7 +17,7 @@ import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
-import org.osmorc.manifest.ManifestHolderRegistry;
+import org.osmorc.manifest.impl.LibraryManifestHolderImpl;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -30,7 +31,6 @@ public class MyBundleManager extends BundleManager {
   public final static Topic<BundleModificationListener> BUNDLE_INDEX_CHANGE_TOPIC =
     Topic.create("Bundle Index Changed", BundleModificationListener.class);
   private BundleCache myBundleCache;
-  private ManifestHolderRegistry myManifestHolderRegistry;
   private Project myProject;
 
   /**
@@ -38,8 +38,7 @@ public class MyBundleManager extends BundleManager {
    */
   private static final Pattern JarPathPattern = Pattern.compile("(.*/)?([^/]+.jar)");
 
-  public MyBundleManager(ManifestHolderRegistry manifestHolderRegistry, Project project) {
-    myManifestHolderRegistry = manifestHolderRegistry;
+  public MyBundleManager(Project project) {
     myProject = project;
     myBundleCache = new BundleCache();
   }
@@ -103,7 +102,7 @@ public class MyBundleManager extends BundleManager {
 
     // if the module has an osmorc facet, treat it as a bundle and add it to the cache
     if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
-      ManifestHolder manifestHolder = myManifestHolderRegistry.getManifestHolder(module);
+      ManifestHolder manifestHolder = ModuleServiceManager.getService(module, ManifestHolder.class);
       boolean needsNotification = myBundleCache.updateWith(manifestHolder);
       needsNotification |= myBundleCache.cleanup();
       if (needsNotification && sendNotifications) {
@@ -130,7 +129,7 @@ public class MyBundleManager extends BundleManager {
   private boolean doReindex(Collection<Library> libraries, boolean sendNotifications) {
     boolean needsNotification = false;
     for (Library library : libraries) {
-      Collection<ManifestHolder> manifestHolders = myManifestHolderRegistry.getManifestHolders(library);
+      Collection<ManifestHolder> manifestHolders = LibraryManifestHolderImpl.createForLibrary(library, myProject);
       for (ManifestHolder manifestHolder : manifestHolders) {
         needsNotification |= myBundleCache.updateWith(manifestHolder);
       }

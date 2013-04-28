@@ -106,8 +106,7 @@
     <!-- Other project services -->
     <projectService serviceInterface="org.osmorc.BundleManager"
                     serviceImplementation="org.osmorc.impl.MyBundleManager"/>
-    <projectService serviceInterface="org.osmorc.manifest.ManifestHolderRegistry"
-                    serviceImplementation="org.osmorc.manifest.impl.ManifestHolderRegistryImpl"/>
+
     <projectService serviceInterface="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"
                     serviceImplementation="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"/>
 
