@@ -9,7 +9,7 @@ import com.intellij.util.xml.DomFileDescription;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osmorc2.Osmorc2Icons;
-import org.jetbrains.osmorc2.serviceComponent.dom.ComponentElement;
+import org.jetbrains.osmorc2.serviceComponent.dom.TComponent;
 import org.osmorc.facet.OsmorcFacetUtil;
 
 import javax.swing.*;
@@ -18,9 +18,10 @@ import javax.swing.*;
  * @author VISTALL
  * @since 14:16/28.04.13
  */
-public class ServiceComponentDomFileDescription extends DomFileDescription<ComponentElement> {
+public class ServiceComponentDomFileDescription extends DomFileDescription<TComponent> {
   public ServiceComponentDomFileDescription() {
-    super(ComponentElement.class, "component");
+    super(TComponent.class, "component");
+    registerNamespacePolicy("scr", "http://www.osgi.org/xmlns/scr/v1.1.0");
   }
 
   @Override

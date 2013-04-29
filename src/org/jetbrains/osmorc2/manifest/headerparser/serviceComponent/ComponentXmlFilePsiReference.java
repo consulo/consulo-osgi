@@ -15,7 +15,7 @@ import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osmorc2.OsgiConstants;
-import org.jetbrains.osmorc2.serviceComponent.dom.ComponentElement;
+import org.jetbrains.osmorc2.serviceComponent.dom.TComponent;
 import org.osmorc.facet.OsmorcFacetUtil;
 
 import java.util.*;
@@ -66,7 +66,7 @@ public class ComponentXmlFilePsiReference extends PsiReferenceBase<PsiElement> {
     for (VirtualFile file : files) {
       PsiFile psiFile = manager.findFile(file);
       if (psiFile instanceof XmlFile) {
-        final DomFileElement<ComponentElement> fileElement = domManager.getFileElement((XmlFile)psiFile, ComponentElement.class);
+        final DomFileElement<TComponent> fileElement = domManager.getFileElement((XmlFile)psiFile, TComponent.class);
         if (fileElement != null) {
           final String filePath = file.getPath();
           final String shortPath = filePath.substring(osgiInfRoot.getPath().length() - OsgiConstants.OSGI_INFO_ROOT.length(), filePath.length());

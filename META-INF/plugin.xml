@@ -150,6 +150,7 @@
     <!--<iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ImportPackageIconLayerProvider" /> -->
 
     <!--Service component dom model-->
+    <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
     <dom.fileDescription implementation="org.jetbrains.osmorc2.serviceComponent.ServiceComponentDomFileDescription"/>
     <localInspection shortName="ServiceComponentInspection" implementationClass="org.jetbrains.osmorc2.ide.codeInspection.ServiceComponentInspection" enabledByDefault="true"  displayName="Component Problems" groupName="OSGi" level="ERROR"/>
   </extensions>
