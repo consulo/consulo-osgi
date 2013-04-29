@@ -43,12 +43,12 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.ExceptionUtil;
 import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osmorc2.OsgiConstants;
 import org.osgi.framework.Constants;
-import org.osmorc.StacktraceUtil;
 import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.LibraryBundlificationRule;
 import org.osmorc.settings.ApplicationSettings;
@@ -146,7 +146,7 @@ public class BndWrapper {
       compileContext.addMessage(CompilerMessageCategory.WARNING,
                                 MessageFormat
                                   .format(messagePrefix + "There was an unexpected problem when trying to bundlify {0}: {1}", sourceJarUrl,
-                                          StacktraceUtil.stackTraceToString(e)), null, 0, 0);
+                                          ExceptionUtil.getThrowableText(e)), null, 0, 0);
     }
     return null;
   }
