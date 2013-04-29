@@ -22,7 +22,7 @@
   </module-components>
 
   <actions>
-    <group id="osmorc.viewGeneratedManifests" class="org.osmorc.make.ViewGeneratedManifestGroup" popup="true"
+    <group id="osmorc.viewGeneratedManifests" class="org.osmorc.ide.actions.ViewGeneratedManifestGroup" popup="true"
            text="View Generated Manifest" description="View the manifest of a recently generated OSGi bundle" icon="/org/jetbrains/osmorc2/icons/osmorc2Facet.png">
       <add-to-group group-id="ToolsMenu" anchor="last"/>
     </group>
