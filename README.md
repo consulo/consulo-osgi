@@ -5,6 +5,7 @@
  * Rewrite manifest holding - make different impl for different Facet settings. It ill remove this hardcode
  * Remove dependent 'pax-runner'
  * [DONE] IDEA-75423
+ * split bundle compilers(review it)
  * IDEA-100812
 
 ```java
