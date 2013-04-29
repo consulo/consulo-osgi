@@ -33,7 +33,7 @@ import java.text.MessageFormat;
 
 /**
  * @author  kork
- * @singe Jul 20, 2009 Time: 9:51:04 PM
+ * @since Jul 20, 2009 Time: 9:51:04 PM
  */
 class ReportingAnalyzer extends Analyzer {
   private final CompileContext _context;
