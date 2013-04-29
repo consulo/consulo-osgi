@@ -43,9 +43,7 @@ import org.osmorc.settings.ProjectSettings;
  */
 public class OsmorcFacet extends Facet<OsmorcFacetConfiguration> {
   public OsmorcFacet(@NotNull Module module) {
-    this(FacetTypeRegistry.getInstance().findFacetType(OsmorcFacetType.ID), module,
-         new OsmorcFacetConfiguration(),
-         null, "OSGi");
+    this(FacetTypeRegistry.getInstance().findFacetType(OsmorcFacetType.ID), module, new OsmorcFacetConfiguration(), null, "OSGi");
   }
 
   public OsmorcFacet(@NotNull FacetType facetType,

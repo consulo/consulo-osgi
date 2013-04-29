@@ -31,7 +31,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.libraries.Library;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.manifest.BundleManifest;
+import org.jetbrains.osmorc2.manifest.BundleManifest;
 
 import java.util.Collection;
 import java.util.Set;

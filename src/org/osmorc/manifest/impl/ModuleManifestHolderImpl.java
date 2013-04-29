@@ -32,9 +32,10 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osmorc2.manifest.impl.BundleManifestImpl;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetUtil;
-import org.osmorc.manifest.BundleManifest;
+import org.jetbrains.osmorc2.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 

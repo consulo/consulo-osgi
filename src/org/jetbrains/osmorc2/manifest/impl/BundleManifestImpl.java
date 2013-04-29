@@ -22,41 +22,34 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.osmorc.manifest;
+package org.jetbrains.osmorc2.manifest.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.libraries.Library;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.manifest.BundleManifest;
+import org.osmorc.manifest.lang.psi.Header;
+import org.osmorc.manifest.lang.psi.ManifestFile;
 
 /**
- * A manifest holder holds a bundle manifest and the object ({@link Project} or
- * {@link Library}) that this manifest belongs to.
- *
  * @author Robert F. Beeger (robert@beeger.net)
- * @author Jan Thomae (janthomae@janthomae.de)
+ * @author Jan Thom&auml; (janthomae@janthomae.de)
  */
-public interface ManifestHolder {
-  /**
-   * Returns the bundle manifest.
-   *
-   * @return the bundle manifest or null if the bound object is no OSGi bundle.
-   */
+public class BundleManifestImpl extends AbstractBundleManifestImpl {
+  @NotNull
+  private final ManifestFile myManifestFile;
+
+  public BundleManifestImpl(@NotNull ManifestFile manifestFile) {
+    myManifestFile = manifestFile;
+  }
+
   @Nullable
-  BundleManifest getBundleManifest() throws ManifestHolderDisposedException;
+  @Override
+  protected Header getHeaderByName(@NotNull String heaaderName) {
+    return myManifestFile.getHeaderByName(heaaderName);
+  }
 
-  /**
-   * The object that this manifest belongs to.
-   *
-   * @return the bound object
-   */
-  Object getBoundObject() throws ManifestHolderDisposedException;
-
-
-  /**
-   * Returns the information if this holder is disposed and should not be used.
-   *
-   * @return true if the holder is disposed, false otherwise.
-   */
-  boolean isDisposed();
+  @NotNull
+  @Override
+  public ManifestFile getManifestFile() {
+    return myManifestFile;
+  }
 }

@@ -40,7 +40,7 @@ import org.osgi.framework.BundleActivator;
 import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacetConfiguration;
 import org.osmorc.facet.OsmorcFacetUtil;
-import org.osmorc.manifest.BundleManifest;
+import org.jetbrains.osmorc2.manifest.BundleManifest;
 import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.Section;

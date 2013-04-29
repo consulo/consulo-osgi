@@ -49,6 +49,7 @@ import java.io.IOException;
  * @author Robert F. Beeger (robert@beeger.net)
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  */
+@Deprecated
 public class OsmorcFacetType extends FacetType<OsmorcFacet, OsmorcFacetConfiguration> {
   public static final FacetTypeId<OsmorcFacet> ID = new FacetTypeId<OsmorcFacet>("Osmorc");
 
@@ -64,9 +65,10 @@ public class OsmorcFacetType extends FacetType<OsmorcFacet, OsmorcFacetConfigura
     return new OsmorcFacetConfiguration();
   }
 
-  public OsmorcFacet createFacet(
-    @NotNull Module module, String name,
-    @NotNull OsmorcFacetConfiguration configuration, @Nullable Facet underlyingFacet) {
+  public OsmorcFacet createFacet(@NotNull Module module,
+                                 String name,
+                                 @NotNull OsmorcFacetConfiguration configuration,
+                                 @Nullable Facet underlyingFacet) {
     completeDefaultConfiguration(configuration, module);
     return new OsmorcFacet(this, module, configuration, underlyingFacet, name);
   }

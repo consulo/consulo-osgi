@@ -22,7 +22,7 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.osmorc.manifest;
+package org.jetbrains.osmorc2.manifest;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +43,7 @@ public interface BundleManifest {
    *
    * @return the manifest file
    */
-  @NotNull
+  @Nullable
   ManifestFile getManifestFile();
 
   /**

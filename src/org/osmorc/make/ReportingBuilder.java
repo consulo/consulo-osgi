@@ -40,7 +40,7 @@ import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
 import org.osmorc.facet.OsmorcFacetUtil;
-import org.osmorc.manifest.BundleManifest;
+import org.jetbrains.osmorc2.manifest.BundleManifest;
 
 import java.text.MessageFormat;
 

@@ -46,7 +46,6 @@ import org.osgi.framework.Constants;
 import org.osmorc.OsmorcProjectComponent;
 import org.osmorc.facet.ui.OsmorcFacetGeneralEditorTab;
 import org.osmorc.facet.ui.OsmorcFacetJAREditorTab;
-import org.osmorc.facet.ui.OsmorcFacetManifestGenerationEditorTab;
 import org.osmorc.settings.ProjectSettings;
 import org.osmorc.util.OrderedProperties;
 
@@ -109,11 +108,13 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
   private static final String VALUE = "value";
 
 
+  @Override
   public FacetEditorTab[] createEditorTabs(final FacetEditorContext editorContext, final FacetValidatorsManager validatorsManager) {
-    return new FacetEditorTab[]{new OsmorcFacetGeneralEditorTab(editorContext),
-      new OsmorcFacetJAREditorTab(editorContext, validatorsManager), new OsmorcFacetManifestGenerationEditorTab(editorContext)};
+    return new FacetEditorTab[]{new OsmorcFacetGeneralEditorTab(this, editorContext),
+      new OsmorcFacetJAREditorTab(editorContext, validatorsManager)/*, new OsmorcFacetManifestGenerationEditorTab(editorContext)*/};
   }
 
+  @Override
   public void readExternal(Element element) throws InvalidDataException {
     PathMacroManager.getInstance(ApplicationManager.getApplication()).expandPaths(element);
 
@@ -200,6 +201,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     }
   }
 
+  @Override
   public void writeExternal(Element element) throws WriteExternalException {
     element.setAttribute(MANIFEST_GENERATION_MODE, getManifestGenerationMode().name());
     element.setAttribute(MANIFEST_LOCATION, getManifestLocation());
@@ -673,6 +675,11 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
 
   public void setOsgiInfLocation(String osgiInfLocation) {
     myOsgiInfLocation = osgiInfLocation;
+  }
+
+  @NotNull
+  public OsmorcFacet getFacet() {
+    return myFacet;
   }
 
   /**
