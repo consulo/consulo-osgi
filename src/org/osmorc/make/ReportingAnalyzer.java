@@ -32,10 +32,13 @@ import com.intellij.openapi.compiler.CompilerMessageCategory;
 import java.text.MessageFormat;
 
 /**
- * Created by IntelliJ IDEA. User: kork Date: Jul 20, 2009 Time: 9:51:04 PM To change this template use File | Settings
- * | File Templates.
+ * @author  kork
+ * @singe Jul 20, 2009 Time: 9:51:04 PM
  */
 class ReportingAnalyzer extends Analyzer {
+  private final CompileContext _context;
+  private final String _sourceFileName;
+
   public ReportingAnalyzer(CompileContext context, String sourceFileName) {
     super();    //To change body of overridden methods use File | Settings | File Templates.
     _context = context;
@@ -63,7 +66,4 @@ class ReportingAnalyzer extends Analyzer {
   public void progress(String s, Object... objects) {
     _context.addMessage(CompilerMessageCategory.INFORMATION, MessageFormat.format(s, objects), _sourceFileName, 0, 0);
   }
-
-  private final CompileContext _context;
-  private final String _sourceFileName;
 }
