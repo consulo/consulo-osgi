@@ -109,8 +109,7 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
   private static final String VALUE = "value";
 
 
-  public FacetEditorTab[] createEditorTabs(final FacetEditorContext editorContext,
-                                           final FacetValidatorsManager validatorsManager) {
+  public FacetEditorTab[] createEditorTabs(final FacetEditorContext editorContext, final FacetValidatorsManager validatorsManager) {
     return new FacetEditorTab[]{new OsmorcFacetGeneralEditorTab(editorContext),
       new OsmorcFacetJAREditorTab(editorContext, validatorsManager), new OsmorcFacetManifestGenerationEditorTab(editorContext)};
   }
@@ -168,12 +167,10 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     setBundleVersion(element.getAttributeValue(BUNDLE_VERSION));
     setOsgiInfLocation(element.getAttributeValue(OSGI_INF_LOCATION));
     setIgnoreFilePattern(element.getAttributeValue(IGNORE_FILE_PATTERN));
-    setUseProjectDefaultManifestFileLocation(Boolean.parseBoolean(element.getAttributeValue(
-      USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION, "true")));
-    setAlwaysRebuildBundleJAR(Boolean.parseBoolean(element.getAttributeValue(
-      ALWAYS_REBUILD_BUNDLE_JAR, "false")));
-    setDoNotSynchronizeWithMaven(Boolean.parseBoolean(element.getAttributeValue(
-      DO_NOT_SYNCHRONIZE_WITH_MAVEN, "false")));
+    setUseProjectDefaultManifestFileLocation(
+      Boolean.parseBoolean(element.getAttributeValue(USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION, "true")));
+    setAlwaysRebuildBundleJAR(Boolean.parseBoolean(element.getAttributeValue(ALWAYS_REBUILD_BUNDLE_JAR, "false")));
+    setDoNotSynchronizeWithMaven(Boolean.parseBoolean(element.getAttributeValue(DO_NOT_SYNCHRONIZE_WITH_MAVEN, "false")));
 
     Element props = element.getChild(ADDITIONAL_PROPERTIES);
     if (props != null) {
@@ -196,12 +193,9 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     List<Pair<String, String>> additionalJARContents = getAdditionalJARContents();
     Element additionalJARContentsElement = element.getChild("additionalJARContents");
     if (additionalJARContentsElement != null) {
-      @SuppressWarnings({"unchecked"})
-      List<Element> children = additionalJARContentsElement.getChildren("entry");
+      @SuppressWarnings({"unchecked"}) List<Element> children = additionalJARContentsElement.getChildren("entry");
       for (Element entryElement : children) {
-        additionalJARContents.add(Pair.create(
-          entryElement.getAttributeValue("source"),
-          entryElement.getAttributeValue("dest")));
+        additionalJARContents.add(Pair.create(entryElement.getAttributeValue("source"), entryElement.getAttributeValue("dest")));
       }
     }
   }
@@ -218,10 +212,8 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
     element.setAttribute(BUNDLE_VERSION, getBundleVersion());
     element.setAttribute(IGNORE_FILE_PATTERN, getIgnoreFilePattern());
     element.setAttribute(OSGI_INF_LOCATION, getOsgiInfLocation());
-    element.setAttribute(USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION,
-                         String.valueOf(isUseProjectDefaultManifestFileLocation()));
-    element.setAttribute(ALWAYS_REBUILD_BUNDLE_JAR,
-                         String.valueOf(isAlwaysRebuildBundleJAR()));
+    element.setAttribute(USE_PROJECT_DEFAULT_MANIFEST_FILE_LOCATION, String.valueOf(isUseProjectDefaultManifestFileLocation()));
+    element.setAttribute(ALWAYS_REBUILD_BUNDLE_JAR, String.valueOf(isAlwaysRebuildBundleJAR()));
     element.setAttribute(DO_NOT_SYNCHRONIZE_WITH_MAVEN, String.valueOf(myDoNotSynchronizeWithMaven));
 
     Element props = new Element(ADDITIONAL_PROPERTIES);
@@ -515,10 +507,11 @@ public class OsmorcFacetConfiguration implements FacetConfiguration {
   /**
    * Same as {@link #getAdditionalPropertiesAsMap()} but adds the Bundle-SymbolicName, Bundle-Version and Bundle-Activator properties
    * so that the returned map can be used to create a full bnd file.
+   *
    * @return
    */
   @NotNull
-  public Map<String,String> getBndFileProperties() {
+  public Map<String, String> getBndFileProperties() {
     Map<String, String> result = getAdditionalPropertiesAsMap();
     result.put(Constants.BUNDLE_SYMBOLICNAME, getBundleSymbolicName());
     result.put(Constants.BUNDLE_VERSION, getBundleVersion());
