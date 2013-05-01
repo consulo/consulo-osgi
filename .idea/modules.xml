@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/impl/felix/felix.iml" filepath="$PROJECT_DIR$/impl/felix/felix.iml" group="impl" />
       <module fileurl="file://$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" filepath="$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" group="impl" />
       <module fileurl="file://$PROJECT_DIR$/manifest/manifest.iml" filepath="$PROJECT_DIR$/manifest/manifest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/osmorc2.iml" filepath="$PROJECT_DIR$/osmorc2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/osgi.iml" filepath="$PROJECT_DIR$/osgi.iml" />
     </modules>
   </component>
 </project>

@@ -10,7 +10,7 @@ import com.intellij.util.xmlb.annotations.Attribute;
  * @since 14:32/29.04.13
  */
 public class ManifestProviderEP extends AbstractExtensionPointBean {
-  public static final ExtensionPointName<ManifestProviderEP> EP_NAME = new ExtensionPointName<ManifestProviderEP>("org.osmorc2.core.manifestProvider");
+  public static final ExtensionPointName<ManifestProviderEP> EP_NAME = new ExtensionPointName<ManifestProviderEP>("org.osgi.manifestProvider");
 
   @Attribute("implementation")
   public String implementation;

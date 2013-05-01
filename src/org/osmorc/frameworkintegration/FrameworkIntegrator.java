@@ -37,7 +37,7 @@ import java.util.List;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public interface FrameworkIntegrator<I extends FrameworkInstanceManager> {
-  ExtensionPointName<FrameworkIntegrator> EP_NAME = ExtensionPointName.create("org.osmorc2.core.frameworkIntegration");
+  ExtensionPointName<FrameworkIntegrator> EP_NAME = ExtensionPointName.create("org.osgi.frameworkIntegration");
 
   /**
    * @return the display name of the framework
