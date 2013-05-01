@@ -75,8 +75,7 @@ public class BundleCompiler implements PackagingCompiler {
   public static final Condition<OrderEntry> NOT_FRAMEWORK_LIBRARY_CONDITION = new Condition<OrderEntry>() {
     @Override
     public boolean value(OrderEntry entry) {
-      return !(entry instanceof LibraryOrderEntry) || !FrameworkInstanceLibraryManager.isFrameworkInstanceLibrary(
-        (LibraryOrderEntry)entry);
+      return !(entry instanceof LibraryOrderEntry) || !FrameworkInstanceLibraryManager.isFrameworkInstanceLibrary((LibraryOrderEntry)entry);
     }
   };
 
@@ -123,8 +122,7 @@ public class BundleCompiler implements PackagingCompiler {
    * @param processingItems the list of processing items
    * @return the list of processing items that remain for further processing (if any)
    */
-  public ProcessingItem[] process(CompileContext compileContext,
-                                  ProcessingItem[] processingItems) {
+  public ProcessingItem[] process(CompileContext compileContext, ProcessingItem[] processingItems) {
     try {
       for (ProcessingItem processingItem : processingItems) {
         Module module = ((BundleProcessingItem)processingItem).getModule();
@@ -146,8 +144,7 @@ public class BundleCompiler implements PackagingCompiler {
    * @param compileContext
    * @throws IOException in case something goes wrong.
    */
-  private static void buildBundle(final Module module, final ProgressIndicator progressIndicator,
-                                  final CompileContext compileContext)
+  private static void buildBundle(final Module module, final ProgressIndicator progressIndicator, final CompileContext compileContext)
     throws IOException {
     String messagePrefix = "[" + module.getName() + "] ";
     progressIndicator.setText("Building bundle for module " + module.getName());
@@ -182,10 +179,9 @@ public class BundleCompiler implements PackagingCompiler {
     if (configuration.isUseBndFile()) {
       File bndFile = findFileInModuleContentRoots(configuration.getBndFileLocation(), module);
       if (bndFile == null || !bndFile.exists() || bndFile.isDirectory()) {
-        compileContext.addMessage(CompilerMessageCategory.ERROR,
-                                  String.format(messagePrefix + "The bnd file \"%s\" for module \"%s\" does not exist.",
-                                                configuration.getBndFileLocation(), module.getName()),
-                                  configuration.getBndFileLocation(), 0, 0);
+        compileContext.addMessage(CompilerMessageCategory.ERROR, String
+          .format(messagePrefix + "The bnd file \"%s\" for module \"%s\" does not exist.", configuration.getBndFileLocation(),
+                  module.getName()), configuration.getBndFileLocation(), 0, 0);
         return;
       }
       else {
@@ -220,14 +216,13 @@ public class BundleCompiler implements PackagingCompiler {
         }
       }
       if (!manifestExists) {
-        compileContext.addMessage(CompilerMessageCategory.ERROR,
-                                  messagePrefix +
-                                  "Manifest file for module " +
-                                  module.getName() +
-                                  ": '" +
-                                  osmorcFacet.getManifestLocation() +
-                                  "' does not exist or cannot be found. Check that file exists and is not excluded from the module.", null,
-                                  0, 0);
+        compileContext.addMessage(CompilerMessageCategory.ERROR, messagePrefix +
+                                                                 "Manifest file for module " +
+                                                                 module.getName() +
+                                                                 ": '" +
+                                                                 osmorcFacet.getManifestLocation() +
+                                                                 "' does not exist or cannot be found. Check that file exists and is not excluded from the module.",
+                                  null, 0, 0);
         return;
       }
     }
@@ -244,8 +239,8 @@ public class BundleCompiler implements PackagingCompiler {
       // XXX: one could argue if this should be done for a non-osmorc build
       for (int i = 0; i < classPaths.size(); i++) {
         String classPath = classPaths.get(i);
-        String relPath = FileUtil.getRelativePath(new File(BndWrapper.getOutputPath(module,  compileContext)),
-                                                  new File(VfsUtil.urlToPath(classPath)));
+        String relPath =
+          FileUtil.getRelativePath(new File(BndWrapper.getOutputPath(module, compileContext)), new File(VfsUtil.urlToPath(classPath)));
         if (i != 0) {
           pathBuilder.append(",");
         }
@@ -269,8 +264,9 @@ public class BundleCompiler implements PackagingCompiler {
       buildProperties.put("Include-Resource", includedResources);
 
       if (!configuration.isIgnorePatternValid()) {
-        compileContext.addMessage(CompilerMessageCategory.ERROR,
-                                  messagePrefix + "The file ignore pattern in the facet configuration is invalid.", null, 0, 0);
+        compileContext
+          .addMessage(CompilerMessageCategory.ERROR, messagePrefix + "The file ignore pattern in the facet configuration is invalid.", null,
+                      0, 0);
         return;
       }
 
@@ -280,7 +276,7 @@ public class BundleCompiler implements PackagingCompiler {
       }
     }
 
-    if ( configuration.isOsmorcControlsManifest() ) {
+    if (configuration.isOsmorcControlsManifest()) {
       // support the {local-packages} instruction
       progressIndicator.setText2("Calculating local packages");
       LocalPackageCollector.addLocalPackages(VfsUtil.virtualToIoFile(moduleOutputDir), buildProperties);
@@ -300,10 +296,9 @@ public class BundleCompiler implements PackagingCompiler {
       progressIndicator.setText2("Running bundlor to calculate the manifest");
       File bundlorFile = findFileInModuleContentRoots(configuration.getBundlorFileLocation(), module);
       if (bundlorFile == null || !bundlorFile.exists()) {
-        compileContext.addMessage(CompilerMessageCategory.ERROR,
-                                  String.format(messagePrefix + "The Bundlor file \"%s\" for module \"%s\" does not exist.",
-                                                configuration.getBundlorFileLocation(), module.getName()),
-                                  configuration.getBundlorFileLocation(), 0, 0);
+        compileContext.addMessage(CompilerMessageCategory.ERROR, String
+          .format(messagePrefix + "The Bundlor file \"%s\" for module \"%s\" does not exist.", configuration.getBundlorFileLocation(),
+                  module.getName()), configuration.getBundlorFileLocation(), 0, 0);
         return;
       }
       BundlorWrapper bw = new BundlorWrapper();
@@ -429,7 +424,8 @@ public class BundleCompiler implements PackagingCompiler {
    * @return a string array containing the urls of the bundlified libraries.
    */
   @NotNull
-  public static String[] bundlifyLibraries(@NotNull Module module, @NotNull ProgressIndicator indicator,
+  public static String[] bundlifyLibraries(@NotNull Module module,
+                                           @NotNull ProgressIndicator indicator,
                                            @NotNull CompileContext compileContext) {
     ArrayList<String> result = new ArrayList<String>();
 

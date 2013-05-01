@@ -15,6 +15,7 @@ import org.jetbrains.osgi.OSGiConstants;
  * @author VISTALL
  * @since 13:55/28.04.13
  */
+@Deprecated
 public class OsmorcFacetUtil {
   public static VirtualFile getOsgiInfRoot(@NotNull Module module) {
     OsmorcFacet instance = OsmorcFacetUtil.getInstance(module);

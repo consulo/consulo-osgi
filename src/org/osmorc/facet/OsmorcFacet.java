@@ -41,6 +41,7 @@ import org.osmorc.settings.ProjectSettings;
  *
  * @author Robert F. Beeger (robert@beeger.net)
  */
+@Deprecated
 public class OsmorcFacet extends Facet<OsmorcFacetConfiguration> {
   public OsmorcFacet(@NotNull Module module) {
     this(FacetTypeRegistry.getInstance().findFacetType(OsmorcFacetType.ID), module, new OsmorcFacetConfiguration(), null, "OSGi");
