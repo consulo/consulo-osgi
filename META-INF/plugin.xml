@@ -153,8 +153,8 @@
     <editorNotificationProvider implementation="org.osmorc.ManifestChangeWatcher"/>
     <editorNotificationProvider implementation="org.osmorc.BundleIndexModificationWatcher"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
-    <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.Osmorc2ExportPackageIconLayerProvider"/>
-    <!--<iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ImportPackageIconLayerProvider" /> -->
+    <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
+    <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider" />
 
     <!--Service component dom model-->
     <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
