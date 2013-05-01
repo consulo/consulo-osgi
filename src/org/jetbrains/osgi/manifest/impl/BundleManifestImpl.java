@@ -24,16 +24,27 @@
  */
 package org.jetbrains.osgi.manifest.impl;
 
+import com.intellij.openapi.vfs.ReadonlyStatusHandler;
+import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osmorc.manifest.lang.ManifestFileType;
+import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
+import org.osmorc.manifest.lang.psi.Section;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  * @author Jan Thom&auml; (janthomae@janthomae.de)
  */
 public class BundleManifestImpl extends AbstractBundleManifestImpl {
+  private static final String SET_HEADER = "%s : %s\n";
+
   @NotNull
   private final ManifestFile myManifestFile;
 
@@ -51,6 +62,46 @@ public class BundleManifestImpl extends AbstractBundleManifestImpl {
   @Override
   public ManifestFile getManifestFile() {
     return myManifestFile;
+  }
+
+  @Override
+  public NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name) {
+    return (NavigatablePsiElement)getHeaderByName(name);
+  }
+
+  @Override
+  public void setHeaderValue(@NotNull String key, @NotNull String value) {
+    ReadonlyStatusHandler.OperationStatus status =
+      ReadonlyStatusHandler.getInstance(myManifestFile.getProject()).ensureFilesWritable(myManifestFile.getVirtualFile());
+    if(status.hasReadonlyFiles()) {
+      return;
+    }
+
+    PsiFile fromText = PsiFileFactory.getInstance(myManifestFile.getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format(SET_HEADER, key, value));
+
+    Header newHeader = PsiTreeUtil.getChildOfType(fromText.getFirstChild(), Header.class);
+
+    assert newHeader != null;
+
+    Header headerByName = getHeaderByName(key);
+    if (headerByName == null) {
+      Section section = (Section)myManifestFile.getFirstChild();
+
+      String sectionText = section.getText();
+      if (sectionText.charAt(sectionText.length() - 1) != '\n') {
+        PsiElement lastChild = section.getLastChild();
+        if (lastChild instanceof Header) {
+          Header header = (Header)lastChild;
+          header.getNode().addLeaf(ManifestTokenType.NEWLINE, "\n", null);
+        }
+      }
+
+      section.add(newHeader);
+    }
+    else {
+      headerByName.replace(newHeader);
+    }
   }
 
   @Override

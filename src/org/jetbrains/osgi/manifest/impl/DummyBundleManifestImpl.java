@@ -1,5 +1,6 @@
 package org.jetbrains.osgi.manifest.impl;
 
+import com.intellij.psi.NavigatablePsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.manifest.BundleManifest;
@@ -23,6 +24,15 @@ public class DummyBundleManifestImpl extends AbstractBundleManifestImpl {
   @Override
   public ManifestFile getManifestFile() {
     return null;
+  }
+
+  @Override
+  public NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name) {
+    return null;
+  }
+
+  @Override
+  public void setHeaderValue(@NotNull String key, @NotNull String value) {
   }
 
   @Override

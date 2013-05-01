@@ -2,7 +2,9 @@ package org.jetbrains.osgi.facet;
 
 import com.intellij.facet.FacetManager;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiElement;
 import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,8 +14,18 @@ import org.jetbrains.annotations.Nullable;
  * @since 17:57/29.04.13
  */
 public class OSGiFacetUtil {
+  @Nullable
   public static OSGiFacet findFacet(@NotNull Module module) {
     return FacetManager.getInstance(module).getFacetByType(OSGiFacetType.ID);
+  }
+
+  @Nullable
+  public static OSGiFacet findFacet(@NotNull PsiElement psiElement) {
+    Module moduleForPsiElement = ModuleUtil.findModuleForPsiElement(psiElement);
+    if(moduleForPsiElement == null) {
+      return null;
+    }
+    return findFacet(moduleForPsiElement);
   }
 
   @Nullable

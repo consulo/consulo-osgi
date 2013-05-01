@@ -25,6 +25,7 @@
 package org.jetbrains.osgi.manifest;
 
 import com.intellij.openapi.util.ModificationTracker;
+import com.intellij.psi.NavigatablePsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -46,6 +47,11 @@ public interface BundleManifest extends ModificationTracker {
    */
   @Nullable
   ManifestFile getManifestFile();
+
+  @Nullable
+  NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name);
+
+  void setHeaderValue(@NotNull String key, @NotNull String value);
 
   /**
    * Gets the bundle version.
