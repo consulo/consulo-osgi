@@ -9,7 +9,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.OsgiConstants;
+import org.jetbrains.osgi.OSGiConstants;
 
 /**
  * @author VISTALL
@@ -19,7 +19,7 @@ public class OsmorcFacetUtil {
   public static VirtualFile getOsgiInfRoot(@NotNull Module module) {
     OsmorcFacet instance = OsmorcFacetUtil.getInstance(module);
 
-    return OsmorcFacetUtil.findVirtualFileInModuleContentRoots(instance.getConfiguration().getOsgiInfLocation() + "/" + OsgiConstants.OSGI_INFO_ROOT, module);
+    return OsmorcFacetUtil.findVirtualFileInModuleContentRoots(instance.getConfiguration().getOsgiInfLocation() + "/" + OSGiConstants.OSGI_INFO_ROOT, module);
   }
 
   @Nullable

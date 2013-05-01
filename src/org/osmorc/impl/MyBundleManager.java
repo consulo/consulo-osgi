@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import org.osmorc.BundleManager;
 import org.osmorc.facet.OsmorcFacetUtil;
-import org.jetbrains.osmorc2.manifest.BundleManifest;
+import org.jetbrains.osgi.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.impl.LibraryManifestHolderImpl;

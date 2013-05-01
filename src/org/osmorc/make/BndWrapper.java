@@ -47,7 +47,7 @@ import com.intellij.util.ExceptionUtil;
 import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.OsgiConstants;
+import org.jetbrains.osgi.OSGiConstants;
 import org.osgi.framework.Constants;
 import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.LibraryBundlificationRule;
@@ -391,7 +391,7 @@ public class BndWrapper {
     List<VirtualFile> virtualFiles = new ArrayList<VirtualFile>();
     VcsUtil.collectFiles(osgiRoot, virtualFiles, true, false);
     for(VirtualFile virtualFile : virtualFiles) {
-      jar.putResource(OsgiConstants.OSGI_INFO_ROOT + "/" + VfsUtilCore.getRelativePath(virtualFile, osgiRoot, '/'), new FileResource(new File(virtualFile.getPath())), true);
+      jar.putResource(OSGiConstants.OSGI_INFO_ROOT + "/" + VfsUtilCore.getRelativePath(virtualFile, osgiRoot, '/'), new FileResource(new File(virtualFile.getPath())), true);
     }
   }
   /**

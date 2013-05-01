@@ -43,9 +43,9 @@ import com.intellij.ui.components.JBRadioButton;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.OsgiConstants;
-import org.jetbrains.osmorc2.compiler.ManifestProvider;
-import org.jetbrains.osmorc2.compiler.ManifestProviderConfigurable;
+import org.jetbrains.osgi.OSGiConstants;
+import org.jetbrains.osgi.compiler.ManifestProvider;
+import org.jetbrains.osgi.compiler.ManifestProviderConfigurable;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 import org.osmorc.facet.OsmorcFacetConfiguration;
@@ -248,11 +248,11 @@ public class OsmorcFacetGeneralEditorTab extends FacetEditorTab implements Panel
         String relativePath = VfsUtilCore
           .getRelativePath(fileLocation, root, File.separatorChar);
         if (relativePath != null) {
-          if(relativePath.equals(OsgiConstants.OSGI_INFO_ROOT)) {
+          if(relativePath.equals(OSGiConstants.OSGI_INFO_ROOT)) {
             relativePath = "";
           }
-          else if(relativePath.endsWith(OsgiConstants.OSGI_INFO_ROOT)) {
-            relativePath = relativePath.substring(0, relativePath.length() - OsgiConstants.OSGI_INFO_ROOT.length() - 1);
+          else if(relativePath.endsWith(OSGiConstants.OSGI_INFO_ROOT)) {
+            relativePath = relativePath.substring(0, relativePath.length() - OSGiConstants.OSGI_INFO_ROOT.length() - 1);
           }
           field.setText(relativePath);
           break;

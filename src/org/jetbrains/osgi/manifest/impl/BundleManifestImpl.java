@@ -22,61 +22,39 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jetbrains.osgi.manifest.impl;
 
-package org.osmorc.run;
-
-import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.configurations.ConfigurationType;
-import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.OSGiIcons;
-import org.osmorc.i18n.OsmorcBundle;
-
-import javax.swing.*;
+import org.jetbrains.annotations.Nullable;
+import org.osmorc.manifest.lang.psi.Header;
+import org.osmorc.manifest.lang.psi.ManifestFile;
 
 /**
- * Configuration type for a bundle run configuration.
- *
- * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
- * @version $Id$
+ * @author Robert F. Beeger (robert@beeger.net)
+ * @author Jan Thom&auml; (janthomae@janthomae.de)
  */
-public class OsgiConfigurationType implements ConfigurationType {
+public class BundleManifestImpl extends AbstractBundleManifestImpl {
+  @NotNull
+  private final ManifestFile myManifestFile;
 
-  private final ConfigurationFactory myFactory;
-
-  OsgiConfigurationType() {
-    myFactory = new ConfigurationFactory(this) {
-      public RunConfiguration createTemplateConfiguration(Project project) {
-        return new OsgiRunConfiguration(project, this, "");
-      }
-
-      public RunConfiguration createConfiguration(String name, RunConfiguration template) {
-        OsgiRunConfiguration runConfiguration = (OsgiRunConfiguration)template;
-        return super.createConfiguration(name, runConfiguration);
-      }
-    };
+  public BundleManifestImpl(@NotNull ManifestFile manifestFile) {
+    myManifestFile = manifestFile;
   }
 
-
-  public String getDisplayName() {
-    return OsmorcBundle.message("runconfiguration.displayname");
-  }
-
-  public String getConfigurationTypeDescription() {
-    return OsmorcBundle.message("runconfiguration.description");
-  }
-
-  public Icon getIcon() {
-    return OSGiIcons.FacetType;
+  @Nullable
+  @Override
+  protected Header getHeaderByName(@NotNull String heaaderName) {
+    return myManifestFile.getHeaderByName(heaaderName);
   }
 
   @NotNull
-  public String getId() {
-    return "#org.osmorc.OsgiConfigurationType";
+  @Override
+  public ManifestFile getManifestFile() {
+    return myManifestFile;
   }
 
-  public ConfigurationFactory[] getConfigurationFactories() {
-    return new ConfigurationFactory[]{myFactory};
+  @Override
+  public long getModificationCount() {
+    return myManifestFile.getModificationStamp();
   }
 }

@@ -27,7 +27,7 @@ package org.osmorc.manifest;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.libraries.Library;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.manifest.BundleManifest;
+import org.jetbrains.osgi.manifest.BundleManifest;
 
 /**
  * A manifest holder holds a bundle manifest and the object ({@link Project} or

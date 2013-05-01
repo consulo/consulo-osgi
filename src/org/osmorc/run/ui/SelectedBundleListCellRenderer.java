@@ -27,7 +27,7 @@ package org.osmorc.run.ui;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.util.PlatformIcons;
-import org.jetbrains.osmorc2.Osmorc2Icons;
+import org.jetbrains.osgi.OSGiIcons;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class SelectedBundleListCellRenderer extends DefaultListCellRenderer {
       component.setIcon(AllIcons.Nodes.Module);
     }
     else if (selectedBundle.getBundleType() == SelectedBundle.BundleType.FrameworkBundle) {
-      component.setIcon(Osmorc2Icons.FacetType);
+      component.setIcon(OSGiIcons.FacetType);
     }
     else {
       component.setIcon(PlatformIcons.JAR_ICON);

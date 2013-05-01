@@ -37,7 +37,7 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osmorc2.Osmorc2Icons;
+import org.jetbrains.osgi.OSGiIcons;
 import org.osmorc.settings.ProjectSettings;
 
 import javax.swing.*;
@@ -113,6 +113,6 @@ public class OsmorcFacetType extends FacetType<OsmorcFacet, OsmorcFacetConfigura
 
 
   public Icon getIcon() {
-    return Osmorc2Icons.FacetType;
+    return OSGiIcons.FacetType;
   }
 }

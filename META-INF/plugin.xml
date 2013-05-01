@@ -1,10 +1,9 @@
 <idea-plugin version="2">
-  <id>org.osmorc2.core</id>
+  <id>org.osgi</id>
   <name>OSGi support</name>
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
   <depends>org.jetbrains.idea.maven</depends>
-  <depends>org.osmorc.manifest</depends>
 
   <project-components>
     <component>
@@ -32,12 +31,12 @@
   <extensionPoints>
     <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
     <extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository"/>
-    <extensionPoint name="manifestProvider" beanClass="org.jetbrains.osmorc2.compiler.ManifestProviderEP">
-      <with attribute="implementation" implements="org.jetbrains.osmorc2.compiler.ManifestProvider"/>
+    <extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.compiler.ManifestProviderEP">
+      <with attribute="implementation" implements="org.jetbrains.osgi.compiler.ManifestProvider"/>
     </extensionPoint>
   </extensionPoints>
 
-  <extensions defaultExtensionNs="org.osmorc2.core">
+  <extensions defaultExtensionNs="org.osgi">
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.felix.FelixIntegrator"/>
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator"/>
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator"/>
@@ -45,12 +44,12 @@
 
     <openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
 
-    <manifestProvider implementation="org.jetbrains.osmorc2.compiler.impl.ManifestFileAsManifestProvider" order="first"/>
-    <manifestProvider implementation="org.jetbrains.osmorc2.compiler.impl.BndFileManifestProvider" />
+    <manifestProvider implementation="org.jetbrains.osgi.compiler.impl.ManifestFileAsManifestProvider" order="first"/>
+    <manifestProvider implementation="org.jetbrains.osgi.compiler.impl.BndFileManifestProvider" />
   </extensions>
 
   <extensions defaultExtensionNs="org.jetbrains.idea.maven">
-    <importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/>
+   <!--- <importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/> -->
   </extensions>
 
   <extensions defaultExtensionNs="org.osmorc.manifest">
@@ -90,7 +89,7 @@
     <headerParser key="DynamicImport-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
     <headerParser key="Export-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
     <headerParser key="Import-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <headerParser key="Service-Component" implementationClass="org.jetbrains.osmorc2.manifest.headerparser.ServiceComponentHeaderParser"/>
+    <headerParser key="Service-Component" implementationClass="org.jetbrains.osgi.manifest.headerparser.ServiceComponentHeaderParser"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
@@ -135,9 +134,9 @@
     <localInspection shortName="osmorcNonOsgiMavenDependency" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
                      level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
 
-    <facetType implementation="org.osmorc.facet.OsmorcFacetType"/>
-    <facetType implementation="org.jetbrains.osmorc2.facet.OSGiFacetType" />
-    <framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>
+    <!--< <facetType implementation="org.osmorc.facet.OsmorcFacetType"/> -->
+    <facetType implementation="org.jetbrains.osgi.facet.OSGiFacetType" />
+    <!---<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
     <compiler implementation="org.osmorc.make.BundleCompiler"/>
     <refactoring.elementListenerProvider implementation="org.osmorc.facet.OsmorcFacetRefactoringListenerProvider"/>
 
@@ -153,15 +152,15 @@
 
     <editorNotificationProvider implementation="org.osmorc.ManifestChangeWatcher"/>
     <editorNotificationProvider implementation="org.osmorc.BundleIndexModificationWatcher"/>
-    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osmorc2.ide.Osmorc2LineMarkerProvider"/>
-    <iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ExportPackageIconLayerProvider"/>
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
+    <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.Osmorc2ExportPackageIconLayerProvider"/>
     <!--<iconLayerProvider implementation="org.jetbrains.osmorc2.ide.iconProvider.Osmorc2ImportPackageIconLayerProvider" /> -->
 
     <!--Service component dom model-->
     <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
-    <dom.fileDescription implementation="org.jetbrains.osmorc2.serviceComponent.ServiceComponentDomFileDescription"/>
+    <dom.fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
     <localInspection shortName="ServiceComponentInspection"
-                     implementationClass="org.jetbrains.osmorc2.ide.codeInspection.ServiceComponentInspection" enabledByDefault="true"
+                     implementationClass="org.jetbrains.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
                      displayName="Component Problems" groupName="OSGi" level="ERROR"/>
   </extensions>
 </idea-plugin>
