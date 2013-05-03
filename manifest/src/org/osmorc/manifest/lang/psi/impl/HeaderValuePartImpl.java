@@ -27,12 +27,17 @@ package org.osmorc.manifest.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.osmorc.manifest.lang.ManifestFileType;
 import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.headerparser.HeaderParser;
 import org.osmorc.manifest.lang.headerparser.HeaderUtil;
+import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.ManifestToken;
 import org.osmorc.manifest.lang.psi.stub.HeaderValuePartStub;
@@ -78,6 +83,19 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
       result = builder.toString();
     }
     return result.trim();
+  }
+
+  @Override
+  public void setText(@NotNull String text) {
+    PsiFile fromText = PsiFileFactory.getInstance(getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Dummy: %s", text));
+
+
+    final Clause clause = PsiTreeUtil.findChildOfAnyType(fromText, Clause.class);
+
+    assert clause != null;
+
+    replace(clause.getValue());
   }
 
   public Object getConvertedValue() {

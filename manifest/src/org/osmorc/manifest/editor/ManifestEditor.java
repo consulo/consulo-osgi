@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.manifest.editor.dialogs.AddNewKeyDialog;
 import org.osmorc.manifest.editor.models.ClauseTableModel;
-import org.osmorc.manifest.editor.models.HeaderListModel;
+import org.osmorc.manifest.editor.models.HeaderTableModel;
 import org.osmorc.manifest.lang.headerparser.HeaderParser;
 import org.osmorc.manifest.lang.headerparser.HeaderUtil;
 import org.osmorc.manifest.lang.psi.Clause;
@@ -37,10 +37,7 @@ import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.BorderLayout;
@@ -243,24 +240,21 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       JBSplitter splitter = new JBSplitter(true);
       splitter.setSplitterProportionKey(getClass().getName() + "#" + key);
 
-      final JBList valueList = new JBList(new HeaderListModel(headerByName));
-      valueList.setCellRenderer(new ListCellRendererWithRightAlignedComponent() {
-        @Override
-        protected void customize(Object value) {
-          Clause clause = (Clause) value;
-          HeaderValuePart headerValuePart = clause.getValue();
-          setLeftText(headerValuePart == null ? "" : headerValuePart.getUnwrappedText());
-        }
-      });
+      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName);
+      final JBTable valueList = new JBTable(valueListModel);
+      valueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
       ToolbarDecorator valueDecorator = ToolbarDecorator.createDecorator(valueList);
       splitter.setFirstComponent(valueDecorator.createPanel());
 
       final ClauseTableModel model = new ClauseTableModel();
       final JBTable propertiesList = new JBTable(model);
-      valueList.addListSelectionListener(new ListSelectionListener() {
+      propertiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+      valueList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
-          Clause value = (Clause)valueList.getSelectedValue();
+          Clause value = valueListModel.getRowValue(e.getFirstIndex());
           model.setClause(value);
           /*UIUtil.invokeAndWaitIfNeeded(new Runnable() {
             @Override

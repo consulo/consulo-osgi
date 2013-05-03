@@ -50,6 +50,8 @@ public interface HeaderValuePart extends PsiElement, StubBasedPsiElement<HeaderV
   @NotNull
   String getUnwrappedText();
 
+  void setText(@NotNull String text);
+
   /**
    * Returns the converted value of this header (.e.g if the header represents a version statement, this will return a {@link org.osmorc.valueobject.Version} object.
    *
