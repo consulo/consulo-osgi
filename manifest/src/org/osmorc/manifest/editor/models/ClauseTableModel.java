@@ -12,9 +12,11 @@ import org.osmorc.manifest.lang.psi.Directive;
  */
 public class ClauseTableModel extends ListTableModel<String> {
   private Clause myClause;
+  private final boolean myIsReadonlyFile;
 
-  public ClauseTableModel() {
+  public ClauseTableModel(boolean isReadonlyFile) {
     super(new ColumnInfo.StringColumn("Key"), new ColumnInfo.StringColumn("Value"));
+    myIsReadonlyFile = isReadonlyFile;
   }
 
   @Override
@@ -29,7 +31,7 @@ public class ClauseTableModel extends ListTableModel<String> {
 
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
-    return true;
+    return !myIsReadonlyFile;
   }
 
   @Override

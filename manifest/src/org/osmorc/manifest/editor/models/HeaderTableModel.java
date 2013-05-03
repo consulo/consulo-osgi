@@ -13,15 +13,17 @@ import org.osmorc.manifest.lang.psi.HeaderValuePart;
  */
 public class HeaderTableModel extends ListTableModel<Clause> {
   private final Header myHeader;
+  private final boolean myIsReadonlyFile;
 
-  public HeaderTableModel(Header header) {
+  public HeaderTableModel(Header header, boolean isReadonlyFile) {
     super(new ColumnInfo.StringColumn(""));
     myHeader = header;
+    myIsReadonlyFile = isReadonlyFile;
   }
 
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
-    return true;
+    return !myIsReadonlyFile;
   }
 
   @Override

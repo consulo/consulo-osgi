@@ -16,6 +16,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -142,12 +143,14 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
   private final JPanel myContentPanel;
 
   private final ManifestFile myManifestFile;
+  private final boolean myIsReadonlyFile;
 
   public ManifestEditor(final Project project, VirtualFile file) {
     myProject = project;
     myVirtualFile = file;
     myRoot = new JPanel(new BorderLayout());
     myRoot.setBorder(IdeBorderFactory.createEmptyBorder(0, 5, 0, 0));
+    myIsReadonlyFile = !ReadonlyStatusHandler.ensureFilesWritable(myProject, myVirtualFile);
 
     JBSplitter splitter = new JBSplitter();
     splitter.setSplitterProportionKey(getClass().getName());
@@ -194,6 +197,7 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
         }
       }
     });
+    disableActionsIfNeed(decorator);
 
     splitter.setFirstComponent(decorator.createPanel());
     splitter.setSecondComponent(myContentPanel);
@@ -225,6 +229,7 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       TextFieldWithAutoCompletion<Object> text =
         new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldWithAutoCompletionListProvider(headerByName, headerParser), false, null);
 
+      text.setEnabled(!myIsReadonlyFile);
       Object simpleConvertedValue = headerByName.getSimpleConvertedValue();
       if(simpleConvertedValue != null) {
         text.setText(simpleConvertedValue.toString());
@@ -240,14 +245,16 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       JBSplitter splitter = new JBSplitter(true);
       splitter.setSplitterProportionKey(getClass().getName() + "#" + key);
 
-      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName);
+      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName, myIsReadonlyFile);
       final JBTable valueList = new JBTable(valueListModel);
       valueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
       ToolbarDecorator valueDecorator = ToolbarDecorator.createDecorator(valueList);
+      disableActionsIfNeed(valueDecorator);
+
       splitter.setFirstComponent(valueDecorator.createPanel());
 
-      final ClauseTableModel model = new ClauseTableModel();
+      final ClauseTableModel model = new ClauseTableModel(myIsReadonlyFile);
       final JBTable propertiesList = new JBTable(model);
       propertiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -266,6 +273,8 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
         }
       });
       ToolbarDecorator propertiesDecorator = ToolbarDecorator.createDecorator(propertiesList);
+      disableActionsIfNeed(propertiesDecorator);
+
       splitter.setSecondComponent(propertiesDecorator.createPanel());
 
       myContentPanel.add(splitter, BorderLayout.CENTER);
@@ -278,6 +287,14 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
         myContentPanel.repaint();
       }
     });
+  }
+
+  private void disableActionsIfNeed(ToolbarDecorator toolbarDecorator) {
+    if(myIsReadonlyFile) {
+      toolbarDecorator.disableUpDownActions();
+      toolbarDecorator.disableAddAction();
+      toolbarDecorator.disableRemoveAction();
+    }
   }
 
   @NotNull
