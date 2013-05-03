@@ -68,7 +68,7 @@ public abstract class AbstractAssignmentExpression extends ManifestElementBase<A
   @Override
   public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
     PsiFile fromText = PsiFileFactory.getInstance(getProject())
-      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Test: test;%s:=%s\n", name, getValue()));
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Dummy: dummy;%s:=%s\n", name, getValue()));
 
     Directive directive = PsiTreeUtil.findChildOfType(fromText, Directive.class);
 
@@ -81,7 +81,7 @@ public abstract class AbstractAssignmentExpression extends ManifestElementBase<A
   @Override
   public void setValue(@NotNull String value) {
     PsiFile fromText = PsiFileFactory.getInstance(getProject())
-      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Test: test;%s:=%s\n", getName(), value));
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Dummy: dummy;%s:=%s\n", getName(), value));
 
     Directive directive = PsiTreeUtil.findChildOfType(fromText, Directive.class);
 
