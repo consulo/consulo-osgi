@@ -35,10 +35,11 @@ public class AddNewKeyDialog extends DialogWrapper {
       }
       list.add(ep.key);
     }
-    myTextField = new TextFieldWithAutoCompletion<String>(project,
-                                                                                            new TextFieldWithAutoCompletion.StringsCompletionProvider(
-                                                                                              list, ManifestFileType.INSTANCE.getIcon()),
-                                                                                            true, null);
+    myTextField = new TextFieldWithAutoCompletion<String>(project, new TextFieldWithAutoCompletion.StringsCompletionProvider(list,
+                                                                                                                             ManifestFileType
+                                                                                                                               .INSTANCE
+                                                                                                                               .getIcon()),
+                                                          true, null);
     myRoot.add(myTextField, BorderLayout.CENTER);
     setTitle("Add New Key");
     init();
