@@ -28,9 +28,11 @@ package org.osmorc.manifest.lang.headerparser.impl;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.ClassKind;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
@@ -40,6 +42,7 @@ import org.osmorc.manifest.lang.psi.HeaderValuePart;
  */
 public class BundleActivatorParser extends AbstractHeaderParserImpl {
 
+  @Override
   public PsiReference[] getReferences(@NotNull HeaderValuePart headerValuePart) {
     if (headerValuePart.getParent() instanceof Clause) {
       final Module module = ModuleUtil.findModuleForPsiElement(headerValuePart);
@@ -58,8 +61,14 @@ public class BundleActivatorParser extends AbstractHeaderParserImpl {
 
       provider.setOption(JavaClassReferenceProvider.EXTEND_CLASS_NAMES, new String[]{"org.osgi.framework.BundleActivator"});
       provider.setOption(JavaClassReferenceProvider.CONCRETE, true);
+      provider.setOption(JavaClassReferenceProvider.CLASS_KIND, ClassKind.CLASS);
       return provider.getReferencesByElement(headerValuePart);
     }
     return PsiReference.EMPTY_ARRAY;
+  }
+
+  @Override
+  public boolean isAcceptable(@NotNull Object o) {
+    return o instanceof PsiClass;
   }
 }

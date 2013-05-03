@@ -43,6 +43,8 @@ public interface HeaderParser{
    */
   Object getValue(@NotNull HeaderValuePart headerValuePart);
 
+  boolean isAcceptable(@NotNull Object o);
+
   /**
    * Simple headers don't have clauses, attributes and directives. Semicolons and commas don't have any special meaning
    *

@@ -38,6 +38,11 @@ public abstract class AbstractHeaderParserImpl implements HeaderParser {
     return headerValuePart.getUnwrappedText();
   }
 
+  @Override
+  public boolean isAcceptable(@NotNull Object o) {
+    return true;
+  }
+
   public boolean isSimpleHeader() {
     return true;
   }

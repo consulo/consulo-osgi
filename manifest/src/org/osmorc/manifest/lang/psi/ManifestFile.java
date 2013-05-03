@@ -61,4 +61,6 @@ public interface ManifestFile extends PsiFile {
 
   @NotNull
   List<String> getValuesByKey(@NotNull String key);
+
+  void setHeaderValue(@NotNull String key, @NotNull String value);
 }

@@ -11,7 +11,7 @@
   </extensionPoints>
 
   <extensions defaultExtensionNs="org.osmorc.manifest">
-    <headerParser key="" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser" order="last"/>
+    <headerParser key="" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser" order="last"/>
 
     <headerParser key="Created-By" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
     <headerParser key="Signature-Version" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
@@ -75,5 +75,6 @@
                              implementationClass="org.osmorc.manifest.lang.psi.HeaderValuePartManipulator"/>
     <lang.ast.factory language="MANIFEST" implementationClass="org.osmorc.manifest.lang.psi.impl.ManifestASTFactory"/>
     <fileTypeFactory implementation="org.osmorc.manifest.lang.ManifestFileTypeFactory" />
+    <fileEditorProvider implementation="org.osmorc.manifest.editor.ManifestEditorProvider"/>
   </extensions>
 </idea-plugin>

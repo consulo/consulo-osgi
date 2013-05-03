@@ -26,17 +26,10 @@ package org.jetbrains.osgi.manifest.impl;
 
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.psi.NavigatablePsiElement;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.manifest.lang.ManifestFileType;
-import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
-import org.osmorc.manifest.lang.psi.Section;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
@@ -77,31 +70,7 @@ public class BundleManifestImpl extends AbstractBundleManifestImpl {
       return;
     }
 
-    PsiFile fromText = PsiFileFactory.getInstance(myManifestFile.getProject())
-      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format(SET_HEADER, key, value));
-
-    Header newHeader = PsiTreeUtil.getChildOfType(fromText.getFirstChild(), Header.class);
-
-    assert newHeader != null;
-
-    Header headerByName = getHeaderByName(key);
-    if (headerByName == null) {
-      Section section = (Section)myManifestFile.getFirstChild();
-
-      String sectionText = section.getText();
-      if (sectionText.charAt(sectionText.length() - 1) != '\n') {
-        PsiElement lastChild = section.getLastChild();
-        if (lastChild instanceof Header) {
-          Header header = (Header)lastChild;
-          header.getNode().addLeaf(ManifestTokenType.NEWLINE, "\n", null);
-        }
-      }
-
-      section.add(newHeader);
-    }
-    else {
-      headerByName.replace(newHeader);
-    }
+   myManifestFile.setHeaderValue(key, value);
   }
 
   @Override

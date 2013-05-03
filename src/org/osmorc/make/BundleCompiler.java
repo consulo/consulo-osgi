@@ -35,29 +35,25 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.roots.*;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.facet.OSGiFacet;
+import org.jetbrains.osgi.facet.OSGiFacetConfiguration;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.osmorc.facet.OsmorcFacet;
-import org.osmorc.facet.OsmorcFacetConfiguration;
 import org.osmorc.facet.OsmorcFacetUtil;
-import org.osmorc.facet.maven.LocalPackageCollector;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager;
-import org.osmorc.util.OrderedProperties;
 
 import java.io.DataInput;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This is a compiler step that builds up a bundle. Depending on user settings the compiler either uses a user-edited
@@ -106,7 +102,7 @@ public class BundleCompiler implements PackagingCompiler {
 
         List<ProcessingItem> result = new ArrayList<ProcessingItem>();
         for (Module affectedModule : affectedModules) {
-          if (OsmorcFacetUtil.hasOsmorcFacet(affectedModule)) {
+          if (OSGiFacetUtil.findFacet(affectedModule) != null) {
             result.add(new BundleProcessingItem(affectedModule));
           }
         }
@@ -163,9 +159,8 @@ public class BundleCompiler implements PackagingCompiler {
       }
     }.execute().getResultObject();
 
-    //final BndWrapper wrapper = new BndWrapper();
-    OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(module);
-    final OsmorcFacetConfiguration configuration = osmorcFacet.getConfiguration();
+    OSGiFacet osmorcFacet = OSGiFacetUtil.findFacet(module);
+    final OSGiFacetConfiguration configuration = osmorcFacet.getConfiguration();
     final List<String> classPaths = new ArrayList<String>();
 
     if (moduleOutputDir != null) {
@@ -175,7 +170,7 @@ public class BundleCompiler implements PackagingCompiler {
 
     // build a bnd file or use a provided one.
     // use a linked hash map to keep the order of properties.
-    Map<String, String> buildProperties = new LinkedHashMap<String, String>();
+  /*  Map<String, String> buildProperties = new LinkedHashMap<String, String>();
     if (configuration.isUseBndFile()) {
       File bndFile = findFileInModuleContentRoots(configuration.getBndFileLocation(), module);
       if (bndFile == null || !bndFile.exists() || bndFile.isDirectory()) {
@@ -326,7 +321,7 @@ public class BundleCompiler implements PackagingCompiler {
     if (!configuration.isUseBndFile() && !configuration.isUseBundlorFile()) {
       // finally bundlify all the libs for this one
       bundlifyLibraries(module, progressIndicator, compileContext);
-    }
+    } */
   }
 
   @Nullable

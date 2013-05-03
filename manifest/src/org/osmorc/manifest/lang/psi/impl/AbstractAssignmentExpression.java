@@ -26,11 +26,15 @@ package org.osmorc.manifest.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
+import org.osmorc.manifest.lang.ManifestFileType;
 import org.osmorc.manifest.lang.psi.AssignmentExpression;
+import org.osmorc.manifest.lang.psi.Directive;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.stub.AssignmentExpressionStub;
 
@@ -61,9 +65,35 @@ public abstract class AbstractAssignmentExpression extends ManifestElementBase<A
     return result != null ? result : "<unnamed>";
   }
 
+  @Override
   public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-    // TODO: Implement
+    PsiFile fromText = PsiFileFactory.getInstance(getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Test: test;%s:=%s\n", name, getValue()));
+
+    Directive directive = PsiTreeUtil.findChildOfType(fromText, Directive.class);
+
+    assert directive != null;
+
+    getNamePsi().replace(directive.getNamePsi());
     return this;
+  }
+
+  @Override
+  public void setValue(@NotNull String value) {
+    PsiFile fromText = PsiFileFactory.getInstance(getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Test: test;%s:=%s\n", getName(), value));
+
+    Directive directive = PsiTreeUtil.findChildOfType(fromText, Directive.class);
+
+    assert directive != null;
+
+    HeaderValuePart valuePsi = getValuePsi();
+    if(valuePsi == null) {
+      replace(directive);
+    }
+    else {
+      valuePsi.replace(directive.getValuePsi());
+    }
   }
 
   public HeaderValuePart getNamePsi() {

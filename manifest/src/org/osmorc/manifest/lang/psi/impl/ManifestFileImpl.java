@@ -27,13 +27,18 @@ package org.osmorc.manifest.lang.psi.impl;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.ManifestFileType;
 import org.osmorc.manifest.lang.ManifestLanguage;
+import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
+import org.osmorc.manifest.lang.psi.Section;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,5 +118,34 @@ public class ManifestFileImpl extends PsiFileBase implements ManifestFile {
       result.add(clause.getClauseText());
     }
     return result;
+  }
+
+  @Override
+  public void setHeaderValue(@NotNull String key, @NotNull String value) {
+    PsiFile fromText = PsiFileFactory.getInstance(getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("%s: %s\n", key, value));
+
+    Header newHeader = PsiTreeUtil.getChildOfType(fromText.getFirstChild(), Header.class);
+
+    assert newHeader != null;
+
+    Header headerByName = getHeaderByName(key);
+    if (headerByName == null) {
+      Section section = (Section)getFirstChild();
+
+      String sectionText = section.getText();
+      if (sectionText.charAt(sectionText.length() - 1) != '\n') {
+        PsiElement lastChild = section.getLastChild();
+        if (lastChild instanceof Header) {
+          Header header = (Header)lastChild;
+          header.getNode().addLeaf(ManifestTokenType.NEWLINE, "\n", null);
+        }
+      }
+
+      section.add(newHeader);
+    }
+    else {
+      headerByName.replace(newHeader);
+    }
   }
 }
