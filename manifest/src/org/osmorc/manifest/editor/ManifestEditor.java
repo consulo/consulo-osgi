@@ -1,30 +1,22 @@
 package org.osmorc.manifest.editor;
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.ide.actions.QualifiedNameProvider;
 import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.ItemPresentationProviders;
-import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiReference;
 import com.intellij.ui.*;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.table.JBTable;
+import com.intellij.util.ui.AbstractTableCellEditor;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,107 +27,20 @@ import org.osmorc.manifest.lang.headerparser.HeaderParser;
 import org.osmorc.manifest.lang.headerparser.HeaderUtil;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Header;
-import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author VISTALL
  * @since 12:33/03.05.13
  */
 public class ManifestEditor extends UserDataHolderBase implements FileEditor {
-  private static class MyTextFieldWithAutoCompletionListProvider extends TextFieldWithAutoCompletionListProvider<Object> {
-
-    private final Header myHeaderByName;
-    private final HeaderParser myHeaderParser;
-
-    public MyTextFieldWithAutoCompletionListProvider(Header headerByName, HeaderParser headerParser) {
-      super(null);
-      myHeaderByName = headerByName;
-      myHeaderParser = headerParser;
-    }
-
-    @NotNull
-    @Override
-    public Collection<Object> getItems(String prefix, boolean cached, CompletionParameters parameters) {
-      return ApplicationManager.getApplication().runReadAction(new Computable<Collection<Object>>() {
-        @Override
-        public Collection<Object> compute() {
-          Clause[] clauses = myHeaderByName.getClauses();
-          if (clauses.length == 0) {
-            return Collections.emptyList();
-          }
-          HeaderValuePart value = clauses[0].getValue();
-          if (value == null) {
-            return Collections.emptyList();
-          }
-
-          List<Object> objects = new ArrayList<Object>();
-          PsiReference[] references = myHeaderParser.getReferences(value);
-          for (PsiReference reference : references) {
-            for (Object o : reference.getVariants()) {
-              if(myHeaderParser.isAcceptable(o)) {
-                objects.add(o);
-              }
-            }
-          }
-          return objects;
-        }
-      });
-    }
-
-    @Nullable
-    @Override
-    protected Icon getIcon(@NotNull Object item) {
-      if (item instanceof NavigationItem) {
-        ItemPresentation itemPresentation = ItemPresentationProviders.getItemPresentation((NavigationItem)item);
-        if (itemPresentation != null) {
-          return itemPresentation.getIcon(false);
-        }
-      }
-      return null;
-    }
-
-    @NotNull
-    @Override
-    protected String getLookupString(@NotNull Object item) {
-      if (item instanceof PsiElement) {
-        for (QualifiedNameProvider provider : Extensions.getExtensions(QualifiedNameProvider.EP_NAME)) {
-          String result = provider.getQualifiedName((PsiElement)item);
-          if (result != null) {
-            return result;
-          }
-        }
-      }
-      return item.toString();
-    }
-
-    @Nullable
-    @Override
-    protected String getTailText(@NotNull Object item) {
-      return null;
-    }
-
-    @Nullable
-    @Override
-    protected String getTypeText(@NotNull Object item) {
-      return null;
-    }
-
-    @Override
-    public int compare(Object item1, Object item2) {
-      return 0;
-    }
-  }
 
   private final JPanel myRoot;
   private final Project myProject;
@@ -227,7 +132,7 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
     final HeaderParser headerParser = HeaderUtil.getHeaderParser(key);
     if (headerParser.isSimpleHeader()) {
       TextFieldWithAutoCompletion<Object> text =
-        new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldWithAutoCompletionListProvider(headerByName, headerParser), false, null);
+        new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldCompletionProvider(headerByName, headerParser), false, null);
 
       text.setEnabled(!myIsReadonlyFile);
       Object simpleConvertedValue = headerByName.getSimpleConvertedValue();
@@ -245,8 +150,27 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       JBSplitter splitter = new JBSplitter(true);
       splitter.setSplitterProportionKey(getClass().getName() + "#" + key);
 
-      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName, myIsReadonlyFile);
+      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName, headerParser, myIsReadonlyFile);
       final JBTable valueList = new JBTable(valueListModel);
+      valueList.getColumnModel().getColumn(0).setCellEditor(new AbstractTableCellEditor() {
+
+        private TextFieldWithAutoCompletion<Object> myTextField;
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+          myTextField =
+            new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldCompletionProvider(headerByName, headerParser),
+
+                                                      false, null);
+          myTextField.setText((String)value);
+          return myTextField;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+          return myTextField.getText();
+        }
+      });
       valueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
       ToolbarDecorator valueDecorator = ToolbarDecorator.createDecorator(valueList);
