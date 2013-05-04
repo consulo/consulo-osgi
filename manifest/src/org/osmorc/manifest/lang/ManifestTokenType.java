@@ -36,6 +36,7 @@ public final class ManifestTokenType extends IElementType {
   public static final ManifestTokenType NEWLINE = new ManifestTokenType("NEWLINE_TOKEN");
   public static final ManifestTokenType SECTION_END = new ManifestTokenType("SECTION_END_TOKEN");
   public static final ManifestTokenType COLON = new ManifestTokenType("COLON_TOKEN");
+  public static final ManifestTokenType COLON_EQUALS = new ManifestTokenType("COLON_EQUALS");
   public static final ManifestTokenType SEMICOLON = new ManifestTokenType("SEMICOLON_TOKEN");
   public static final ManifestTokenType EQUALS = new ManifestTokenType("EQUALS_TOKEN");
   public static final ManifestTokenType COMMA = new ManifestTokenType("COMMA_TOKEN");

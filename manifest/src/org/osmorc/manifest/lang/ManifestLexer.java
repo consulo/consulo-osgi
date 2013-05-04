@@ -29,9 +29,6 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
@@ -48,21 +45,6 @@ public class ManifestLexer extends LexerBase {
   private static final int WAITING_FOR_HEADER_ASSIGNMENT_STATE = 1;
   private static final int WAITING_FOR_HEADER_ASSIGNMENT_AFTER_BAD_CHARACTER_STATE = 2;
   private static final int WAITING_FOR_SPACE_AFTER_HEADER_NAME_STATE = 3;
-
-  private static final Map<Character, IElementType> SPECIAL_CHARACTERS_TOKEN_MAPPING;
-
-  static {
-    SPECIAL_CHARACTERS_TOKEN_MAPPING = new HashMap<Character, IElementType>();
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put(':', ManifestTokenType.COLON);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put(';', ManifestTokenType.SEMICOLON);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put(',', ManifestTokenType.COMMA);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put('=', ManifestTokenType.EQUALS);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put('(', ManifestTokenType.OPENING_PARENTHESIS_TOKEN);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put(')', ManifestTokenType.CLOSING_PARENTHESIS_TOKEN);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put('[', ManifestTokenType.OPENING_BRACKET_TOKEN);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put(']', ManifestTokenType.CLOSING_BRACKET_TOKEN);
-    SPECIAL_CHARACTERS_TOKEN_MAPPING.put('\"', ManifestTokenType.QUOTE);
-  }
 
   public ManifestLexer() {
   }
@@ -151,8 +133,8 @@ public class ManifestLexer extends LexerBase {
         myCurrentState = INITIAL_STATE;
       }
       else if (isSpecialCharacter(myTokenStart)) {
-        myTokenType = getTokenTypeForSpecialCharacter(myTokenStart);
-        myTokenEnd = myTokenStart + 1;
+        myTokenType = getToken(myTokenStart);
+        myTokenEnd = myTokenStart + getTokenSize(myTokenType);
         myCurrentState = INITIAL_STATE;
       }
       else {
@@ -202,10 +184,43 @@ public class ManifestLexer extends LexerBase {
   }
 
   private boolean isSpecialCharacter(int position) {
-    return SPECIAL_CHARACTERS_TOKEN_MAPPING.get(myBuffer.charAt(position)) != null;
+    return getToken(position) != null;
   }
 
-  private IElementType getTokenTypeForSpecialCharacter(int position) {
-    return SPECIAL_CHARACTERS_TOKEN_MAPPING.get(myBuffer.charAt(position));
+  private int getTokenSize(IElementType tokenType) {
+    if(tokenType == ManifestTokenType.COLON_EQUALS) {
+      return 2;
+    }
+    else {
+      return 1;
+    }
+  }
+
+  public IElementType getToken(int position) {
+    final char c = myBuffer.charAt(position);
+    switch (c) {
+      case ':':
+        if((position + 1) < myEndOffset && getToken(position + 1) == ManifestTokenType.EQUALS) {
+         return ManifestTokenType.COLON_EQUALS;
+        }
+        return ManifestTokenType.COLON;
+      case ';':
+        return ManifestTokenType.SEMICOLON;
+      case ',':
+        return ManifestTokenType.COMMA;
+      case '=':
+        return ManifestTokenType.EQUALS;
+      case '(':
+        return ManifestTokenType.OPENING_PARENTHESIS_TOKEN;
+      case ')':
+        return ManifestTokenType.CLOSING_PARENTHESIS_TOKEN;
+      case '[':
+        return ManifestTokenType.OPENING_BRACKET_TOKEN;
+      case ']':
+        return ManifestTokenType.CLOSING_BRACKET_TOKEN;
+      case '\"':
+        return ManifestTokenType.QUOTE;
+    }
+    return null;
   }
 }

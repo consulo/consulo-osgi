@@ -49,4 +49,9 @@ public abstract class ManifestElementBase<T extends StubElement> extends StubBas
   public Language getLanguage() {
     return ManifestLanguage.INSTANCE;
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + " [" + getNode().getElementType() + "]";
+  }
 }

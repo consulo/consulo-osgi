@@ -5,6 +5,7 @@ import com.intellij.openapi.extensions.AbstractExtensionPointBean;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.util.xmlb.annotations.Attribute;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 
 /**
  * @author VISTALL
@@ -20,6 +21,16 @@ public class HeaderParserEP extends AbstractExtensionPointBean {
   @NotNull
   @Attribute("implementationClass")
   public String implementationClass;
+
+  public HeaderParserEP() {
+
+  }
+
+  @TestOnly
+  public HeaderParserEP(@NotNull String key, @NotNull Class<? extends HeaderParser> clazz) {
+    this.key = key;
+    this.implementationClass = clazz.getName();
+  }
 
   private HeaderParser myParserInstance;
 

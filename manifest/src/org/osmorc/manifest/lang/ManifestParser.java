@@ -174,7 +174,7 @@ class ManifestParser implements PsiParser {
   }
 
   private boolean parseDirective(PsiBuilder builder) {
-    if (builder.getTokenType() == ManifestTokenType.COLON && assignmentMarkerType == null) {
+    if (builder.getTokenType() == ManifestTokenType.COLON_EQUALS && assignmentMarkerType == null) {
       assignmentMarker = headerValuePartMarker.precede();
       assignmentMarkerType = ManifestElementTypes.DIRECTIVE;
       closeHeaderValuePart();
@@ -184,9 +184,6 @@ class ManifestParser implements PsiParser {
         if (builder.getTokenType() == ManifestTokenType.SIGNIFICANT_SPACE) {
           builder.advanceLexer();
         }
-      }
-      if (builder.getTokenType() == ManifestTokenType.EQUALS) {
-        builder.advanceLexer();
       }
       return true;
     }
