@@ -15,6 +15,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.*;
 import com.intellij.ui.components.JBList;
+import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.AbstractTableCellEditor;
 import com.intellij.util.ui.UIUtil;
@@ -134,17 +135,14 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       TextFieldWithAutoCompletion<Object> text =
         new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldCompletionProvider(headerByName, headerParser), false, null);
 
+      text.setOneLineMode(false);
       text.setEnabled(!myIsReadonlyFile);
       Object simpleConvertedValue = headerByName.getSimpleConvertedValue();
       if(simpleConvertedValue != null) {
         text.setText(simpleConvertedValue.toString());
       }
 
-
-      JPanel panel = new JPanel(new BorderLayout());
-      panel.add(new JLabel("Value: "), BorderLayout.WEST);
-      panel.add(text, BorderLayout.CENTER);
-      myContentPanel.add(panel, BorderLayout.NORTH);
+      myContentPanel.add(new JBScrollPane(text), BorderLayout.CENTER);
     }
     else {
       JBSplitter splitter = new JBSplitter(true);
