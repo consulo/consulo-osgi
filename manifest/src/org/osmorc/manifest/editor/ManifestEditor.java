@@ -212,6 +212,7 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
   }
 
   private void disableActionsIfNeed(ToolbarDecorator toolbarDecorator) {
+    toolbarDecorator.disableUpDownActions();
     if(myIsReadonlyFile) {
       toolbarDecorator.disableUpDownActions();
       toolbarDecorator.disableAddAction();
