@@ -20,6 +20,8 @@ import com.intellij.util.ui.AbstractTableCellEditor;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osmorc.manifest.editor.completionProviders.HeaderKeyCompletionProvider;
+import org.osmorc.manifest.editor.completionProviders.HeaderValueCompletionProvider;
 import org.osmorc.manifest.editor.models.ClauseTableModel;
 import org.osmorc.manifest.editor.models.FileTableModel;
 import org.osmorc.manifest.editor.models.HeaderTableModel;

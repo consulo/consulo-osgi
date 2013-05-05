@@ -1,4 +1,4 @@
-package org.osmorc.manifest.editor;
+package org.osmorc.manifest.editor.completionProviders;
 
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.ui.TextFieldWithAutoCompletionListProvider;
