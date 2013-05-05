@@ -88,7 +88,7 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
   @Override
   public void setText(@NotNull String text) {
     final String dummyTemplate;
-    if(getText().endsWith("\n")) {
+    if (getText().endsWith("\n")) {
       dummyTemplate = "Dummy: %s\n";
     }
     else {
@@ -103,7 +103,10 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
 
     assert clause != null;
 
-    replace(clause.getValue());
+    final HeaderValuePart value = clause.getValue();
+    if (value != null) {
+      replace(value);
+    }
   }
 
   public Object getConvertedValue() {

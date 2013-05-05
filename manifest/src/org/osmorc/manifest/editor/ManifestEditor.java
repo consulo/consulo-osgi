@@ -4,33 +4,36 @@ import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolderBase;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.*;
-import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.AbstractTableCellEditor;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.manifest.editor.dialogs.AddNewKeyDialog;
 import org.osmorc.manifest.editor.models.ClauseTableModel;
+import org.osmorc.manifest.editor.models.FileTableModel;
 import org.osmorc.manifest.editor.models.HeaderTableModel;
 import org.osmorc.manifest.lang.headerparser.HeaderParser;
 import org.osmorc.manifest.lang.headerparser.HeaderUtil;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Header;
+import org.osmorc.manifest.lang.psi.HeaderValuePart;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.BorderLayout;
@@ -73,50 +76,64 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
 
     myManifestFile = (ManifestFile)psiFile;
 
-    final ManifestEditorListModel dataModel = new ManifestEditorListModel(myManifestFile);
 
-    final JBList list = new JBList(dataModel);
-    list.addListSelectionListener(new ListSelectionListener() {
+    final FileTableModel fileTableModel = new FileTableModel(myManifestFile);
+    final JBTable headersTable = new JBTable(fileTableModel);
+    headersTable.getColumnModel().getColumn(0).setCellEditor(new AbstractTableCellEditor() {
+
+      private TextFieldWithAutoCompletion<String> myTextField;
+
+      @Override
+      public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        myTextField = new TextFieldWithAutoCompletion<String>(myProject, new HeaderKeyCompletionProvider(), false, null);
+        myTextField.setText((String)value);
+        return myTextField;
+      }
+
+      @Override
+      public Object getCellEditorValue() {
+        return myTextField.getText();
+      }
+    });
+    headersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    headersTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
-        final String selectedValue = (String)list.getSelectedValue();
-        selectHeader(selectedValue);
+        Header value = fileTableModel.getRowValue(headersTable.getSelectedRow());
+
+        selectHeader(value);
       }
     });
 
-    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(list);
+
+    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(headersTable);
     decorator.setAddAction(new AnActionButtonRunnable() {
       @Override
       public void run(AnActionButton anActionButton) {
-        AddNewKeyDialog dialog = new AddNewKeyDialog(project);
-        boolean b = dialog.showAndGet();
-        if (b) {
-          final String key = dialog.getKey();
-          if (!StringUtil.isEmptyOrSpaces(key)) {
-            ApplicationManager.getApplication().runWriteAction(new Runnable() {
-              @Override
-              public void run() {
-                myManifestFile.setHeaderValue(key, "");
-              }
-            });
+        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+          @Override
+          public void run() {
+            myManifestFile.setHeaderValue("NewKey", "NewValue");
           }
-        }
+        });
       }
     });
     decorator.setRemoveAction(new AnActionButtonRunnable() {
       @Override
       public void run(AnActionButton anActionButton) {
-        final String selectedValue = (String)list.getSelectedValue();
-        if(selectedValue == null) {
+        final Header value = fileTableModel.getRowValue(headersTable.getSelectedRow());
+        if (value == null) {
           return;
         }
         ApplicationManager.getApplication().runWriteAction(new Runnable() {
           @Override
           public void run() {
-            final Header headerByName = myManifestFile.getHeaderByName(selectedValue);
-            if(headerByName != null) {
-              headerByName.delete();
+            if (headersTable.isEditing()) {
+              headersTable.removeEditor();
             }
+            value.delete();
+
+            selectHeader(null);
           }
         });
       }
@@ -127,46 +144,54 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
     splitter.setSecondComponent(myContentPanel);
 
     myRoot.add(splitter);
-
-    document.addDocumentListener(new com.intellij.openapi.editor.event.DocumentAdapter() {
-      @Override
-      public void documentChanged(DocumentEvent event) {
-        dataModel.setInvalidData();
-      }
-    });
   }
 
-  public void selectHeader(@Nullable String key) {
+  public void selectHeader(@Nullable final Header header) {
     myContentPanel.removeAll();
 
-    if (key == null) {
+    if (header == null) {
       return;
     }
 
-    final Header headerByName = myManifestFile.getHeaderByName(key);
-    if (headerByName == null) {
-      return;
-    }
-
+    final String key = header.getName();
     final HeaderParser headerParser = HeaderUtil.getHeaderParser(key);
     if (headerParser.isSimpleHeader()) {
-      TextFieldWithAutoCompletion<Object> text =
-        new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldCompletionProvider(headerByName, headerParser), false, null);
+      final TextFieldWithAutoCompletion<Object> textField =
+        new TextFieldWithAutoCompletion<Object>(myProject, new HeaderValueCompletionProvider(header, headerParser), false, null);
 
-      text.setOneLineMode(false);
-      text.setEnabled(!myIsReadonlyFile);
-      Object simpleConvertedValue = headerByName.getSimpleConvertedValue();
-      if(simpleConvertedValue != null) {
-        text.setText(simpleConvertedValue.toString());
+      textField.setOneLineMode(false);
+      textField.setEnabled(!myIsReadonlyFile);
+      Object simpleConvertedValue = header.getSimpleConvertedValue();
+      if (simpleConvertedValue != null) {
+        textField.setText(simpleConvertedValue.toString());
       }
 
-      myContentPanel.add(new JBScrollPane(text), BorderLayout.CENTER);
+      textField.addDocumentListener(new DocumentAdapter() {
+        @Override
+        public void documentChanged(DocumentEvent e) {
+          ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            @Override
+            public void run() {
+              final Clause[] clauses = header.getClauses();
+              if (clauses.length != 1) {
+                return;
+              }
+              final HeaderValuePart value = clauses[0].getValue();
+              if (value != null) {
+                value.setText(textField.getText());
+              }
+            }
+          });
+        }
+      });
+
+      myContentPanel.add(new JBScrollPane(textField), BorderLayout.CENTER);
     }
     else {
       JBSplitter splitter = new JBSplitter(true);
       splitter.setSplitterProportionKey(getClass().getName() + "#" + key);
 
-      final HeaderTableModel valueListModel = new HeaderTableModel(headerByName, headerParser, myIsReadonlyFile);
+      final HeaderTableModel valueListModel = new HeaderTableModel(header, headerParser, myIsReadonlyFile);
       final JBTable valueList = new JBTable(valueListModel);
       valueList.getColumnModel().getColumn(0).setCellEditor(new AbstractTableCellEditor() {
 
@@ -174,10 +199,9 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-          myTextField =
-            new TextFieldWithAutoCompletion<Object>(myProject, new MyTextFieldCompletionProvider(headerByName, headerParser),
+          myTextField = new TextFieldWithAutoCompletion<Object>(myProject, new HeaderValueCompletionProvider(header, headerParser),
 
-                                                      false, null);
+                                                                false, null);
           myTextField.setText((String)value);
           return myTextField;
         }
@@ -231,7 +255,7 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
 
   private void disableActionsIfNeed(ToolbarDecorator toolbarDecorator) {
     toolbarDecorator.disableUpDownActions();
-    if(myIsReadonlyFile) {
+    if (myIsReadonlyFile) {
       toolbarDecorator.disableUpDownActions();
       toolbarDecorator.disableAddAction();
       toolbarDecorator.disableRemoveAction();

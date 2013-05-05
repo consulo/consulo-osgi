@@ -28,12 +28,12 @@ import java.util.List;
 * @author VISTALL
 * @since 8:57/04.05.13
 */
-public class MyTextFieldCompletionProvider extends TextFieldWithAutoCompletionListProvider<Object> {
+public class HeaderValueCompletionProvider extends TextFieldWithAutoCompletionListProvider<Object> {
 
   private final Header myHeaderByName;
   private final HeaderParser myHeaderParser;
 
-  public MyTextFieldCompletionProvider(Header headerByName, HeaderParser headerParser) {
+  public HeaderValueCompletionProvider(Header headerByName, HeaderParser headerParser) {
     super(null);
     myHeaderByName = headerByName;
     myHeaderParser = headerParser;
