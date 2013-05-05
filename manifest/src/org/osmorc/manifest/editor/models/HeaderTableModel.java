@@ -17,28 +17,7 @@ public class HeaderTableModel extends ListTableModel<Clause> {
   private final boolean myIsReadonlyFile;
 
   public HeaderTableModel(final Header header, final HeaderParser headerParser, boolean isReadonlyFile) {
-    super(new ColumnInfo.StringColumn("")/* {
-      @Override
-      public boolean isCellEditable(String s) {
-        return true;
-      }
-
-      @Nullable
-      @Override
-      public TableCellEditor getEditor(String o) {
-        return new AbstractTableCellEditor() {
-          @Override
-          public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            return new TextFieldWithAutoCompletion<Object>(header.getProject(), new MyTextFieldWithAutoCompletionListProvider(header, headerParser), false, null);
-          }
-
-          @Override
-          public Object getCellEditorValue() {
-            return "";
-          }
-        };
-      }
-    }*/);
+    super(new ColumnInfo.StringColumn(""));
     myHeader = header;
     myIsReadonlyFile = isReadonlyFile;
   }
