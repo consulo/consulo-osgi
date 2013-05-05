@@ -87,8 +87,16 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
 
   @Override
   public void setText(@NotNull String text) {
+    final String dummyTemplate;
+    if(getText().endsWith("\n")) {
+      dummyTemplate = "Dummy: %s\n";
+    }
+    else {
+      dummyTemplate = "Dummy: %s";
+    }
+
     PsiFile fromText = PsiFileFactory.getInstance(getProject())
-      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Dummy: %s", text));
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format(dummyTemplate, text));
 
 
     final Clause clause = PsiTreeUtil.findChildOfAnyType(fromText, Clause.class);
