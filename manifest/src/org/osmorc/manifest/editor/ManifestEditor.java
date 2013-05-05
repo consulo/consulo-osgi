@@ -103,6 +103,24 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
         }
       }
     });
+    decorator.setRemoveAction(new AnActionButtonRunnable() {
+      @Override
+      public void run(AnActionButton anActionButton) {
+        final String selectedValue = (String)list.getSelectedValue();
+        if(selectedValue == null) {
+          return;
+        }
+        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+          @Override
+          public void run() {
+            final Header headerByName = myManifestFile.getHeaderByName(selectedValue);
+            if(headerByName != null) {
+              headerByName.delete();
+            }
+          }
+        });
+      }
+    });
     disableActionsIfNeed(decorator);
 
     splitter.setFirstComponent(decorator.createPanel());

@@ -80,8 +80,16 @@ public abstract class AbstractAssignmentExpression extends ManifestElementBase<A
 
   @Override
   public void setValue(@NotNull String value) {
+    final String oldValue = getValue();
+    String dummyTemplate;
+    if(oldValue.endsWith("\n")) {
+      dummyTemplate = "Dummy: dummy;%s:=%s\n";
+    }
+    else {
+      dummyTemplate = "Dummy: dummy;%s:=%s";
+    }
     PsiFile fromText = PsiFileFactory.getInstance(getProject())
-      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format("Dummy: dummy;%s:=%s\n", getName(), value));
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format(dummyTemplate, getName(), value));
 
     Directive directive = PsiTreeUtil.findChildOfType(fromText, Directive.class);
 
