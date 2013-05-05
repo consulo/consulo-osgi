@@ -36,31 +36,39 @@ import org.jetbrains.annotations.Nullable;
  * @version $Id:$
  */
 public class SelectedBundle {
-  public SelectedBundle(@NotNull String displayName, @Nullable String url, @NotNull BundleType bundleType) {
-    this.displayName = displayName;
-    bundleUrl = url;
-    this.bundleType = bundleType;
-    startAfterInstallation = bundleType.isDefaultStartAfterInstallation();
-    startLevel = 1;
+
+  private String myDisplayName;
+  @Nullable
+  private String myBundlePath;
+  private int myStartLevel;
+  private boolean myStartAfterInstallation;
+  private final BundleType myBundleType;
+
+  public SelectedBundle(@NotNull String displayName, @Nullable String path, @NotNull BundleType bundleType) {
+    this.myDisplayName = displayName;
+    myBundlePath = path;
+    this.myBundleType = bundleType;
+    myStartAfterInstallation = bundleType.isDefaultStartAfterInstallation();
+    myStartLevel = 1;
   }
 
   @NotNull
   public String getName() {
-    return displayName;
+    return myDisplayName;
   }
 
   public void setName(@NotNull String displayName) {
-    this.displayName = displayName;
+    this.myDisplayName = displayName;
   }
 
   @Nullable
-  public String getBundleUrl() {
-    return bundleUrl;
+  public String getBundlePath() {
+    return myBundlePath;
   }
 
 
   public String toString() {
-    return displayName + (bundleUrl != null ? (" (" + bundleUrl.substring(bundleUrl.lastIndexOf("/") + 1) + ")") : "");
+    return myDisplayName + (myBundlePath != null ? (" (" + myBundlePath.substring(myBundlePath.lastIndexOf("/") + 1) + ")") : "");
   }
 
   /**
@@ -77,25 +85,21 @@ public class SelectedBundle {
     if (o instanceof SelectedBundle) {
       SelectedBundle other = (SelectedBundle)o;
 
-      return isModule() ? isEqual(displayName, other.displayName) : isEqual(bundleUrl, other.bundleUrl);
+      return myBundlePath != null ? myBundlePath.equals(other.myBundlePath) : myDisplayName.equals(myDisplayName);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return isModule() ? displayName.hashCode() : (bundleUrl != null ? bundleUrl.hashCode() : 0);
-  }
-
-  private boolean isEqual(Object o1, Object o2) {
-    return o1 == null && o2 == null || o1 != null && o2 != null && o1.equals(o2) && o2.equals(o1);
+    return myBundlePath != null ? myBundlePath.hashCode() : myDisplayName.hashCode() ;
   }
 
   /**
    * @return the start level of this bundle. Unless set to something else, this is 1.
    */
   public int getStartLevel() {
-    return startLevel;
+    return myStartLevel;
   }
 
   /**
@@ -104,79 +108,26 @@ public class SelectedBundle {
    * @return true, if the start level of this bundle should be the default start level of the run configuration, false otherwise.
    */
   public boolean isDefaultStartLevel() {
-    return startLevel == 0;
+    return myStartLevel == 0;
   }
 
   public void setStartLevel(int startLevel) {
-    this.startLevel = startLevel;
+    this.myStartLevel = startLevel;
   }
 
-  public void setBundleUrl(@Nullable String bundleUrl) {
-    this.bundleUrl = bundleUrl;
+  public void setBundlePath(@Nullable String bundlePath) {
+    this.myBundlePath = bundlePath;
   }
 
   public BundleType getBundleType() {
-    return bundleType;
-  }
-
-  public void setBundleType(BundleType bundleType) {
-    this.bundleType = bundleType;
-  }
-
-  public boolean isModule() {
-    return bundleType == BundleType.Module;
+    return myBundleType;
   }
 
   public boolean isStartAfterInstallation() {
-    return startAfterInstallation;
+    return myStartAfterInstallation;
   }
 
   public void setStartAfterInstallation(boolean startAfterInstallation) {
-    this.startAfterInstallation = startAfterInstallation;
-  }
-
-  private String displayName;
-  @Nullable
-  private String bundleUrl;
-  private int startLevel;
-  private boolean startAfterInstallation;
-  private BundleType bundleType;
-
-  /**
-   * The type of a selected bundle,
-   */
-  public static enum BundleType {
-    /**
-     * The selected bundle is a module of the currently open project.
-     */
-    Module(true),
-    /**
-     * The selected bundle is an existing bundle that is part of the OSGi framework (e.g. the Knopflerfish Desktop
-     * bundle).
-     */
-    FrameworkBundle(true),
-    /**
-     * The selected bundle is a library used in this project, that should be started. This is rarely used, except for
-     * Libraries that are meant to be used as bundles (such as Spring-DM).
-     */
-    StartableLibrary(true),
-
-    /**
-     * The selected bundle is a plain library that should be installed only.
-     */
-    PlainLibrary(false);
-
-    BundleType(boolean startAfterInstallation) {
-      defaultStartAfterInstallation = startAfterInstallation;
-    }
-
-    /**
-     * @return true if bundles of this type should by default be started after installation, false otherwise.
-     */
-    public boolean isDefaultStartAfterInstallation() {
-      return defaultStartAfterInstallation;
-    }
-
-    private final boolean defaultStartAfterInstallation;
+    this.myStartAfterInstallation = startAfterInstallation;
   }
 }

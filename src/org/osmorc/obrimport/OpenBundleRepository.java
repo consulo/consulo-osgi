@@ -39,7 +39,7 @@ import java.io.IOException;
  * @version $Id:$
  */
 public interface OpenBundleRepository {
-  ExtensionPointName<OpenBundleRepository> EP_NAME = ExtensionPointName.create("org.osgi.openBundleRepository");
+  ExtensionPointName<OpenBundleRepository> EP_NAME = ExtensionPointName.create("org.jetbrains.osgi.openBundleRepository");
   /**
    * @return the name of the Obr, which is displayed to the user.
    */

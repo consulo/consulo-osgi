@@ -35,9 +35,6 @@ import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.openapi.compiler.DummyCompileContext;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
@@ -47,19 +44,18 @@ import com.intellij.openapi.projectRoots.JdkUtil;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.util.PathsList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.*;
-import org.osmorc.make.BundleCompiler;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
 
-import javax.swing.*;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import javax.swing.SwingUtilities;
 import java.util.*;
 
 /**
@@ -73,7 +69,7 @@ public class OsgiRunState extends JavaCommandLineState {
   private final OsgiRunConfiguration runConfiguration;
   private final Project project;
   private final Sdk jdkForRun;
-  private SelectedBundle[] _selectedBundles;
+  private SelectedBundle[] mySelectedBundles;
   private final FrameworkRunner runner;
   private static final String FILE_URL_PREFIX = "file:///";
 
@@ -126,22 +122,6 @@ public class OsgiRunState extends JavaCommandLineState {
       classpath.add(libraryFile);
     }
 
-    if (runConfiguration.isIncludeAllBundlesInClassPath()) {
-      SelectedBundle[] bundles = getSelectedBundles();
-      for (SelectedBundle bundle : bundles) {
-        String bundlePath = bundle.getBundleUrl();
-        bundlePath = bundlePath.substring(FILE_URL_PREFIX.length());
-        if (bundlePath.indexOf(':') < 0 && bundlePath.charAt(0) != '/') {
-          bundlePath = "/" + bundlePath;
-        }
-        bundlePath = bundlePath.replace('/', File.separatorChar);
-
-        classpath.add(bundlePath);
-      }
-    }
-
-    // setup  the main class
-    params.setMainClass(runner.getMainClass());
 
     // get the bundles to be run.
     SelectedBundle[] bundles = getSelectedBundles();
@@ -149,6 +129,19 @@ public class OsgiRunState extends JavaCommandLineState {
       throw new CantRunException(
         "One or more modules seem to be missing their OSGi facets or you have modules in your run configuration that no longer exist. Please re-add the OSGi facets or clean the run configuration and try again.");
     }
+
+    if (runConfiguration.isIncludeAllBundlesInClassPath()) {
+      for (SelectedBundle bundle : bundles) {
+        String bundlePath = bundle.getBundlePath();
+
+        assert bundlePath != null;
+
+        classpath.add(FileUtil.toSystemIndependentName(bundlePath));
+      }
+    }
+
+    // setup  the main class
+    params.setMainClass(runner.getMainClass());
 
     // setup the commandline parameters
     final ParametersList programParameters = params.getProgramParametersList();
@@ -172,47 +165,34 @@ public class OsgiRunState extends JavaCommandLineState {
   @Nullable
   private SelectedBundle[] getSelectedBundles() {
 
-    if (_selectedBundles == null) {
+    if (mySelectedBundles == null) {
       ProgressManager.getInstance().run(new Task.Modal(project, "Preparing bundles...", false) {
 
         public void run(@NotNull ProgressIndicator progressIndicator) {
           progressIndicator.setIndeterminate(false);
           final HashSet<SelectedBundle> selectedBundles = new HashSet<SelectedBundle>();
-          // the bundles are module names, by now we try to find jar files in the output directory which we can then install
-          ModuleManager moduleManager = ModuleManager.getInstance(project);
+
           int bundleCount = runConfiguration.getBundlesToDeploy().size();
           for (int i = 0; i < bundleCount; i++) {
             final SelectedBundle selectedBundle = runConfiguration.getBundlesToDeploy().get(i);
             progressIndicator.setFraction(i / bundleCount);
-            if (selectedBundle.isModule()) {
-              // use the output jar name if it is a module
-              try {
-                final Module module = moduleManager.findModuleByName(selectedBundle.getName());
-                if (module == null) {
-                  showErrorMessage("Module '" + selectedBundle.getName() + "' does no longer exist. Please check your run configuration.");
-                  _selectedBundles = null;
-                  return;
-                }
 
-                if (!OsmorcFacetUtil.hasOsmorcFacet(module)) {
-                  // actually this should not happen, but it seemed to happen once, so we check this here.
-                  showErrorMessage("Module '" + selectedBundle.getName() +
-                                   "' has no OSGi facet, but should have. Please re-add the OSGi facet to this module.");
-                  _selectedBundles = null;
-                  return;
-                }
-                selectedBundle.setBundleUrl(new URL("file", "/", BundleCompiler.getJarFileName(module)).toString());
-                // add all the library dependencies of the bundle
-                String[] depUrls = BundleCompiler.bundlifyLibraries(module, progressIndicator, DummyCompileContext.getInstance());
-                for (String depUrl : depUrls) {
-                  SelectedBundle dependency = new SelectedBundle("Dependency", depUrl, SelectedBundle.BundleType.PlainLibrary);
-                  selectedBundles.add(dependency);
-                }
-                selectedBundles.add(selectedBundle);
+            if(selectedBundle.getBundleType() == BundleType.Artifact) {
+              final Artifact artifact = ArtifactManager.getInstance(project).findArtifact(selectedBundle.getName());
+              if(artifact == null) {
+                showErrorMessage("Artifact '" + selectedBundle.getName() + "' is not found");
+                OsgiRunState.this.mySelectedBundles = null;
+                return;
               }
-              catch (MalformedURLException e) {
-                throw new IllegalStateException(e); // should not happen...
+              final String outputFilePath = artifact.getOutputFilePath();
+              if(outputFilePath == null) {
+                showErrorMessage("Artifact '" + selectedBundle.getName() + "' is not builded");
+                OsgiRunState.this.mySelectedBundles = null;
+                return;
               }
+
+              selectedBundle.setBundlePath(outputFilePath);
+              selectedBundles.add(selectedBundle);
             }
             else {
               if (selectedBundles.contains(selectedBundle)) {
@@ -227,8 +207,8 @@ public class OsgiRunState extends JavaCommandLineState {
 
           // filter out bundles which have the same symbolic name
           for (SelectedBundle selectedBundle : selectedBundles) {
-            String name = CachingBundleInfoProvider.getBundleSymbolicName(selectedBundle.getBundleUrl());
-            String version = CachingBundleInfoProvider.getBundleVersions(selectedBundle.getBundleUrl());
+            String name = CachingBundleInfoProvider.getBundleSymbolicName(selectedBundle.getBundlePath());
+            String version = CachingBundleInfoProvider.getBundleVersions(selectedBundle.getBundlePath());
             String key = name + version;
             if (!finalList.containsKey(key)) {
               finalList.put(key, selectedBundle);
@@ -236,12 +216,12 @@ public class OsgiRunState extends JavaCommandLineState {
           }
 
           Collection<SelectedBundle> selectedBundleCollection = finalList.values();
-          _selectedBundles = selectedBundleCollection.toArray(new SelectedBundle[selectedBundleCollection.size()]);
-          Arrays.sort(_selectedBundles, new StartLevelComparator());
+          OsgiRunState.this.mySelectedBundles = selectedBundleCollection.toArray(new SelectedBundle[selectedBundleCollection.size()]);
+          Arrays.sort(OsgiRunState.this.mySelectedBundles, new StartLevelComparator());
         }
       });
     }
-    return _selectedBundles;
+    return mySelectedBundles;
   }
 
   private static void showErrorMessage(final String message) {

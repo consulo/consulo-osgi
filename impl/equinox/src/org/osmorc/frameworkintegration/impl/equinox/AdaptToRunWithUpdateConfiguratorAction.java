@@ -29,7 +29,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.frameworkintegration.*;
-import org.osmorc.make.BundleCompiler;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
 
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
 
     Collection<SelectedBundle> currentlySelectedBundles = new ArrayList<SelectedBundle>(getContext().getCurrentlySelectedBundles());
     for (SelectedBundle selectedBundle : currentlySelectedBundles) {
-      if (selectedBundle.getBundleType() == SelectedBundle.BundleType.FrameworkBundle) {
-        String url = selectedBundle.getBundleUrl();
+      if (selectedBundle.getBundleType() == BundleType.FrameworkBundle) {
+        String url = selectedBundle.getBundlePath();
         boolean necessaryFrameworkBundleFound = false;
         if (url != null) {
           for (Iterator<String> iterator = necessaryFrameworkBundleURLs.iterator(); iterator.hasNext(); ) {
@@ -92,7 +92,7 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
             for (Iterator<String> iterator = necessaryFrameworkBundleURLs.iterator(); iterator.hasNext(); ) {
               String necessaryFrameworkBundleURL = iterator.next();
               if (url.contains(necessaryFrameworkBundleURL)) {
-                SelectedBundle bundle = createSelectedFrameworkBundle(url);
+                SelectedBundle bundle = createSelectedFrameworkBundle(jarFile.getPath());
                 adaptBundle(bundle);
                 iterator.remove();
                 getContext().addBundle(bundle);
@@ -106,7 +106,7 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
   }
 
   private void adaptBundle(@NotNull SelectedBundle bundle) {
-    String url = bundle.getBundleUrl();
+    String url = bundle.getBundlePath();
     assert url != null;
     if (url.contains(ORG_ECLIPSE_EQUINOX_COMMON_URL)) {
       bundle.setStartLevel(2);
@@ -122,14 +122,12 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
     }
   }
 
-  private SelectedBundle createSelectedFrameworkBundle(String url) {
-    url = BundleCompiler.convertJarUrlToFileUrl(url);
-    url = BundleCompiler.fixFileURL(url);
-    String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(url);
+  private SelectedBundle createSelectedFrameworkBundle(String path) {
+    String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(path);
     SelectedBundle bundle = null;
     if (bundleName != null) {
-      String bundleVersion = CachingBundleInfoProvider.getBundleVersions(url);
-      bundle = new SelectedBundle(bundleName + " - " + bundleVersion, url, SelectedBundle.BundleType.FrameworkBundle);
+      String bundleVersion = CachingBundleInfoProvider.getBundleVersions(path);
+      bundle = new SelectedBundle(bundleName + " - " + bundleVersion, path, BundleType.FrameworkBundle);
     }
     return bundle;
   }

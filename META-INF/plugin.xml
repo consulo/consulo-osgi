@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-  <id>org.osgi</id>
+  <id>org.jetbrains.osgi</id>
   <name>OSGi support</name>
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
@@ -36,7 +36,7 @@
     </extensionPoint>
   </extensionPoints>
 
-  <extensions defaultExtensionNs="org.osgi">
+  <extensions defaultExtensionNs="org.jetbrains.osgi">
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.felix.FelixIntegrator"/>
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator"/>
     <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator"/>
@@ -137,7 +137,7 @@
     <!--< <facetType implementation="org.osmorc.facet.OsmorcFacetType"/> -->
     <facetType implementation="org.jetbrains.osgi.facet.OSGiFacetType" />
     <!---<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
-    <compiler implementation="org.osmorc.make.BundleCompiler"/>
+
     <refactoring.elementListenerProvider implementation="org.osmorc.facet.OsmorcFacetRefactoringListenerProvider"/>
 
     <projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
@@ -156,6 +156,7 @@
     <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
     <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider" />
 
+    <packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType" />
     <!--Service component dom model-->
     <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
     <dom.fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>

@@ -192,7 +192,7 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
 
       // remove all framework bundles from the list
       RunConfigurationTableModel model = getTableModel();
-      model.removeAllOfType(SelectedBundle.BundleType.FrameworkBundle);
+      model.removeAllOfType(BundleType.FrameworkBundle);
 
       for (BundleSelectionAction bundleSelectionAction : integrator.getBundleSelectionActions()) {
         bundleSelectionAction.setContext(this);
@@ -455,7 +455,7 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
       }
     }
 
-    public void removeAllOfType(SelectedBundle.BundleType type) {
+    public void removeAllOfType(BundleType type) {
       for (Iterator<SelectedBundle> selectedBundleIterator = selectedBundles.iterator(); selectedBundleIterator.hasNext(); ) {
         SelectedBundle selectedBundle = selectedBundleIterator.next();
         if (selectedBundle.getBundleType() == type) {

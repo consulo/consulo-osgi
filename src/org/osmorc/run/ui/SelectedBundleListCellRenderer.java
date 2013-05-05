@@ -25,12 +25,14 @@
 
 package org.osmorc.run.ui;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.util.PlatformIcons;
 import org.jetbrains.osgi.OSGiIcons;
+import org.jetbrains.osgi.compiler.artifact.OSGiArtifactType;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import java.awt.Component;
 
 /**
  * ListCellRenderer that is rendering a Module
@@ -44,10 +46,10 @@ public class SelectedBundleListCellRenderer extends DefaultListCellRenderer {
                                                 boolean cellHasFocus) {
     JLabel component = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     SelectedBundle selectedBundle = (SelectedBundle)value;
-    if (selectedBundle.isModule()) {
-      component.setIcon(AllIcons.Nodes.Module);
+    if(selectedBundle.getBundleType() == BundleType.Artifact) {
+      component.setIcon(OSGiArtifactType.getInstance().getIcon());
     }
-    else if (selectedBundle.getBundleType() == SelectedBundle.BundleType.FrameworkBundle) {
+    else if (selectedBundle.getBundleType() == BundleType.FrameworkBundle) {
       component.setIcon(OSGiIcons.FacetType);
     }
     else {

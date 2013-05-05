@@ -29,7 +29,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.frameworkintegration.*;
-import org.osmorc.make.BundleCompiler;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
 
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ class AdaptToRunWithoutUpdateConfigurator extends BundleSelectionAction {
 
     final Collection<SelectedBundle> currentlySelectedBundles = new ArrayList<SelectedBundle>(getContext().getCurrentlySelectedBundles());
     for (SelectedBundle selectedBundle : currentlySelectedBundles) {
-      if (selectedBundle.getBundleType() == SelectedBundle.BundleType.FrameworkBundle) {
-        String url = selectedBundle.getBundleUrl();
+      if (selectedBundle.getBundleType() == BundleType.FrameworkBundle) {
+        String url = selectedBundle.getBundlePath();
         if (url != null) {
           if (url.contains(ORG_ECLIPSE_UPDATE_CONFIGURATOR_URL) || url.contains(ORG_ECLIPSE_OSGI_URL)) {
             getContext().removeBundle(selectedBundle);
@@ -75,7 +75,7 @@ class AdaptToRunWithoutUpdateConfigurator extends BundleSelectionAction {
         for (VirtualFile jarFile : jarFiles) {
           String url = jarFile.getUrl();
           if (!url.contains(ORG_ECLIPSE_UPDATE_CONFIGURATOR_URL) && !url.contains(ORG_ECLIPSE_OSGI_URL)) {
-            prototypeBundle = createSelectedFrameworkBundle(prototypeBundle, url);
+            prototypeBundle = createSelectedFrameworkBundle(prototypeBundle, jarFile.getPath());
             if (prototypeBundle != null && !currentlySelectedBundles.contains(prototypeBundle)) {
               adaptBundle(prototypeBundle);
               getContext().addBundle(prototypeBundle);
@@ -87,22 +87,20 @@ class AdaptToRunWithoutUpdateConfigurator extends BundleSelectionAction {
     });
   }
 
-  private SelectedBundle createSelectedFrameworkBundle(final SelectedBundle prototypeBundle, final String url) {
-    String bundleUrl = BundleCompiler.convertJarUrlToFileUrl(url);
-    bundleUrl = BundleCompiler.fixFileURL(bundleUrl);
-    String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(bundleUrl);
+  private SelectedBundle createSelectedFrameworkBundle(final SelectedBundle prototypeBundle, final String path) {
+    String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(path);
     SelectedBundle bundle = null;
 
     if (bundleName != null) {
       bundle = prototypeBundle;
-      String bundleVersion = CachingBundleInfoProvider.getBundleVersions(bundleUrl);
+      String bundleVersion = CachingBundleInfoProvider.getBundleVersions(path);
       String displayName = bundleName + " - " + bundleVersion;
       if (bundle != null) {
         bundle.setName(displayName);
-        bundle.setBundleUrl(bundleUrl);
+        bundle.setBundlePath(path);
       }
       else {
-        bundle = new SelectedBundle(displayName, bundleUrl, SelectedBundle.BundleType.FrameworkBundle);
+        bundle = new SelectedBundle(displayName, path, BundleType.FrameworkBundle);
       }
     }
     return bundle;
@@ -110,7 +108,7 @@ class AdaptToRunWithoutUpdateConfigurator extends BundleSelectionAction {
 
 
   private void adaptBundle(@NotNull SelectedBundle bundle) {
-    String url = bundle.getBundleUrl();
+    String url = bundle.getBundlePath();
     assert url != null;
     if (url.contains("org.eclipse.core.runtime_")) {
       bundle.setStartLevel(4);

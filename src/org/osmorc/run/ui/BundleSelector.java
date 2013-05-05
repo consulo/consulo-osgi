@@ -25,18 +25,20 @@
 
 package org.osmorc.run.ui;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.LibraryOrderEntry;
+import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.ui.DocumentAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacetUtil;
+import org.jetbrains.osgi.compiler.artifact.OSGiArtifactType;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.i18n.OsmorcBundle;
-import org.osmorc.make.BundleCompiler;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -52,15 +54,22 @@ import java.util.*;
  * @version $Id$
  */
 public class BundleSelector extends JDialog {
+  public static final Condition<OrderEntry> NOT_FRAMEWORK_LIBRARY_CONDITION = new Condition<OrderEntry>() {
+    @Override
+    public boolean value(OrderEntry entry) {
+      return !(entry instanceof LibraryOrderEntry) || !FrameworkInstanceLibraryManager.isFrameworkInstanceLibrary((LibraryOrderEntry)entry);
+    }
+  };
+
   private JPanel contentPane;
   private JButton buttonOK;
   private JButton buttonCancel;
-  private JList bundlesList;
+  private JList<SelectedBundle> bundlesList;
   private JTextField searchField;
   private FrameworkInstanceDefinition usedFramework;
   private List<SelectedBundle> hideBundles = new ArrayList<SelectedBundle>();
   private final Project project;
-  private ArrayList<SelectedBundle> selectedBundles = new ArrayList<SelectedBundle>();
+  private List<SelectedBundle> selectedBundles = new ArrayList<SelectedBundle>();
   private final ArrayList<SelectedBundle> allAvailableBundles = new ArrayList<SelectedBundle>();
 
   public BundleSelector(Project project) {
@@ -117,18 +126,19 @@ public class BundleSelector extends JDialog {
   private void createList() {
     allAvailableBundles.clear();
 
-    final HashSet<SelectedBundle> hs = new HashSet<SelectedBundle>();
+    final Set<SelectedBundle> hs = new HashSet<SelectedBundle>();
     // add all the modules
-    Module[] modules = ModuleManager.getInstance(project).getModules();
-    for (Module module : modules) {
-      if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
-        SelectedBundle selectedBundle = new SelectedBundle(module.getName(), null, SelectedBundle.BundleType.Module);
+    Artifact[] artifacts = ArtifactManager.getInstance(project).getSortedArtifacts();
+    for (Artifact artifact : artifacts) {
+      if (artifact.getArtifactType() == OSGiArtifactType.getInstance()) {
+        SelectedBundle selectedBundle = new SelectedBundle(artifact.getName(), null, BundleType.Artifact);
 
         // treeset produced weird results here... so i gotta take the slow approach.
 
         hs.add(selectedBundle);
       }
     }
+
     // add all framework bundles, if there are some.
     if (usedFramework != null) {
       FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(usedFramework);
@@ -137,14 +147,13 @@ public class BundleSelector extends JDialog {
         protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
                                             @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
           for (VirtualFile jarFile : jarFiles) {
-            String url = jarFile.getUrl();
-            url = BundleCompiler.convertJarUrlToFileUrl(url);
-            url = BundleCompiler.fixFileURL(url);
-            String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(url);
+
+            final String jarFilePath = jarFile.getPath();
+            String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(jarFilePath);
             if (bundleName != null) {
-              String bundleVersion = CachingBundleInfoProvider.getBundleVersions(url);
+              String bundleVersion = CachingBundleInfoProvider.getBundleVersions(jarFilePath);
               SelectedBundle b =
-                new SelectedBundle(bundleName + " - " + bundleVersion, url, SelectedBundle.BundleType.FrameworkBundle);
+                new SelectedBundle(bundleName + " - " + bundleVersion, jarFilePath, BundleType.FrameworkBundle);
               hs.add(b);
             }
           }
@@ -153,18 +162,16 @@ public class BundleSelector extends JDialog {
 
 
       // all the libraries that are bundles already (doesnt make much sense to start bundlified libs as they have no activator).
-      final String[] urls = OrderEnumerator.orderEntries(project).withoutSdk().withoutModuleSourceEntries()
-        .satisfying(BundleCompiler.NOT_FRAMEWORK_LIBRARY_CONDITION).classes().getUrls();
-      for (String url : urls) {
-        url = BundleCompiler.convertJarUrlToFileUrl(url);
-        url = BundleCompiler.fixFileURL(url);
+      final VirtualFile[] virtualFiles = OrderEnumerator.orderEntries(project).withoutSdk().withoutModuleSourceEntries()
+        .satisfying(NOT_FRAMEWORK_LIBRARY_CONDITION).classes().getRoots();
+      for (VirtualFile virtualFile : virtualFiles) {
 
-
-        String displayName = CachingBundleInfoProvider.getBundleSymbolicName(url);
+        final String virtualFilePath = virtualFile.getPath();
+        String displayName = CachingBundleInfoProvider.getBundleSymbolicName(virtualFilePath);
         if (displayName != null) {
           // okay its a startable library
           SelectedBundle selectedBundle =
-            new SelectedBundle(displayName, url, SelectedBundle.BundleType.StartableLibrary);
+            new SelectedBundle(displayName, virtualFilePath, BundleType.StartableLibrary);
           hs.add(selectedBundle);
         }
       }
@@ -178,7 +185,7 @@ public class BundleSelector extends JDialog {
     ArrayList<SelectedBundle> theList = new ArrayList<SelectedBundle>(allAvailableBundles);
     // now filter
     String filterText = searchField.getText().toLowerCase();
-    DefaultListModel newModel = new DefaultListModel();
+    DefaultListModel<SelectedBundle> newModel = new DefaultListModel<SelectedBundle>();
     for (SelectedBundle selectedBundle : theList) {
       boolean needsFiltering = filterText.length() > 0;
       if (needsFiltering && !selectedBundle.getName().toLowerCase().contains(filterText)) {
@@ -190,11 +197,9 @@ public class BundleSelector extends JDialog {
   }
 
   private void onOK() {
-    Object[] selectedValues = bundlesList.getSelectedValues();
-    selectedBundles = new ArrayList<SelectedBundle>();
-    for (Object selectedValue : selectedValues) {
-      selectedBundles.add((SelectedBundle)selectedValue);
-    }
+
+    selectedBundles = bundlesList.getSelectedValuesList();
+
     dispose();
   }
 

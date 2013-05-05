@@ -26,17 +26,14 @@
 package org.osmorc.frameworkintegration.impl.equinox;
 
 import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.*;
-import org.osmorc.make.BundleCompiler;
 import org.osmorc.run.LegacyOsgiRunConfigurationLoader;
 import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
 import org.osmorc.settings.ApplicationSettings;
 import org.osmorc.settings.ProjectSettings;
@@ -73,14 +70,14 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
   }
 
   private void addModuleBundles(List<SelectedBundle> bundlesToDeploy, Project project) {
-    Module[] modules = ModuleManager.getInstance(project).getModules();
+    /*Module[] modules = ModuleManager.getInstance(project).getModules();
     for (Module module : modules) {
       if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
-        SelectedBundle bundle = new SelectedBundle(module.getName(), null, SelectedBundle.BundleType.Module);
+        SelectedBundle bundle = new SelectedBundle(module.getName(), null, BundleType.Module);
         bundle.setStartLevel(4);
         bundlesToDeploy.add(bundle);
       }
-    }
+    }*/
   }
 
   private void addFrameworkBundle(final List<SelectedBundle> bundlesToDeploy,
@@ -95,7 +92,7 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
         for (VirtualFile jarFile : jarFiles) {
           String url = jarFile.getUrl();
           if (url.contains("org.eclipse.equinox.common_")) {
-            SelectedBundle bundle = createSelectedFrameworkBundle(url);
+            SelectedBundle bundle = createSelectedFrameworkBundle(jarFile.getPath());
             if (bundle != null) {
               bundle.setStartLevel(2);
               bundle.setStartAfterInstallation(true);
@@ -103,7 +100,7 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
             }
           }
           else if (url.contains("org.eclipse.update.configurator_")) {
-            SelectedBundle bundle = createSelectedFrameworkBundle(url);
+            SelectedBundle bundle = createSelectedFrameworkBundle(jarFile.getPath());
             if (bundle != null) {
               bundle.setStartLevel(3);
               bundle.setStartAfterInstallation(true);
@@ -111,7 +108,7 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
             }
           }
           else if (url.contains("org.eclipse.core.runtime_")) {
-            SelectedBundle bundle = createSelectedFrameworkBundle(url);
+            SelectedBundle bundle = createSelectedFrameworkBundle(jarFile.getPath());
             if (bundle != null) {
               bundle.setStartLevel(4);
               bundle.setStartAfterInstallation(true);
@@ -125,13 +122,11 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
 
   @Nullable
   private SelectedBundle createSelectedFrameworkBundle(String url) {
-    url = BundleCompiler.convertJarUrlToFileUrl(url);
-    url = BundleCompiler.fixFileURL(url);
     String bundleName = CachingBundleInfoProvider.getBundleSymbolicName(url);
     SelectedBundle bundle = null;
     if (bundleName != null) {
       String bundleVersion = CachingBundleInfoProvider.getBundleVersions(url);
-      bundle = new SelectedBundle(bundleName + " - " + bundleVersion, url, SelectedBundle.BundleType.FrameworkBundle);
+      bundle = new SelectedBundle(bundleName + " - " + bundleVersion, url, BundleType.FrameworkBundle);
     }
     return bundle;
   }

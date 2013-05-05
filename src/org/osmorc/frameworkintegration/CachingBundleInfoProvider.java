@@ -25,6 +25,7 @@
 
 package org.osmorc.frameworkintegration;
 
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VfsUtil;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.framework.Constants;
@@ -85,24 +86,24 @@ public class CachingBundleInfoProvider {
   /**
    * Returns the symbolic name of the bundle at the given url. If the file at the given url is no bundle, returns null.
    *
-   * @param bundleUrl the url of the bundle
+   * @param path the path of the bundle
    * @return the symbolic name of the bundle or null if the file is no bundle.
    */
   @Nullable
-  public static String getBundleSymbolicName(String bundleUrl) {
-    String symbolicName = getBundleAttribute(bundleUrl, Constants.BUNDLE_SYMBOLICNAME);
+  public static String getBundleSymbolicName(String path) {
+    String symbolicName = getBundleAttribute(path, Constants.BUNDLE_SYMBOLICNAME);
     return symbolicName != null ? symbolicName.split(";", 2)[0] : null; // Only take the name and leave the parameters
   }
 
   /**
    * Returns the version of the bundle at the given url.
    *
-   * @param bundleUrl the url of the bundle to search
+   * @param path the url path the bundle to search
    * @return the version of the bundle or null if the file is no bundle
    */
   @Nullable
-  public static String getBundleVersions(String bundleUrl) {
-    return getBundleAttribute(bundleUrl, Constants.BUNDLE_VERSION);
+  public static String getBundleVersions(String path) {
+    return getBundleAttribute(path, Constants.BUNDLE_VERSION);
   }
 
 
@@ -121,28 +122,32 @@ public class CachingBundleInfoProvider {
    * Returns the attribute of the bundle located at the given url. If the bundle cannot be found there or the jar at
    * that location isn't a bundle, this returns null.
    *
-   * @param bundleUrl the url of the bundle
+   * @param path the url of the bundle
    * @param attribute the attribute to resolve
    * @return the attribute's value or null if there is no such bundle or no such attribute
    */
   @Nullable
-  private synchronized static String getBundleAttribute(String bundleUrl, String attribute) {
-    bundleUrl = normalize(bundleUrl);
-    if (!_cache.containsKey(bundleUrl)) {
+  private synchronized static String getBundleAttribute(String path, String attribute) {
+    final String indepPath = FileUtil.toSystemIndependentName(path);
+
+    Manifest manifest = _cache.get(indepPath);
+    if (manifest == null) {
       try {
-        File bundleFile = new File(VfsUtil.urlToPath(bundleUrl));
+        File bundleFile = new File(indepPath);
         if (bundleFile.isDirectory()) {
           File manifestFile = new File(bundleFile, "META-INF/MANIFEST.MF");
           if (manifestFile.exists() && !manifestFile.isDirectory()) {
             FileInputStream fileInputStream = new FileInputStream(manifestFile);
-            Manifest manifest = new Manifest(fileInputStream);
+
+            manifest = new Manifest(fileInputStream);
+
             fileInputStream.close();
-            _cache.put(bundleUrl, manifest);
+            _cache.put(indepPath, manifest);
           }
         }
         else {
           JarFile file = new JarFile(bundleFile);
-          _cache.put(bundleUrl, file.getManifest());
+          _cache.put(indepPath, file.getManifest());
           file.close();
         }
       }
@@ -151,7 +156,7 @@ public class CachingBundleInfoProvider {
       }
     }
 
-    Manifest manifest = _cache.get(bundleUrl);
+
     return manifest != null ? manifest.getMainAttributes().getValue(attribute) : null;
   }
 

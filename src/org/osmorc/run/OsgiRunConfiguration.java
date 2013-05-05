@@ -33,7 +33,6 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.impl.JavaSdkImpl;
@@ -41,6 +40,13 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.JDOMExternalizable;
 import com.intellij.openapi.util.WriteExternalException;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
+import com.intellij.packaging.impl.artifacts.ArtifactUtil;
+import com.intellij.packaging.impl.artifacts.DefaultPackagingElementResolvingContext;
+import com.intellij.packaging.impl.elements.ModuleOutputPackagingElement;
+import com.intellij.packaging.impl.elements.ProductionModuleOutputElementType;
+import com.intellij.util.Processor;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
@@ -49,6 +55,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.impl.GenericRunProperties;
 import org.osmorc.i18n.OsmorcBundle;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.OsgiRunConfigurationEditor;
 import org.osmorc.run.ui.SelectedBundle;
 import org.osmorc.settings.ApplicationSettings;
@@ -78,7 +85,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
   @NonNls
   private static final String INSTANCE_ATTRIBUTE = "instance";
   @NonNls
-  private static final String URL_ATTRIBUTE = "url";
+  private static final String PATH_ATTRIBUTE = "path";
   @NonNls
   private static final String ADDITIONAL_PROPERTIES_ELEMENT = "additinalProperties";
   @NonNls
@@ -169,13 +176,13 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     bundlesToDeploy.clear();
     for (Element child : children) {
       String name = child.getAttributeValue(NAME_ATTRIBUTE);
-      String url = child.getAttributeValue(URL_ATTRIBUTE);
+      String path = child.getAttributeValue(PATH_ATTRIBUTE);
       String startLevel = child.getAttributeValue(START_LEVEL_ATTRIBUTE);
       String typeName = child.getAttributeValue(TYPE_ATTRIBUTE);
 
       if ("legacyLoader".equals(name)) {
         try {
-          legacyOsgiRunConfigurationLoader = (LegacyOsgiRunConfigurationLoader)Class.forName(url).newInstance();
+          legacyOsgiRunConfigurationLoader = (LegacyOsgiRunConfigurationLoader)Class.forName(path).newInstance();
         }
         catch (InstantiationException e) {
           throw new InvalidDataException(e);
@@ -189,15 +196,15 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
         break;
       }
 
-      SelectedBundle.BundleType type;
+      BundleType type;
       try {
-        type = SelectedBundle.BundleType.valueOf(typeName);
+        type = BundleType.valueOf(typeName);
       }
       catch (Exception e) {
         // legacy settings should have modules, only so this is a safe guess.
-        type = SelectedBundle.BundleType.Module;
+        continue;
       }
-      SelectedBundle selectedBundle = new SelectedBundle(name, url, type);
+      SelectedBundle selectedBundle = new SelectedBundle(name, path, type);
       if (startLevel != null) { // avoid crashing on legacy settings.
         try {
           selectedBundle.setStartLevel(Integer.parseInt(startLevel));
@@ -253,8 +260,8 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     for (SelectedBundle selectedBundle : bundlesToDeploy) {
       Element bundle = new Element(BUNDLE_ELEMENT);
       bundle.setAttribute(NAME_ATTRIBUTE, selectedBundle.getName());
-      if (!selectedBundle.isModule()) {
-        bundle.setAttribute(URL_ATTRIBUTE, selectedBundle.getBundleUrl());
+      if (!(selectedBundle.getBundleType() == BundleType.Artifact)) {
+        bundle.setAttribute(PATH_ATTRIBUTE, selectedBundle.getBundlePath());
       }
       bundle.setAttribute(START_LEVEL_ATTRIBUTE, String.valueOf(selectedBundle.getStartLevel()));
       bundle.setAttribute(TYPE_ATTRIBUTE, selectedBundle.getBundleType().name());
@@ -319,12 +326,30 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
 
   @NotNull
   public Module[] getModules() {
-    List<Module> modules = new ArrayList<Module>();
+    final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(getProject());
+    final List<Module> modules = new ArrayList<Module>();
     for (SelectedBundle selectedBundle : getBundlesToDeploy()) {
-      if (selectedBundle.isModule()) {
-        modules.add(ModuleManager.getInstance(getProject()).findModuleByName(selectedBundle.getName()));
+      if (selectedBundle.getBundleType() == BundleType.Artifact) {
+        Artifact artifact = ArtifactManager.getInstance(getProject()).findArtifact(selectedBundle.getName());
+        if (artifact == null) {
+          continue;
+        }
+
+        ArtifactUtil.processPackagingElements(artifact, ProductionModuleOutputElementType.ELEMENT_TYPE,
+                                              new Processor<ModuleOutputPackagingElement>() {
+                                                @Override
+                                                public boolean process(ModuleOutputPackagingElement moduleOutputPackagingElement) {
+                                                  final Module module = moduleOutputPackagingElement.findModule(context);
+                                                  if (module != null) {
+                                                    modules.add(module);
+                                                  }
+                                                  return true;
+                                                }
+                                              }, context, true);
+
       }
     }
+
     return modules.toArray(new Module[modules.size()]);
   }
 

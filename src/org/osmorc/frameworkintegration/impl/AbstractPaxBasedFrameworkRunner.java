@@ -71,7 +71,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
     // pax does it's own magic, so the only lib we need, is the pax lib.
     // XXX: ask anton if there is some better way to do this..
     @SuppressWarnings({"ConstantConditions"}) final String paxLib =
-      PluginManager.getPlugin(PluginId.getId("org.osmorc2.core")).getPath().getPath() + "/lib/" + PaxRunnerLib;
+      PluginManager.getPlugin(PluginId.getId("org.jetbrains.osgi")).getPath().getPath() + "/lib/" + PaxRunnerLib;
     List<VirtualFile> libs = new ArrayList<VirtualFile>(1);
     VirtualFile path = LocalFileSystem.getInstance().findFileByPath(paxLib);
     if (path == null) {
@@ -108,17 +108,17 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
     }
 
     for (SelectedBundle bundle : bundlesToInstall) {
-      String prefix = CachingBundleInfoProvider.isExploded(bundle.getBundleUrl()) ? "scan-bundle:" : "";
-      if (bundle.isStartAfterInstallation() && !CachingBundleInfoProvider.isFragmentBundle(bundle.getBundleUrl())) {
+      String prefix = CachingBundleInfoProvider.isExploded(bundle.getBundlePath()) ? "scan-bundle:" : "";
+      if (bundle.isStartAfterInstallation() && !CachingBundleInfoProvider.isFragmentBundle(bundle.getBundlePath())) {
         int bundleStartLevel = bundle.isDefaultStartLevel() ? getRunConfiguration().getDefaultStartLevel() : bundle.getStartLevel();
-        commandLineParameters.add(prefix + bundle.getBundleUrl() + "@" + bundleStartLevel);
+        commandLineParameters.add(prefix + bundle.getBundlePath() + "@" + bundleStartLevel);
       }
       else {
-        if (CachingBundleInfoProvider.isFragmentBundle(bundle.getBundleUrl())) {
-          commandLineParameters.add(prefix + bundle.getBundleUrl() + "@nostart");
+        if (CachingBundleInfoProvider.isFragmentBundle(bundle.getBundlePath())) {
+          commandLineParameters.add(prefix + bundle.getBundlePath() + "@nostart");
         }
         else {
-          commandLineParameters.add(prefix + bundle.getBundleUrl());
+          commandLineParameters.add(prefix + bundle.getBundlePath());
         }
       }
     }

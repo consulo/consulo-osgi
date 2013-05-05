@@ -33,6 +33,7 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
 
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class EquinoxRunConfigurationConverter extends ProjectConverter {
           ArrayList<SelectedBundle> bundles = new ArrayList<SelectedBundle>();
           bundles.add(
             new SelectedBundle("legacyLoader", "org.osmorc.frameworkintegration.impl.equinox.LegacyEquinoxOsgiRunConfigurationLoader",
-                               SelectedBundle.BundleType.FrameworkBundle));
+                               BundleType.FrameworkBundle));
           osgiRunConfiguration.setBundlesToDeploy(bundles);
 
           element.setAttribute("type", "#org.osmorc.OsgiConfigurationType");
