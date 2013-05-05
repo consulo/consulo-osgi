@@ -100,8 +100,9 @@ public class HeaderValuePartImpl extends ManifestElementBase<HeaderValuePartStub
 
 
     final Clause clause = PsiTreeUtil.findChildOfAnyType(fromText, Clause.class);
-
-    assert clause != null;
+    if(clause == null) {
+      return;
+    }
 
     final HeaderValuePart value = clause.getValue();
     if (value != null) {
