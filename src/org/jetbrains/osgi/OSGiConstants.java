@@ -6,6 +6,7 @@ package org.jetbrains.osgi;
  */
 public interface OSGiConstants {
   String OSGI_INFO_ROOT = "OSGI-INF";
+  String META_INFO_ROOT = "META-INF";
 
   String DEFAULT_OSGI_INF_ROOT_LOCATION = "$MODULE_DIR$/OSGI-INF";
 }

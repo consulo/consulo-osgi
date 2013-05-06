@@ -7,7 +7,6 @@ import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementOutputKind;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.artifacts.JarFromModulesTemplate;
 import com.intellij.packaging.impl.elements.ArchivePackagingElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +49,6 @@ public class OSGiArtifactType extends ArtifactType {
   @NotNull
   @Override
   public List<? extends ArtifactTemplate> getNewArtifactTemplates(@NotNull PackagingElementResolvingContext context) {
-    //return Collections.singletonList(new OSGiArtifactTemplate(context));
-    return Collections.singletonList(new JarFromModulesTemplate(context));
+    return Collections.singletonList(new OSGiArtifactTemplate(context));
   }
 }
