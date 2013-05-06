@@ -42,16 +42,12 @@ import com.intellij.openapi.util.JDOMExternalizable;
 import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.artifacts.ArtifactManager;
-import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.artifacts.DefaultPackagingElementResolvingContext;
-import com.intellij.packaging.impl.elements.ModuleOutputPackagingElement;
-import com.intellij.packaging.impl.elements.ProductionModuleOutputElementType;
-import com.intellij.util.Processor;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.compiler.artifact.OSGiArtifactUtil;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.impl.GenericRunProperties;
 import org.osmorc.i18n.OsmorcBundle;
@@ -326,7 +322,6 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
 
   @NotNull
   public Module[] getModules() {
-    final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(getProject());
     final List<Module> modules = new ArrayList<Module>();
     for (SelectedBundle selectedBundle : getBundlesToDeploy()) {
       if (selectedBundle.getBundleType() == BundleType.Artifact) {
@@ -335,18 +330,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
           continue;
         }
 
-        ArtifactUtil.processPackagingElements(artifact, ProductionModuleOutputElementType.ELEMENT_TYPE,
-                                              new Processor<ModuleOutputPackagingElement>() {
-                                                @Override
-                                                public boolean process(ModuleOutputPackagingElement moduleOutputPackagingElement) {
-                                                  final Module module = moduleOutputPackagingElement.findModule(context);
-                                                  if (module != null) {
-                                                    modules.add(module);
-                                                  }
-                                                  return true;
-                                                }
-                                              }, context, true);
-
+        Collections.addAll(modules, OSGiArtifactUtil.collectModules(getProject(), artifact));
       }
     }
 

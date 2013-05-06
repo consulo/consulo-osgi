@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="bndlib-1.50.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/bndlib-1.50.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bndlib.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/bndlib-1.50.0.jar!/OSGI-OPT/src" />
+      <root url="file://$PROJECT_DIR$/patched-libs/bndlib/src" />
     </SOURCES>
   </library>
 </component>

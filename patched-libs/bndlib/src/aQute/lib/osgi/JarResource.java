@@ -1,0 +1,49 @@
+package aQute.lib.osgi;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class JarResource implements Resource {
+  Jar jar;
+  String extra;
+
+  public JarResource(Jar jar) {
+    this.jar = jar;
+  }
+
+  public String getExtra() {
+    return extra;
+  }
+
+  public long lastModified() {
+    return jar.lastModified();
+  }
+
+
+  public void write(OutputStream out) throws Exception {
+    jar.write(out);
+  }
+
+  public InputStream openInputStream() throws Exception {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    write(out);
+    out.close();
+    ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+    return in;
+  }
+
+  public void setExtra(String extra) {
+    this.extra = extra;
+  }
+
+  public Jar getJar() {
+    return jar;
+  }
+
+  public String toString() {
+    return ":" + jar.getName() + ":";
+  }
+
+}

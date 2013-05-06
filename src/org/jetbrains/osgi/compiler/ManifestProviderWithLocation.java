@@ -17,7 +17,7 @@ import com.intellij.vcsUtil.VcsUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.impl.SimpleConfigurableWithLocation;
+import org.jetbrains.osgi.compiler.oldImpl.SimpleConfigurableWithLocation;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
 import org.osmorc.manifest.lang.psi.ManifestFile;

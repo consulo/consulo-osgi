@@ -16,6 +16,7 @@ import org.jetbrains.osgi.manifest.impl.DummyBundleManifestImpl;
  * @author VISTALL
  * @since 14:01/29.04.13
  */
+@Deprecated
 public abstract class ManifestProvider implements JDOMExternalizable{
 
   public void validateAndCreate() {
