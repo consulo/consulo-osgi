@@ -66,7 +66,7 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
       metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(meta.getPath(), "/"));
     }
 
-    return new NewArtifactConfiguration(archive, archive.getName(), OSGiArtifactType.getInstance());
+    return new NewArtifactConfiguration(archive, name, OSGiArtifactType.getInstance());
   }
 
   @Nullable
