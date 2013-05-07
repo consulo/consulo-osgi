@@ -19,6 +19,7 @@ import org.jetbrains.idea.maven.model.MavenArtifact;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.osmorc.BundleManager;
+import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 
 /**
  * @author VISTALL
@@ -36,6 +37,11 @@ public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspect
   public void registerProblems(Module module, XmlTag xmlTag, MavenArtifact artifact, ProblemsHolder problemsHolder) {
     final Library library = findLibrary(module, artifact);
     if(library == null) {
+      return;
+    }
+
+    // if artifact not OSGi
+    if(!CachingBundleInfoProvider.isBundle(artifact.getPath())) {
       return;
     }
 
