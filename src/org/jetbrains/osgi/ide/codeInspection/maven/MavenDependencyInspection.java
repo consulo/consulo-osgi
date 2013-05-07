@@ -88,6 +88,9 @@ public abstract class MavenDependencyInspection extends XmlSuppressableInspectio
             }
           }
 
+          if(jarArtifact == null) {
+            return;
+          }
           registerProblems(module, xmltag, jarArtifact, problemsHolder);
         }
       }
