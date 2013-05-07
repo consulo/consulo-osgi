@@ -25,12 +25,17 @@
 
 package org.osmorc.inspection.maven;
 
-import com.intellij.codeInspection.*;
+import com.intellij.codeInspection.LocalQuickFix;
+import com.intellij.codeInspection.ProblemDescriptor;
+import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
@@ -40,9 +45,8 @@ import org.jetbrains.idea.maven.dom.MavenDomUtil;
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
 import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
-import org.jetbrains.idea.maven.project.MavenProjectsManager;
-import org.jetbrains.idea.maven.utils.MavenArtifactUtil;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.idea.maven.model.MavenArtifact;
+import org.jetbrains.osgi.ide.codeInspection.maven.MavenDependencyInspection;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.obrimport.MavenRepository;
 import org.osmorc.obrimport.ObrSearchDialog;
@@ -58,71 +62,18 @@ import java.util.List;
  *
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
  */
-public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionTool {
-  @Nls
-  @NotNull
-  public String getGroupDisplayName() {
-    return "OSGi";
-  }
-
+public class NonOsgiMavenDependencyInspection extends MavenDependencyInspection {
   @Nls
   @NotNull
   public String getDisplayName() {
     return "Non-OSGi dependency";
   }
 
-  @NotNull
-  public String getShortName() {
-    return "osmorcNonOsgiMavenDependency";
-  }
-
   @Override
-  public boolean isEnabledByDefault() {
-    return true;
-  }
-
-  @NotNull
-  @Override
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder problemsHolder, boolean b) {
-    return new XmlElementVisitor() {
-      public void visitXmlTag(XmlTag xmltag) {
-        // suppress inspection for projects not having an OSGi context.
-        if (OSGiFacetUtil.findFacet(xmltag) == null) {
-          return;
-        }
-        // get the dependency
-        MavenDomDependency dependency = getDependency(xmltag);
-        if (dependency != null) {
-          String scope = dependency.getScope().getStringValue();
-          if ("test".equals(scope)) {
-            // don't test this for "test" dependencies...
-            return;
-          }
-          // get the projects manager for this dependency
-          MavenProjectsManager manager = MavenProjectsManager.getInstance(xmltag.getProject());
-          // try to resolve the jar file
-          File artifactFile = MavenArtifactUtil.getArtifactFile(manager.getLocalRepository(), dependency.getGroupId().getStringValue(),
-                                                                dependency.getArtifactId().getStringValue(),
-                                                                dependency.getVersion().getStringValue(), "jar");
-          if (artifactFile.exists()) {
-            // it is no bundle
-            if (!CachingBundleInfoProvider.isBundle(artifactFile.getAbsolutePath())) {
-              problemsHolder.registerProblem(xmltag, "Dependency is not OSGi-ready", new FindOsgiCapableMavenDependencyQuickFix());
-            }
-          }
-        }
-      }
-    };
-  }
-
-  @Override
-  public ProblemDescriptor[] checkFile(@NotNull PsiFile psiFile, @NotNull InspectionManager inspectionManager, boolean b) {
-    // only run this for POM files in osmorc-controlled projects, its a waste of resources on other XML file types
-    if (!MavenDomUtil.isMavenFile(psiFile) || OSGiFacetUtil.findFacet(psiFile) == null) {
-      return ProblemDescriptor.EMPTY_ARRAY;
-    }
-    else {
-      return super.checkFile(psiFile, inspectionManager, b);
+  public void registerProblems(Module module, XmlTag xmlTag, MavenArtifact artifact, ProblemsHolder problemsHolder) {
+    final File file = artifact.getFile();
+    if (file.exists() && !CachingBundleInfoProvider.isBundle(file.getAbsolutePath())) {
+      problemsHolder.registerProblem(xmlTag, "Dependency is not OSGi-ready", new FindOsgiCapableMavenDependencyQuickFix());
     }
   }
 

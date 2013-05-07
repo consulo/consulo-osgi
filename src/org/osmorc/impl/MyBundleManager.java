@@ -12,9 +12,9 @@ import com.intellij.util.messages.Topic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
-import org.osmorc.BundleManager;
-import org.osmorc.facet.OsmorcFacetUtil;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
+import org.osmorc.BundleManager;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.impl.LibraryManifestHolderImpl;
@@ -100,8 +100,8 @@ public class MyBundleManager extends BundleManager {
       return false; // don't work on modules outside of the current project.
     }
 
-    // if the module has an osmorc facet, treat it as a bundle and add it to the cache
-    if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
+    // if the module has an OSGi facet, treat it as a bundle and add it to the cache
+    if (OSGiFacetUtil.findFacet(module) != null) {
       ManifestHolder manifestHolder = ModuleServiceManager.getService(module, ManifestHolder.class);
       boolean needsNotification = myBundleCache.updateWith(manifestHolder);
       needsNotification |= myBundleCache.cleanup();
