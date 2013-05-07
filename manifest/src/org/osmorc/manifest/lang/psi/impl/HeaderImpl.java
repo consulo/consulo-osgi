@@ -27,14 +27,14 @@ package org.osmorc.manifest.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
+import org.osmorc.manifest.lang.ManifestFileType;
 import org.osmorc.manifest.lang.ManifestTokenType;
-import org.osmorc.manifest.lang.psi.Clause;
-import org.osmorc.manifest.lang.psi.Header;
-import org.osmorc.manifest.lang.psi.HeaderValuePart;
-import org.osmorc.manifest.lang.psi.ManifestToken;
+import org.osmorc.manifest.lang.psi.*;
 import org.osmorc.manifest.lang.psi.stub.HeaderStub;
 
 /**
@@ -95,5 +95,36 @@ public class HeaderImpl extends ManifestElementBase<HeaderStub> implements Heade
       }
     }
     return null;
+  }
+
+  @Override
+  public void addClause(@NotNull String text) {
+    final String dummyTemplate;
+    final boolean b = getClauses().length == 0;
+    if (b) {
+      dummyTemplate = "Dummy: %s";
+    }
+    else {
+      dummyTemplate = "Dummy: firstItem, %s";
+    }
+
+
+    ManifestFile fromText = (ManifestFile) PsiFileFactory.getInstance(getProject())
+      .createFileFromText("DUMMY.MF", ManifestFileType.INSTANCE, String.format(dummyTemplate, text));
+
+    if(b) {
+      final Clause childrenOfType = PsiTreeUtil.findChildOfType(fromText, Clause.class);
+
+      assert childrenOfType != null;
+
+      add(childrenOfType);
+    }
+    else {
+      final Clause clause = fromText.getHeaders()[0].getClauses()[1];
+
+
+      add(clause.getPrevSibling());
+      add(clause);
+    }
   }
 }

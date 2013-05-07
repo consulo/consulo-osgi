@@ -216,6 +216,12 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
       valueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
       ToolbarDecorator valueDecorator = ToolbarDecorator.createDecorator(valueList);
+      valueDecorator.setAddAction(new AnActionButtonRunnable() {
+        @Override
+        public void run(AnActionButton anActionButton) {
+          header.addClause("newValue");
+        }
+      });
       disableActionsIfNeed(valueDecorator);
 
       splitter.setFirstComponent(valueDecorator.createPanel());

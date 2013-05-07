@@ -53,4 +53,6 @@ public interface Header extends PsiNamedElement, StubBasedPsiElement<HeaderStub>
    */
   @Nullable
   Object getSimpleConvertedValue();
+
+  void addClause(@NotNull String text);
 }
