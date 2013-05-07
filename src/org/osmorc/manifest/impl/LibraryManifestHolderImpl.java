@@ -49,7 +49,7 @@ import java.util.*;
 /**
  * Author: Robert F. Beeger (robert@beeger.net)
  */
-public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl {
+public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl<Library> {
 
   private BundleManifest myBundleManifest;
   private final Library myLibrary;
@@ -189,7 +189,7 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl {
   private static final Map<String, LibraryManifestHolderImpl> myHolderCache = new HashMap<String, LibraryManifestHolderImpl>();
 
   @Override
-  public Object getBoundObject() throws ManifestHolderDisposedException {
+  public Library getBoundObject() throws ManifestHolderDisposedException {
     if (isDisposed()) {
       throw new ManifestHolderDisposedException();
     }

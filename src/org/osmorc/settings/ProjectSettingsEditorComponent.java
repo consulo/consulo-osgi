@@ -40,7 +40,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.ModuleDependencySynchronizer;
 import org.osmorc.facet.OsmorcFacet;
 import org.osmorc.facet.OsmorcFacetConfiguration;
 import org.osmorc.facet.OsmorcFacetUtil;
@@ -64,8 +63,6 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
   private JComboBox myDefaultManifestFileLocation;
   private TextFieldWithBrowseButton myBundleOutputPath;
   private JButton myApplyToAllButton;
-  private JComboBox mySynchronizationType;
-  private JButton mySynchronizeNowButton;
   private Project myProject;
 
   public ProjectSettingsEditorComponent(Project project) {
@@ -106,12 +103,6 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
       }
     });
 
-    mySynchronizeNowButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        ModuleDependencySynchronizer.resynchronizeAll(myProject);
-      }
-    });
     ApplicationSettings.getInstance().addApplicationSettingsListener(this);
   }
 
@@ -173,8 +164,6 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
       settings.setBundlesOutputPath(null);
     }
 
-    SynchronizationItem selectedItem = (SynchronizationItem)mySynchronizationType.getSelectedItem();
-    settings.setManifestSynchronizationType(selectedItem.getType());
     myModified = false;
   }
 
@@ -190,7 +179,7 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
   public void resetTo(ProjectSettings settings) {
     mySettings = settings;
     refreshFrameworkInstanceCombobox();
-    refreshSynchronizationCombobox();
+
     myDefaultManifestFileLocation.setSelectedItem(mySettings.getDefaultManifestFileLocation());
     myCreateFrameworkInstanceModule.setSelected(mySettings.isCreateFrameworkInstanceModule());
     String bundlesPath = mySettings.getBundlesOutputPath();
@@ -227,19 +216,6 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
       myFrameworkInstance.addItem(projectFrameworkInstance);
     }
     myFrameworkInstance.setSelectedItem(projectFrameworkInstance);
-  }
-
-  private synchronized void refreshSynchronizationCombobox() {
-    if (mySettings == null) return;
-    mySynchronizationType.removeAllItems();
-
-    for (ProjectSettings.ManifestSynchronizationType type : ProjectSettings.ManifestSynchronizationType.values()) {
-      SynchronizationItem item = new SynchronizationItem(type);
-      mySynchronizationType.addItem(item);
-      if (type == mySettings.getManifestSynchronizationType()) {
-        mySynchronizationType.setSelectedItem(item);
-      }
-    }
   }
 
   public boolean isModified() {

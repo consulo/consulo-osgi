@@ -1,14 +1,20 @@
 package org.jetbrains.osgi.ide.codeInspection.maven;
 
+import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.Ref;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.idea.maven.model.MavenArtifact;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
@@ -49,7 +55,28 @@ public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspect
       }
     }
 
-    problemsHolder.registerProblem(xmlTag, getDisplayName());
+    problemsHolder.registerProblem(xmlTag, getDisplayName(), new LocalQuickFixAndIntentionActionOnPsiElement(xmlTag) {
+      @Override
+      public void invoke(@NotNull Project project,
+                         @NotNull PsiFile file,
+                         @Nullable("is null when called from inspection") Editor editor,
+                         @NotNull PsiElement startElement,
+                         @NotNull PsiElement endElement) {
+        startElement.delete();
+      }
+
+      @NotNull
+      @Override
+      public String getText() {
+        return "Remove artifact";
+      }
+
+      @NotNull
+      @Override
+      public String getFamilyName() {
+        return "OSGi";
+      }
+    });
   }
 
   private static Library findLibrary(@NotNull Module module, @NotNull final MavenArtifact artifact) {

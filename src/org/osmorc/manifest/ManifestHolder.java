@@ -36,7 +36,7 @@ import org.jetbrains.osgi.manifest.BundleManifest;
  * @author Robert F. Beeger (robert@beeger.net)
  * @author Jan Thomae (janthomae@janthomae.de)
  */
-public interface ManifestHolder {
+public interface ManifestHolder<T> {
   /**
    * Returns the bundle manifest.
    *
@@ -50,7 +50,7 @@ public interface ManifestHolder {
    *
    * @return the bound object
    */
-  Object getBoundObject() throws ManifestHolderDisposedException;
+  T getBoundObject() throws ManifestHolderDisposedException;
 
 
   /**

@@ -25,33 +25,22 @@
 
 package org.osmorc.manifest.impl;
 
-import com.intellij.openapi.application.Application;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
-import org.osmorc.facet.OsmorcFacet;
-import org.osmorc.facet.OsmorcFacetUtil;
+import org.jetbrains.osgi.facet.OSGiFacet;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolderDisposedException;
-import org.osmorc.manifest.lang.psi.ManifestFile;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl {
+public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl<Module> {
 
   private final Module myModule;
-  private final Application myApplication;
-  private BundleManifest myBundleManifest;
 
-  public ModuleManifestHolderImpl(Module module,
-                                  Application application) {
+  public ModuleManifestHolderImpl(Module module) {
     this.myModule = module;
-    this.myApplication = application;
   }
 
   @Nullable
@@ -59,56 +48,16 @@ public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl {
     if (isDisposed()) {
       throw new ManifestHolderDisposedException();
     }
-    final VirtualFile cachedFile = myBundleManifest != null ? myBundleManifest.getManifestFile().getVirtualFile() : null;
-    final VirtualFile fileFromSettings = getManifestFile();
-    if (myBundleManifest != null &&
-        (cachedFile == null || fileFromSettings == null || !cachedFile.getPath().equals(fileFromSettings.getPath()))) {
-      myBundleManifest = null; // manifest file changed, we need to start from scratch.
-    }
-
-    // only try to load the manifest if we have an osmorc facet for that module
-    OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
-    if (myBundleManifest == null && facet != null) {
-      // and only if this manifest is manually edited
-      if (facet.getConfiguration().isManifestManuallyEdited()) {
-        myBundleManifest = loadManifest();
-      }
-    }
-    return myBundleManifest;
+    final OSGiFacet facet = OSGiFacetUtil.findFacet(myModule);
+    return facet == null ? null : facet.getConfiguration().getBundleManifest(myModule.getProject());
   }
 
   public boolean isDisposed() {
     return myModule.isDisposed();
   }
 
-  private BundleManifest loadManifest() {
-    final VirtualFile manifestFile = getManifestFile();
-    if (manifestFile != null) {
-      return myApplication.runReadAction(new Computable<BundleManifest>() {
-        public BundleManifest compute() {
-          PsiFile psiFile = PsiManager.getInstance(myModule.getProject()).findFile(manifestFile);
-          if (!(psiFile instanceof ManifestFile)) {
-            // IDEADEV-40349 removed all messageboxes
-            return null;
-          }
-          return new BundleManifestImpl((ManifestFile)psiFile);
-        }
-      });
-    }
-    return null;
-  }
-
-
-  private
-  @Nullable
-  VirtualFile getManifestFile() {
-    OsmorcFacet facet = OsmorcFacetUtil.getInstance(myModule);
-    return facet != null ? facet.getManifestFile() : null;
-  }
-
-
   @Override
-  public Object getBoundObject() throws ManifestHolderDisposedException {
+  public Module getBoundObject() throws ManifestHolderDisposedException {
     if (isDisposed()) {
       throw new ManifestHolderDisposedException();
     }

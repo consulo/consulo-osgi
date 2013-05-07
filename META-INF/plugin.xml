@@ -101,8 +101,6 @@
     <moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
                    serviceImplementation="org.osmorc.manifest.impl.ModuleManifestHolderImpl"/>
 
-    <moduleService serviceInterface="org.osmorc.ModuleDependencySynchronizer"
-                   serviceImplementation="org.osmorc.ModuleDependencySynchronizer"/>
     <!-- Project services -->
     <!-- Project settings and editors -->
     <projectService serviceInterface="org.osmorc.settings.ProjectSettings"

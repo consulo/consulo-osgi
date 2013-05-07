@@ -55,7 +55,6 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
   private boolean _createFrameworkInstanceModule;
   private @NotNull String _defaultManifestFileLocation = "META-INF/MANIFEST.MF";
   private @Nullable String _bundlesOutputPath;
-  private @NotNull ManifestSynchronizationType myManifestSynchronizationType = ManifestSynchronizationType.ManuallySynchronize;
 
 
   /**
@@ -85,21 +84,6 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    */
   public static ProjectSettings getInstance(@NotNull Project project) {
     return ServiceManager.getService(project, ProjectSettings.class);
-  }
-
-
-  /**
-   * The synchronization type for manually edited manifests.
-   *
-   * @return the synchronization type.
-   */
-  @NotNull
-  public ManifestSynchronizationType getManifestSynchronizationType() {
-    return myManifestSynchronizationType;
-  }
-
-  public void setManifestSynchronizationType(@NotNull ManifestSynchronizationType manifestSynchronizationType) {
-    myManifestSynchronizationType = manifestSynchronizationType;
   }
 
   /**
