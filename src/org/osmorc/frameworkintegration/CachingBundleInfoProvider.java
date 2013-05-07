@@ -26,7 +26,6 @@
 package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.vfs.VfsUtil;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.framework.Constants;
 
@@ -54,9 +53,9 @@ public class CachingBundleInfoProvider {
   }
 
   /**
-   * Returns true if the file at the given url is a bundle, false otherwise.
+   * Returns true if the file at the given path is a bundle, false otherwise.
    *
-   * @param path the url of the bundle
+   * @param path the path of the bundle
    * @return true if the file at the path is a bundle, false otherwise.
    */
   public static boolean isBundle(String path) {
@@ -66,12 +65,12 @@ public class CachingBundleInfoProvider {
   /**
    * Returns true if the object at the given URI can be bundlified. This is only true for jar files which are not already bundles.
    *
-   * @param bundleUrl the url to the object to be bundlified.
+   * @param path the path to the object to be bundlified.
    * @return true if the object can be bundlified, false otherwise.
    */
-  public static boolean canBeBundlified(String bundleUrl) {
-    if (isBundle(bundleUrl)) return false;
-    File sourceFile = new File(VfsUtil.urlToPath(bundleUrl));
+  public static boolean canBeBundlified(String path) {
+    if (isBundle(path)) return false;
+    File sourceFile = new File(path);
     if (sourceFile.isDirectory()) {
       // it's an exploded directory, we cannot bundle these.
       return false;
@@ -84,7 +83,7 @@ public class CachingBundleInfoProvider {
   }
 
   /**
-   * Returns the symbolic name of the bundle at the given url. If the file at the given url is no bundle, returns null.
+   * Returns the symbolic name of the bundle at the given path. If the file at the given path is no bundle, returns null.
    *
    * @param path the path of the bundle
    * @return the symbolic name of the bundle or null if the file is no bundle.
@@ -96,9 +95,9 @@ public class CachingBundleInfoProvider {
   }
 
   /**
-   * Returns the version of the bundle at the given url.
+   * Returns the version of the bundle at the given path.
    *
-   * @param path the url path the bundle to search
+   * @param path the path path the bundle to search
    * @return the version of the bundle or null if the file is no bundle
    */
   @Nullable
@@ -110,7 +109,7 @@ public class CachingBundleInfoProvider {
   /**
    * Returns boolean status if the given bundle is a fragment bundle.
    *
-   * @param bundleUrl the url of the bundle
+   * @param bundleUrl the path of the bundle
    * @return true if the given bundle is a fragment bundle, false if it is not or if the state could not be determined.
    */
   public static boolean isFragmentBundle(String bundleUrl) {
@@ -119,10 +118,10 @@ public class CachingBundleInfoProvider {
   }
 
   /**
-   * Returns the attribute of the bundle located at the given url. If the bundle cannot be found there or the jar at
+   * Returns the attribute of the bundle located at the given path. If the bundle cannot be found there or the jar at
    * that location isn't a bundle, this returns null.
    *
-   * @param path the url of the bundle
+   * @param path the path of the bundle
    * @param attribute the attribute to resolve
    * @return the attribute's value or null if there is no such bundle or no such attribute
    */
@@ -160,12 +159,9 @@ public class CachingBundleInfoProvider {
     return manifest != null ? manifest.getMainAttributes().getValue(attribute) : null;
   }
 
-  private static String normalize(String bundleUrl) {
-    return bundleUrl.replaceAll("file:/([^/]+)", "file:///$1");
-  }
 
-  public static boolean isExploded(String bundleUrl) {
-    File bundleFile = new File(VfsUtil.urlToPath(bundleUrl));
+  public static boolean isExploded(String path) {
+    File bundleFile = new File(path);
     return bundleFile.isDirectory();
   }
 }
