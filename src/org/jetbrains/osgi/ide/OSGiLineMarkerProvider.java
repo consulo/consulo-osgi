@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiIcons;
 import org.jetbrains.osgi.facet.OSGiFacet;
-import org.jetbrains.osgi.facet.OSGiFacetConfiguration;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.osgi.framework.Constants;
@@ -32,23 +31,22 @@ import java.util.List;
  */
 public class OSGiLineMarkerProvider implements LineMarkerProvider {
 
-  public static final GutterIconNavigationHandler<PsiElement> BUNDLE_ACTIVATOR_HANDLER =
-    new GutterIconNavigationHandler<PsiElement>() {
-      @Override
-      public void navigate(MouseEvent e, PsiElement elt) {
-        OSGiFacet facet = OSGiFacetUtil.findFacet(elt);
-        if (facet == null) {
-          return;
-        }
-        BundleManifest bundleManifest = facet.getConfiguration().getActiveManifestProvider().getBundleManifest(elt.getProject());
-
-        NavigatablePsiElement target = bundleManifest.getNavigateTargetByHeaderName(Constants.BUNDLE_ACTIVATOR);
-        if(target == null) {
-          return;
-        }
-        PsiElementListNavigator.openTargets(e, new NavigatablePsiElement[]{target}, null, null, new DefaultPsiElementCellRenderer());
+  public static final GutterIconNavigationHandler<PsiElement> BUNDLE_ACTIVATOR_HANDLER = new GutterIconNavigationHandler<PsiElement>() {
+    @Override
+    public void navigate(MouseEvent e, PsiElement elt) {
+      OSGiFacet facet = OSGiFacetUtil.findFacet(elt);
+      if (facet == null) {
+        return;
       }
-    };
+      BundleManifest bundleManifest = facet.getConfiguration().getActiveManifestProvider().getBundleManifest(elt.getProject());
+
+      NavigatablePsiElement target = bundleManifest.getNavigateTargetByHeaderName(Constants.BUNDLE_ACTIVATOR);
+      if (target == null) {
+        return;
+      }
+      PsiElementListNavigator.openTargets(e, new NavigatablePsiElement[]{target}, null, null, new DefaultPsiElementCellRenderer());
+    }
+  };
 
   @Nullable
   @Override
@@ -84,7 +82,7 @@ public class OSGiLineMarkerProvider implements LineMarkerProvider {
         return;
       }
 
-      LineMarkerInfo<PsiElement> temp = createLineMarkerForBundleActivator(psiClass, module, osGiFacet, nameIdentifier);
+      LineMarkerInfo<PsiElement> temp = createLineMarkerForBundleActivator(psiClass, nameIdentifier);
       if (temp != null) {
         list.add(temp);
       }
@@ -106,27 +104,13 @@ public class OSGiLineMarkerProvider implements LineMarkerProvider {
     return null;
   }
 
-  private LineMarkerInfo<PsiElement> createLineMarkerForBundleActivator(PsiClass psiClass,
-                                                                        Module module,
-                                                                        OSGiFacet facet,
-                                                                        PsiIdentifier nameElement) {
-    final String qualifiedName = psiClass.getQualifiedName();
-    if (qualifiedName == null) {
-      return null;
-    }
+  private LineMarkerInfo<PsiElement> createLineMarkerForBundleActivator(PsiClass psiClass, PsiIdentifier nameElement) {
 
-    boolean needLineMarker = false;
-    OSGiFacetConfiguration configuration = facet.getConfiguration();
-
-    BundleManifest bundleManifest = configuration.getBundleManifest(psiClass.getProject());
-
-    if (qualifiedName.equals(bundleManifest.getBundleActivator())) {
-      needLineMarker = true;
-    }
-
-    return needLineMarker ? new LineMarkerInfo<PsiElement>(nameElement, nameElement.getTextRange(), OSGiIcons.OsgiBundleActivator,
-                                                           Pass.UPDATE_OVERRIDEN_MARKERS,
-                                                           new ConstantFunction<PsiElement, String>("Bundle activator"),
-                                                           BUNDLE_ACTIVATOR_HANDLER, GutterIconRenderer.Alignment.LEFT) : null;
+    return OSGiFacetUtil.isBundleActivator(psiClass) ? new LineMarkerInfo<PsiElement>(nameElement, nameElement.getTextRange(),
+                                                                                      OSGiIcons.OsgiBundleActivator,
+                                                                                      Pass.UPDATE_OVERRIDEN_MARKERS,
+                                                                                      new ConstantFunction<PsiElement, String>(
+                                                                                        "Bundle activator"), BUNDLE_ACTIVATOR_HANDLER,
+                                                                                      GutterIconRenderer.Alignment.LEFT) : null;
   }
 }

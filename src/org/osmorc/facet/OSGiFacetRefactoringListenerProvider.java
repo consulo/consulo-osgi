@@ -33,51 +33,52 @@ import com.intellij.refactoring.listeners.RefactoringElementListener;
 import com.intellij.refactoring.listeners.RefactoringElementListenerProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.facet.OSGiFacet;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.osgi.framework.Constants;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public class OsmorcFacetRefactoringListenerProvider implements RefactoringElementListenerProvider {
-  public OsmorcFacetRefactoringListenerProvider() {
+public class OSGiFacetRefactoringListenerProvider implements RefactoringElementListenerProvider {
+  public OSGiFacetRefactoringListenerProvider() {
   }
 
   @Nullable
   public RefactoringElementListener getListener(final PsiElement element) {
-    if (element instanceof PsiClass && OsmorcFacetUtil.hasOsmorcFacet(element)) {
-      OsmorcFacet osmorcFacet = OsmorcFacetUtil.getInstance(element);
-      OsmorcFacetConfiguration osmorcFacetConfiguration = osmorcFacet.getConfiguration();
-      PsiClass psiClass = (PsiClass)element;
-      if (osmorcFacetConfiguration.isOsmorcControlsManifest() &&
-          osmorcFacetConfiguration.getBundleActivator() != null &&
-          osmorcFacetConfiguration.getBundleActivator().equals(psiClass.getQualifiedName())) {
-        return new ActivatorClassRefactoringListener(osmorcFacetConfiguration);
-      }
+    if (element instanceof PsiClass && OSGiFacetUtil.isBundleActivator((PsiClass) element)) {
+        return new ActivatorClassRefactoringListener();
     }
 
     return null;
   }
 
   private static final class ActivatorClassRefactoringListener extends RefactoringElementAdapter {
-    private final OsmorcFacetConfiguration osmorcFacetConfiguration;
-
-    private ActivatorClassRefactoringListener(final OsmorcFacetConfiguration osmorcFacetConfiguration) {
-      this.osmorcFacetConfiguration = osmorcFacetConfiguration;
+    private ActivatorClassRefactoringListener() {
     }
 
     public void elementRenamedOrMoved(@NotNull final PsiElement newElement) {
       ApplicationManager.getApplication().runWriteAction(new Runnable() {
         public void run() {
-          osmorcFacetConfiguration.setBundleActivator(((PsiClass)newElement).getQualifiedName());
+          final OSGiFacet facet = OSGiFacetUtil.findFacet(newElement);
+          if(facet == null) {
+            return;
+          }
+          facet.getConfiguration().getBundleManifest(newElement.getProject()).setHeaderValue(Constants.BUNDLE_ACTIVATOR, ((PsiClass)newElement).getQualifiedName());
         }
       });
     }
 
     @Override
-    public void undoElementMovedOrRenamed(@NotNull PsiElement newElement, @NotNull final String oldQualifiedName) {
+    public void undoElementMovedOrRenamed(@NotNull final PsiElement newElement, @NotNull final String oldQualifiedName) {
       ApplicationManager.getApplication().runWriteAction(new Runnable() {
         @Override
         public void run() {
-          osmorcFacetConfiguration.setBundleActivator(oldQualifiedName);
+          final OSGiFacet facet = OSGiFacetUtil.findFacet(newElement);
+          if(facet == null) {
+            return;
+          }
+          facet.getConfiguration().getBundleManifest(newElement.getProject()).setHeaderValue(Constants.BUNDLE_ACTIVATOR, oldQualifiedName);
         }
       });
     }

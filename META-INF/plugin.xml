@@ -137,7 +137,7 @@
     <facetType implementation="org.jetbrains.osgi.facet.OSGiFacetType" />
     <!---<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
-    <refactoring.elementListenerProvider implementation="org.osmorc.facet.OsmorcFacetRefactoringListenerProvider"/>
+    <refactoring.elementListenerProvider implementation="org.osmorc.facet.OSGiFacetRefactoringListenerProvider"/>
 
     <projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
                          displayName="OSGi"/>

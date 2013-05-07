@@ -150,7 +150,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
 
     @NotNull
     public String getFamilyName() {
-      return "Osmorc";
+      return "OSGi";
     }
 
     @NotNull

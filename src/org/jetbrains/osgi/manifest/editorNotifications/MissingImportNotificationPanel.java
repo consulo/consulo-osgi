@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 12:07/07.05.13
  */
 public class MissingImportNotificationPanel extends EditorNotificationPanel {
-  public MissingImportNotificationPanel(@NotNull String packageName) {
-    setText("Missing package '" + packageName + "' in 'Import-Package' header");
+  public MissingImportNotificationPanel(@NotNull String packagesName) {
+    setText("Missing package(s) '" + packagesName + "' in 'Import-Package' header");
   }
 }

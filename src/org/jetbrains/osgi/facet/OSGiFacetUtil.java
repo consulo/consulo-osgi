@@ -4,6 +4,7 @@ import com.intellij.facet.FacetManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
@@ -36,5 +37,17 @@ public class OSGiFacetUtil {
     }
 
     return VcsUtil.getVirtualFile(facet.getConfiguration().getOsgiInfLocation());
+  }
+ 
+  public static boolean isBundleActivator(PsiClass psiClass) {
+    final OSGiFacet facet = findFacet(psiClass);
+    if(facet == null) {
+      return false;
+    }
+    final String qualifiedName = psiClass.getQualifiedName();
+    if(qualifiedName == null) {
+      return false;
+    }
+    return qualifiedName.equals(facet.getConfiguration().getBundleManifest(psiClass.getProject()).getBundleActivator());
   }
 }
