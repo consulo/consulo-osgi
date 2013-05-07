@@ -100,8 +100,7 @@
     <!-- Module services -->
     <moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
                    serviceImplementation="org.osmorc.manifest.impl.ModuleManifestHolderImpl"/>
-    <moduleService serviceInterface="org.osmorc.AdditionalJARContentsWatcherManager"
-                   serviceImplementation="org.osmorc.impl.AdditionalJARContentsWatcherManagerImpl"/>
+
     <moduleService serviceInterface="org.osmorc.ModuleDependencySynchronizer"
                    serviceImplementation="org.osmorc.ModuleDependencySynchronizer"/>
     <!-- Project services -->
@@ -150,11 +149,11 @@
                     displayName="Library Bundling"/>
     </applicationConfigurable>
 
-    <editorNotificationProvider implementation="org.osmorc.ManifestChangeWatcher"/>
-    <editorNotificationProvider implementation="org.osmorc.BundleIndexModificationWatcher"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
     <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
     <iconLayerProvider implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider" />
+
+    <editorNotificationProvider implementation="org.jetbrains.osgi.manifest.editorNotifications.MissingImportNotificationProvider" />
 
     <compiler implementation="org.jetbrains.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
     <packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType" />

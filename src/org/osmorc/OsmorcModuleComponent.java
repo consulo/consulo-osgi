@@ -49,19 +49,15 @@ public class OsmorcModuleComponent implements ModuleComponent {
   private final Module myModule;
   private final BundleManager myBundleManager;
   private final FrameworkInstanceLibraryManager myFrameworkInstanceLibraryManager;
-  private final AdditionalJARContentsWatcherManager myAdditionalJARContentsWatcherManager;
   private final Application myApplication;
   private boolean disposed;
 
   public OsmorcModuleComponent(Module module,
                                BundleManager bundleManager,
-                               FrameworkInstanceLibraryManager frameworkInstanceLibraryManager,
-                               AdditionalJARContentsWatcherManager additionalJARContentsWatcherManager,
-                               Application application) {
+                               FrameworkInstanceLibraryManager frameworkInstanceLibraryManager, Application application) {
     this.myModule = module;
     myBundleManager = bundleManager;
     this.myFrameworkInstanceLibraryManager = frameworkInstanceLibraryManager;
-    this.myAdditionalJARContentsWatcherManager = additionalJARContentsWatcherManager;
     this.myApplication = application;
     disposed = false;
   }
@@ -98,7 +94,7 @@ public class OsmorcModuleComponent implements ModuleComponent {
   }
 
   public void projectClosed() {
-    myAdditionalJARContentsWatcherManager.dispose();
+
   }
 
   public void moduleAdded() {
@@ -130,7 +126,6 @@ public class OsmorcModuleComponent implements ModuleComponent {
         // reindex the module itself
         buildManuallyEditedManifestIndex();
       }
-      myAdditionalJARContentsWatcherManager.updateWatcherSetup();
     }
   }
 }

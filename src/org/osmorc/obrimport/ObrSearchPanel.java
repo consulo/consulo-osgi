@@ -31,6 +31,7 @@ import com.intellij.ui.CollectionListModel;
 import com.intellij.ui.ListCellRendererWrapper;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.net.HTTPProxySettingsDialog;
+import com.intellij.util.ui.UIUtil;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -138,16 +139,20 @@ public class ObrSearchPanel extends ProgressIndicatorBase {
 
   @Override
   protected void onProgressChange() {
-    _progressBar.setIndeterminate(isIndeterminate());
-    _progressBar.setValue((int)(100 * getFraction()));
-    _statusLabel.setText(getText());
-    _cancelButton.setEnabled(isRunning() && isCancelable());
+    UIUtil.invokeLaterIfNeeded(new Runnable() {
+      @Override
+      public void run() {
+        _progressBar.setIndeterminate(isIndeterminate());
+        _progressBar.setValue((int)(100 * getFraction()));
+        _statusLabel.setText(getText());
+        _cancelButton.setEnabled(isRunning() && isCancelable());
+      }
+    });
   }
 
   @Override
   protected void onRunningChange() {
-    // Fix it to run on the event dispatch thread.
-    SwingUtilities.invokeLater(new Runnable() {
+    UIUtil.invokeLaterIfNeeded(new Runnable() {
       public void run() {
         _progressBar.setEnabled(isRunning());
         _statusLabel.setEnabled(isRunning());

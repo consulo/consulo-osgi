@@ -42,14 +42,13 @@ import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
 import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.utils.MavenArtifactUtil;
-import org.osmorc.facet.OsmorcFacetUtil;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.obrimport.MavenRepository;
 import org.osmorc.obrimport.ObrSearchDialog;
 import org.osmorc.obrimport.springsource.ObrMavenResult;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +57,6 @@ import java.util.List;
  * Inspection which detects non-OSGi dependencies.
  *
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
- * @version $Id:$
  */
 public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionTool {
   @Nls
@@ -89,7 +87,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
     return new XmlElementVisitor() {
       public void visitXmlTag(XmlTag xmltag) {
         // suppress inspection for projects not having an OSGi context.
-        if (!OsmorcFacetUtil.hasOsmorcFacet(xmltag)) {
+        if (OSGiFacetUtil.findFacet(xmltag) == null) {
           return;
         }
         // get the dependency
@@ -103,21 +101,13 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
           // get the projects manager for this dependency
           MavenProjectsManager manager = MavenProjectsManager.getInstance(xmltag.getProject());
           // try to resolve the jar file
-          File artifactFile = MavenArtifactUtil
-            .getArtifactFile(manager.getLocalRepository(), dependency.getGroupId().getStringValue(),
-                             dependency.getArtifactId().getStringValue(),
-                             dependency.getVersion().getStringValue(), "jar");
+          File artifactFile = MavenArtifactUtil.getArtifactFile(manager.getLocalRepository(), dependency.getGroupId().getStringValue(),
+                                                                dependency.getArtifactId().getStringValue(),
+                                                                dependency.getVersion().getStringValue(), "jar");
           if (artifactFile.exists()) {
-            try {
-              String url = artifactFile.toURL().toString();
-              // it is no bundle
-              if (!CachingBundleInfoProvider.isBundle(url)) {
-                problemsHolder.registerProblem(xmltag, "Dependency is not OSGi-ready",
-                                               new FindOsgiCapableMavenDependencyQuickFix());
-              }
-            }
-            catch (MalformedURLException e) {
-              // ok
+            // it is no bundle
+            if (!CachingBundleInfoProvider.isBundle(artifactFile.getAbsolutePath())) {
+              problemsHolder.registerProblem(xmltag, "Dependency is not OSGi-ready", new FindOsgiCapableMavenDependencyQuickFix());
             }
           }
         }
@@ -126,11 +116,10 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
   }
 
   @Override
-  public ProblemDescriptor[] checkFile(@NotNull PsiFile psiFile, @NotNull InspectionManager inspectionManager,
-                                       boolean b) {
+  public ProblemDescriptor[] checkFile(@NotNull PsiFile psiFile, @NotNull InspectionManager inspectionManager, boolean b) {
     // only run this for POM files in osmorc-controlled projects, its a waste of resources on other XML file types
-    if (!MavenDomUtil.isMavenFile(psiFile) || !OsmorcFacetUtil.hasOsmorcFacet(psiFile)) {
-      return new ProblemDescriptor[0];
+    if (!MavenDomUtil.isMavenFile(psiFile) || OSGiFacetUtil.findFacet(psiFile) == null) {
+      return ProblemDescriptor.EMPTY_ARRAY;
     }
     else {
       return super.checkFile(psiFile, inspectionManager, b);
@@ -171,8 +160,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
 
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
       final MavenDomDependency dependency = getDependency((XmlTag)problemDescriptor.getPsiElement());
-      final ObrMavenResult mavenResult =
-        ObrSearchDialog.queryForMavenArtifact(project, dependency.getArtifactId().toString());
+      final ObrMavenResult mavenResult = ObrSearchDialog.queryForMavenArtifact(project, dependency.getArtifactId().toString());
       if (mavenResult != null) {
 
         final PsiFile psiFile = problemDescriptor.getPsiElement().getContainingFile();
@@ -180,8 +168,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
           protected void run(Result result) throws Throwable
 
           {
-            MavenDomProjectModel model =
-              MavenDomUtil.getMavenDomProjectModel(getProject(), psiFile.getVirtualFile());
+            MavenDomProjectModel model = MavenDomUtil.getMavenDomProjectModel(getProject(), psiFile.getVirtualFile());
             // adds a new dependency to the end of the list
             MavenDomDependency dummy = model.getDependencies().addDependency();
             dummy.getArtifactId().setStringValue(mavenResult.getArtifactId());
@@ -215,8 +202,7 @@ public class NonOsgiMavenDependencyInspection extends XmlSuppressableInspectionT
               }
             }
 
-            List<MavenRepository> unknownRepositories =
-              new ArrayList<MavenRepository>(Arrays.asList(repos));
+            List<MavenRepository> unknownRepositories = new ArrayList<MavenRepository>(Arrays.asList(repos));
             unknownRepositories.removeAll(knownRepositories);
 
             // now we have a list of Repos we still don't know.

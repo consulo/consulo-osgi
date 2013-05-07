@@ -56,11 +56,11 @@ public class CachingBundleInfoProvider {
   /**
    * Returns true if the file at the given url is a bundle, false otherwise.
    *
-   * @param bundleUrl the url of the bundle
-   * @return true if the file at the url is a bundle, false otherwise.
+   * @param path the url of the bundle
+   * @return true if the file at the path is a bundle, false otherwise.
    */
-  public static boolean isBundle(String bundleUrl) {
-    return getBundleSymbolicName(bundleUrl) != null;
+  public static boolean isBundle(String path) {
+    return getBundleSymbolicName(path) != null;
   }
 
   /**
@@ -147,7 +147,7 @@ public class CachingBundleInfoProvider {
         }
         else {
           JarFile file = new JarFile(bundleFile);
-          _cache.put(indepPath, file.getManifest());
+          _cache.put(indepPath, manifest = file.getManifest());
           file.close();
         }
       }
