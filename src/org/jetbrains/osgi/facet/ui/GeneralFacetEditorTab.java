@@ -238,6 +238,14 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
     myConfiguration.setOsgiInfLocation(FileUtil.toSystemIndependentName(myOsgiInfPane.getText()));
     myConfiguration.setMetaInfLocation(FileUtil.toSystemIndependentName(myMetaInfPane.getText()));
 
+    final Object selectedItem = myArtifactList.getSelectedItem();
+    if(selectedItem != null) {
+      myConfiguration.setArtifactName(((Artifact)selectedItem).getName());
+    }
+    else {
+      myConfiguration.setArtifactName(null);
+    }
+
     Enumeration<AbstractButton> elements = myButtonGroup.getElements();
     while (elements.hasMoreElements()) {
       AbstractButton abstractButton = elements.nextElement();
