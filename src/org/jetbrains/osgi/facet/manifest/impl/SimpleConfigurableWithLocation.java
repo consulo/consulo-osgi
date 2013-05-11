@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler.oldImpl;
+package org.jetbrains.osgi.facet.manifest.impl;
 
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;
@@ -6,9 +6,9 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.util.io.FileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.ManifestProviderConfigurable;
-import org.jetbrains.osgi.compiler.ManifestProviderWithLocation;
-import org.jetbrains.osgi.compiler.oldImpl.ui.LabelAndFileLocationPanel;
+import org.jetbrains.osgi.facet.manifest.ManifestProviderConfigurable;
+import org.jetbrains.osgi.facet.manifest.ManifestProviderWithLocation;
+import org.jetbrains.osgi.facet.manifest.impl.ui.LabelAndFileLocationPanel;
 
 import javax.swing.*;
 

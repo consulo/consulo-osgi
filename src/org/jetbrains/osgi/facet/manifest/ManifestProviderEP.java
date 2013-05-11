@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler;
+package org.jetbrains.osgi.facet.manifest;
 
 import com.intellij.openapi.extensions.AbstractExtensionPointBean;
 import com.intellij.openapi.extensions.ExtensionPointName;

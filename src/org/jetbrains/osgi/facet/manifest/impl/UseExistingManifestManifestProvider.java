@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler.oldImpl;
+package org.jetbrains.osgi.facet.manifest.impl;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
@@ -9,8 +9,8 @@ import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
-import org.jetbrains.osgi.compiler.ManifestProvider;
-import org.jetbrains.osgi.compiler.ManifestProviderConfigurable;
+import org.jetbrains.osgi.facet.manifest.ManifestProvider;
+import org.jetbrains.osgi.facet.manifest.ManifestProviderConfigurable;
 import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;

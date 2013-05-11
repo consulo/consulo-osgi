@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
 import org.jetbrains.osgi.OSGiIcons;
-import org.jetbrains.osgi.compiler.ManifestProvider;
+import org.jetbrains.osgi.facet.manifest.ManifestProvider;
 
 import javax.swing.*;
 

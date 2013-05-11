@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler.oldImpl.ui;
+package org.jetbrains.osgi.facet.manifest.impl.ui;
 
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.components.JBLabel;

@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler;
+package org.jetbrains.osgi.facet.manifest;
 
 import com.intellij.openapi.options.UnnamedConfigurable;
 import org.jetbrains.annotations.NotNull;

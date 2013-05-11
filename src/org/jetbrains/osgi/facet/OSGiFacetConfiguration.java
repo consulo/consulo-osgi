@@ -15,8 +15,8 @@ import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.artifacts.ArtifactManager;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.compiler.ManifestProvider;
-import org.jetbrains.osgi.compiler.ManifestProviderEP;
+import org.jetbrains.osgi.facet.manifest.ManifestProvider;
+import org.jetbrains.osgi.facet.manifest.ManifestProviderEP;
 import org.jetbrains.osgi.facet.ui.GeneralFacetEditorTab;
 
 import java.io.File;

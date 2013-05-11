@@ -31,8 +31,8 @@
   <extensionPoints>
     <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
     <extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository"/>
-    <extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.compiler.ManifestProviderEP">
-      <with attribute="implementation" implements="org.jetbrains.osgi.compiler.ManifestProvider"/>
+    <extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.facet.manifest.ManifestProviderEP">
+      <with attribute="implementation" implements="org.jetbrains.osgi.facet.manifest.ManifestProvider"/>
     </extensionPoint>
   </extensionPoints>
 
@@ -44,8 +44,8 @@
 
     <openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
 
-    <manifestProvider implementation="org.jetbrains.osgi.compiler.oldImpl.UseExistingManifestManifestProvider" order="first"/>
-    <manifestProvider implementation="org.jetbrains.osgi.compiler.oldImpl.BndFileManifestProvider"/>
+    <manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider" order="first"/>
+    <manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.BndFileManifestProvider"/>
   </extensions>
 
   <extensions defaultExtensionNs="org.jetbrains.idea.maven">

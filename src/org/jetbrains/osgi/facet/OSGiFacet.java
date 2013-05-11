@@ -4,7 +4,7 @@ import com.intellij.facet.Facet;
 import com.intellij.facet.FacetType;
 import com.intellij.openapi.module.Module;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.compiler.ManifestProvider;
+import org.jetbrains.osgi.facet.manifest.ManifestProvider;
 import org.jetbrains.osgi.manifest.BundleManifest;
 
 /**

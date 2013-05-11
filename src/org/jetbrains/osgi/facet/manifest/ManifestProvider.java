@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler;
+package org.jetbrains.osgi.facet.manifest;
 
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;

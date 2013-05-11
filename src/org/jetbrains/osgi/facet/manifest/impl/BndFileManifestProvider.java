@@ -1,8 +1,8 @@
-package org.jetbrains.osgi.compiler.oldImpl;
+package org.jetbrains.osgi.facet.manifest.impl;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.ManifestProviderWithLocation;
+import org.jetbrains.osgi.facet.manifest.ManifestProviderWithLocation;
 import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 

@@ -1,4 +1,4 @@
-package org.jetbrains.osgi.compiler;
+package org.jetbrains.osgi.facet.manifest;
 
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;
@@ -17,7 +17,7 @@ import com.intellij.vcsUtil.VcsUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.oldImpl.SimpleConfigurableWithLocation;
+import org.jetbrains.osgi.facet.manifest.impl.SimpleConfigurableWithLocation;
 import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
