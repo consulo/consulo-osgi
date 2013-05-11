@@ -18,6 +18,7 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.compiler.oldImpl.SimpleConfigurableWithLocation;
+import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -83,9 +84,9 @@ public abstract class ManifestProviderWithLocation extends ManifestProvider {
 
   @Nullable
   @Override
-  protected BundleManifest getBundleManifestImpl(Project project) {
+  protected BundleManifest getBundleManifestImpl(OSGiFacet facet) {
     if(myCachedValue == null) {
-      myCachedValue = CachedValuesManager.getManager(project).createCachedValue(new OurCachedValueProvider(project));
+      myCachedValue = CachedValuesManager.getManager(facet.getModule().getProject()).createCachedValue(new OurCachedValueProvider(facet.getModule().getProject()));
     }
     return myCachedValue.getValue();
   }

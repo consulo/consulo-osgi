@@ -49,7 +49,7 @@ public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl<Module>
       throw new ManifestHolderDisposedException();
     }
     final OSGiFacet facet = OSGiFacetUtil.findFacet(myModule);
-    return facet == null ? null : facet.getConfiguration().getBundleManifest(myModule.getProject());
+    return facet == null ? null : facet.getManifest();
   }
 
   public boolean isDisposed() {

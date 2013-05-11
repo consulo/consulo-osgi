@@ -1,16 +1,24 @@
 package org.jetbrains.osgi.facet.ui;
 
 import com.intellij.facet.ui.FacetEditorTab;
+import com.intellij.facet.ui.FacetEditorValidator;
+import com.intellij.facet.ui.FacetValidatorsManager;
+import com.intellij.facet.ui.ValidationResult;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
+import com.intellij.ui.ListCellRendererWrapper;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -19,10 +27,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.compiler.ManifestProvider;
 import org.jetbrains.osgi.compiler.ManifestProviderConfigurable;
+import org.jetbrains.osgi.compiler.artifact.OSGiArtifactType;
+import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.facet.OSGiFacetConfiguration;
+import org.jetbrains.osgi.facet.validation.OSGiCreateArtifactQuickFix;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -37,10 +48,10 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
     Key.create("manifest-provider-configurable-key");
 
   private JPanel myRootPanel;
-  private JPanel myRoot;
-  private JCheckBox myDoNotSynchronizeFacetCheckBox;
   private TextFieldWithBrowseButton myOsgiInfPane;
   private JPanel myPanelForProviders;
+  private JComboBox<Artifact> myArtifactList;
+  private TextFieldWithBrowseButton myMetaInfPane;
 
   private final OSGiFacetConfiguration myConfiguration;
   private final Module myModule;
@@ -48,7 +59,10 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
 
   private ManifestProvider myActiveProvider;
 
-  public GeneralFacetEditorTab(OSGiFacetConfiguration configuration, Module module) {
+  public GeneralFacetEditorTab(OSGiFacetConfiguration configuration,
+                               FacetValidatorsManager validatorsManager,
+                               final Module module,
+                               final OSGiFacet facet) {
     this.myConfiguration = configuration;
     myModule = module;
     this.myActiveProvider = configuration.getActiveManifestProvider();
@@ -76,11 +90,19 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
     myOsgiInfPane.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        selectOsgiInfo(myOsgiInfPane);
+        selectRoot(myOsgiInfPane, myConfiguration.getOsgiInfLocation());
+      }
+    });
+
+    myMetaInfPane.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        selectRoot(myMetaInfPane, myConfiguration.getMetaInfLocation());
       }
     });
 
     myOsgiInfPane.setText(FileUtil.toSystemDependentName(myConfiguration.getOsgiInfLocation()));
+    myMetaInfPane.setText(FileUtil.toSystemDependentName(myConfiguration.getMetaInfLocation()));
 
     ManifestProvider[] manifestProviders = configuration.getManifestProviders();
     myPanelForProviders.setLayout(new GridLayoutManager(manifestProviders.length, 1));
@@ -112,6 +134,42 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
                                                          null));
     }
 
+    myArtifactList.setRenderer(new ListCellRendererWrapper<Artifact>() {
+      @Override
+      public void customize(JList list, Artifact value, int index, boolean selected, boolean hasFocus) {
+        if (value == null) {
+          setIcon(AllIcons.RunConfigurations.Unknown);
+        }
+        else {
+          setText(value.getName());
+          setIcon(value.getArtifactType().getIcon());
+        }
+      }
+    });
+
+    final Project project = module.getProject();
+
+    for (Artifact artifact : ArtifactManager.getInstance(project).getSortedArtifacts()) {
+      if (artifact.getArtifactType() instanceof OSGiArtifactType) {
+        myArtifactList.addItem(artifact);
+      }
+    }
+
+    final Artifact artifact = configuration.getArtifact(project);
+
+    myArtifactList.setSelectedItem(artifact);
+
+    validatorsManager.registerValidator(new FacetEditorValidator() {
+      @Override
+      public ValidationResult check() {
+        final Object selectedItem = myArtifactList.getSelectedItem();
+        if (selectedItem == null) {
+          return new ValidationResult("Artifact not selected", new OSGiCreateArtifactQuickFix(facet, myArtifactList));
+        }
+        return ValidationResult.OK;
+      }
+    }, myArtifactList);
+
     Enumeration<AbstractButton> elements = myButtonGroup.getElements();
     while (elements.hasMoreElements()) {
       AbstractButton button = elements.nextElement();
@@ -126,8 +184,8 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
     }
   }
 
-  private void selectOsgiInfo(TextFieldWithBrowseButton field) {
-    VirtualFile currentFile = LocalFileSystem.getInstance().findFileByPath(myConfiguration.getOsgiInfLocation());
+  private void selectRoot(TextFieldWithBrowseButton field, @NotNull String location) {
+    VirtualFile currentFile = LocalFileSystem.getInstance().findFileByPath(location);
 
     VirtualFile fileLocation =
       FileChooser.chooseFile(FileChooserDescriptorFactory.createSingleFolderDescriptor(), myModule.getProject(), currentFile);
@@ -178,6 +236,7 @@ public class GeneralFacetEditorTab extends FacetEditorTab {
   public void apply() throws ConfigurationException {
     myConfiguration.setActiveManifestProvider(myActiveProvider);
     myConfiguration.setOsgiInfLocation(FileUtil.toSystemIndependentName(myOsgiInfPane.getText()));
+    myConfiguration.setMetaInfLocation(FileUtil.toSystemIndependentName(myMetaInfPane.getText()));
 
     Enumeration<AbstractButton> elements = myButtonGroup.getElements();
     while (elements.hasMoreElements()) {

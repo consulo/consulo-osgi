@@ -36,6 +36,7 @@ public class OSGiFacetType extends FacetType<OSGiFacet, OSGiFacetConfiguration> 
   public OSGiFacetConfiguration createDefaultConfiguration() {
     OSGiFacetConfiguration facetConfiguration = new OSGiFacetConfiguration();
     facetConfiguration.setOsgiInfLocation(OSGiConstants.DEFAULT_OSGI_INF_ROOT_LOCATION);
+    facetConfiguration.setMetaInfLocation(OSGiConstants.DEFAULT_META_INF_ROOT_LOCATION);
     facetConfiguration.setActiveManifestProvider(facetConfiguration.getManifestProviders()[0]);
     return facetConfiguration;
   }
@@ -51,6 +52,7 @@ public class OSGiFacetType extends FacetType<OSGiFacet, OSGiFacetConfiguration> 
     PathMacroManager pathMacroManager = PathMacroManager.getInstance(module);
 
     configuration.setOsgiInfLocation(pathMacroManager.expandPath(OSGiConstants.DEFAULT_OSGI_INF_ROOT_LOCATION));
+    configuration.setMetaInfLocation(pathMacroManager.expandPath(OSGiConstants.DEFAULT_META_INF_ROOT_LOCATION));
     for(ManifestProvider manifestProvider : configuration.getManifestProviders()) {
       manifestProvider.expandPaths(pathMacroManager);
     }

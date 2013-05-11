@@ -48,6 +48,6 @@ public class OSGiFacetUtil {
     if(qualifiedName == null) {
       return false;
     }
-    return qualifiedName.equals(facet.getConfiguration().getBundleManifest(psiClass.getProject()).getBundleActivator());
+    return qualifiedName.equals(facet.getManifest().getBundleActivator());
   }
 }

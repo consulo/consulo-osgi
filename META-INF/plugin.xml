@@ -44,7 +44,7 @@
 
     <openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
 
-    <manifestProvider implementation="org.jetbrains.osgi.compiler.oldImpl.ManifestFileAsManifestProvider" order="first"/>
+    <manifestProvider implementation="org.jetbrains.osgi.compiler.oldImpl.UseExistingManifestManifestProvider" order="first"/>
     <manifestProvider implementation="org.jetbrains.osgi.compiler.oldImpl.BndFileManifestProvider"/>
   </extensions>
 

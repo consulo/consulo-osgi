@@ -1,7 +1,10 @@
 package org.jetbrains.osgi.compiler.oldImpl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.compiler.ManifestProviderWithLocation;
+import org.jetbrains.osgi.facet.OSGiFacet;
+import org.jetbrains.osgi.manifest.BundleManifest;
 
 /**
  * @author VISTALL
@@ -15,6 +18,12 @@ public class BndFileManifestProvider extends ManifestProviderWithLocation {
   @NotNull
   @Override
   public String getHeaderName() {
-    return "Use existing bnd file";
+    return "Generate MANIFEST.MF from bnd file";
+  }
+
+  @Nullable
+  @Override
+  protected BundleManifest getBundleManifestImpl(OSGiFacet facet) {
+    return null;
   }
 }

@@ -47,7 +47,7 @@ public abstract class OSGiPackageIconLayerProvider implements IconLayerProvider 
         return null;
       }
 
-      BundleManifest bundleManifest = facet.getConfiguration().getActiveManifestProvider().getBundleManifest(dirPackage.getProject());
+      BundleManifest bundleManifest = facet.getManifest();
       if (isApplicable(qualifiedName, bundleManifest)) {
         return getIcon();
       }

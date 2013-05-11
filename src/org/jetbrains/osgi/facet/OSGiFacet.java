@@ -4,6 +4,8 @@ import com.intellij.facet.Facet;
 import com.intellij.facet.FacetType;
 import com.intellij.openapi.module.Module;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.osgi.compiler.ManifestProvider;
+import org.jetbrains.osgi.manifest.BundleManifest;
 
 /**
  * @author VISTALL
@@ -17,5 +19,11 @@ public class OSGiFacet extends Facet<OSGiFacetConfiguration> {
                    @NotNull OSGiFacetConfiguration configuration,
                    Facet underlyingFacet) {
     super(facetType, module, name, configuration, underlyingFacet);
+  }
+
+  @NotNull
+  public BundleManifest getManifest() {
+    final ManifestProvider activeManifestProvider = getConfiguration().getActiveManifestProvider();
+    return activeManifestProvider.getBundleManifest(this);
   }
 }

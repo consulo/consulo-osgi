@@ -11,12 +11,13 @@ import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.openapi.util.io.FileUtilRt;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.osgi.compiler.ManifestProvider;
 import org.jetbrains.osgi.compiler.ManifestProviderEP;
 import org.jetbrains.osgi.facet.ui.GeneralFacetEditorTab;
-import org.jetbrains.osgi.manifest.BundleManifest;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
   private final ManifestProvider[] myManifestProviders;
   private ManifestProvider myActiveManifestProvider;
 
-  @NotNull
   private String myOsgiInfLocation;
+  private String myMetaInfLocation;
+
+  private String myArtifactName;
 
   public OSGiFacetConfiguration() {
     ManifestProviderEP[] extensions = ManifestProviderEP.EP_NAME.getExtensions();
@@ -49,7 +52,7 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
 
   @Override
   public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
-    return new FacetEditorTab[] {new GeneralFacetEditorTab(this, editorContext.getModule())};
+    return new FacetEditorTab[]{new GeneralFacetEditorTab(this, validatorsManager, editorContext.getModule(), (OSGiFacet) editorContext.getFacet())};
   }
 
   @Override
@@ -57,26 +60,29 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
     PathMacroManager.getInstance(ApplicationManager.getApplication()).expandPaths(element);
 
     setOsgiInfLocation(element.getAttributeValue("osgi-inf-path"));
+    setMetaInfLocation(element.getAttributeValue("meta-inf-path"));
+
+    myArtifactName = element.getAttributeValue("artifact-name", (String)null);
 
     List<Element> elementChildren = element.getChildren();
     ManifestProvider[] manifestProviders = myManifestProviders;
-    for(Element childElement : elementChildren) {
-      if("manifest-provider".equals(childElement.getName())) {
+    for (Element childElement : elementChildren) {
+      if ("manifest-provider".equals(childElement.getName())) {
         String className = childElement.getAttributeValue("class");
         boolean active = Boolean.parseBoolean(childElement.getAttributeValue("active"));
 
         ManifestProvider manifestProvider = null;
-        for(ManifestProvider temp : manifestProviders) {
-          if(className.equals(temp.getClass().getName())) {
+        for (ManifestProvider temp : manifestProviders) {
+          if (className.equals(temp.getClass().getName())) {
             manifestProvider = temp;
           }
         }
 
-        if(manifestProvider == null) {
+        if (manifestProvider == null) {
           continue;
         }
 
-        if(active && myActiveManifestProvider == null) {
+        if (active && myActiveManifestProvider == null) {
           myActiveManifestProvider = manifestProvider;
         }
         manifestProvider.readExternal(childElement);
@@ -86,11 +92,19 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
     validateAndCreate();
   }
 
+  public Artifact getArtifact(@NotNull Project project) {
+    return myArtifactName == null ? null : ArtifactManager.getInstance(project).findArtifact(myArtifactName);
+  }
+
   @Override
   public void writeExternal(Element element) throws WriteExternalException {
     element.setAttribute("osgi-inf-path", myOsgiInfLocation);
+    element.setAttribute("meth-inf-path", myMetaInfLocation);
+    if (myArtifactName != null) {
+      element.setAttribute("artifact-name", myArtifactName);
+    }
 
-    for(ManifestProvider provider : myManifestProviders) {
+    for (ManifestProvider provider : myManifestProviders) {
       Element providerElement = new Element("manifest-provider");
       providerElement.setAttribute("active", String.valueOf(myActiveManifestProvider == provider));
       providerElement.setAttribute("class", provider.getClass().getName());
@@ -100,11 +114,11 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
       element.addContent(providerElement);
     }
 
-   // PathMacroManager.getInstance(ApplicationManager.getApplication()).collapsePaths(element);
+    // PathMacroManager.getInstance(ApplicationManager.getApplication()).collapsePaths(element);
   }
 
   public void validateAndCreate() {
-    if(myActiveManifestProvider == null) {
+    if (myActiveManifestProvider == null) {
       myActiveManifestProvider = myManifestProviders[0];
     }
 
@@ -114,10 +128,6 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
 
   public ManifestProvider[] getManifestProviders() {
     return myManifestProviders;
-  }
-
-  public BundleManifest getBundleManifest(@NotNull Project project) {
-    return myActiveManifestProvider.getBundleManifest(project);
   }
 
   public boolean isActive(ManifestProvider manifestProvider) {
@@ -136,7 +146,24 @@ public class OSGiFacetConfiguration implements FacetConfiguration {
     return StringUtil.notNullize(myOsgiInfLocation);
   }
 
-  public void setOsgiInfLocation(@NotNull String osgiInfLocation) {
+  public void setOsgiInfLocation(String osgiInfLocation) {
     myOsgiInfLocation = osgiInfLocation;
+  }
+
+  public String getArtifactName() {
+    return myArtifactName;
+  }
+
+  public void setArtifactName(String artifactName) {
+    myArtifactName = artifactName;
+  }
+
+  @NotNull
+  public String getMetaInfLocation() {
+    return StringUtil.notNullize(myMetaInfLocation);
+  }
+
+  public void setMetaInfLocation(String metaInfLocation) {
+    myMetaInfLocation = metaInfLocation;
   }
 }

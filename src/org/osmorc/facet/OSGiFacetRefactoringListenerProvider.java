@@ -64,7 +64,7 @@ public class OSGiFacetRefactoringListenerProvider implements RefactoringElementL
           if(facet == null) {
             return;
           }
-          facet.getConfiguration().getBundleManifest(newElement.getProject()).setHeaderValue(Constants.BUNDLE_ACTIVATOR, ((PsiClass)newElement).getQualifiedName());
+          facet.getManifest().setHeaderValue(Constants.BUNDLE_ACTIVATOR, ((PsiClass)newElement).getQualifiedName());
         }
       });
     }
@@ -78,7 +78,7 @@ public class OSGiFacetRefactoringListenerProvider implements RefactoringElementL
           if(facet == null) {
             return;
           }
-          facet.getConfiguration().getBundleManifest(newElement.getProject()).setHeaderValue(Constants.BUNDLE_ACTIVATOR, oldQualifiedName);
+          facet.getManifest().setHeaderValue(Constants.BUNDLE_ACTIVATOR, oldQualifiedName);
         }
       });
     }

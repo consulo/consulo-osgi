@@ -84,7 +84,7 @@ public class UnregisteredActivatorInspection extends LocalInspectionTool {
       public void visitClass(PsiClass psiClass) {
         OSGiFacet facet = OSGiFacetUtil.findFacet(psiClass);
         if (facet != null) {
-          BundleManifest bundleManifest = facet.getConfiguration().getActiveManifestProvider().getBundleManifest(holder.getProject());
+          BundleManifest bundleManifest = facet.getManifest();
           for (PsiType type : psiClass.getSuperTypes()) {
             if (type.equalsToText(BundleActivator.class.getName())) {
               String activatorName = psiClass.getQualifiedName();

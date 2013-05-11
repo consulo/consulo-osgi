@@ -38,7 +38,7 @@ public class OSGiLineMarkerProvider implements LineMarkerProvider {
       if (facet == null) {
         return;
       }
-      BundleManifest bundleManifest = facet.getConfiguration().getActiveManifestProvider().getBundleManifest(elt.getProject());
+      BundleManifest bundleManifest = facet.getManifest();
 
       NavigatablePsiElement target = bundleManifest.getNavigateTargetByHeaderName(Constants.BUNDLE_ACTIVATOR);
       if (target == null) {

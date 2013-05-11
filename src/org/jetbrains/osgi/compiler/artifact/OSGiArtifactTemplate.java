@@ -12,6 +12,7 @@ import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
+import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 
 import java.util.ArrayList;
@@ -44,10 +45,12 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
     if (selectedModules.size() != 1) {
       return null;
     }
-    return doCreateArtifact(selectedModules.get(0));
+    final OSGiFacet facet = OSGiFacetUtil.findFacet(selectedModules.get(0));
+    return doCreateArtifactTemplate(facet);
   }
 
-  private NewArtifactConfiguration doCreateArtifact(Module module) {
+  public static NewArtifactConfiguration doCreateArtifactTemplate(OSGiFacet facet) {
+    final Module module = facet.getModule();
     final String name = module.getName();
 
     final PackagingElementFactory factory = PackagingElementFactory.getInstance();
@@ -55,22 +58,17 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
 
     archive.addOrFindChild(factory.createModuleOutput(module));
 
-    VirtualFile osgi = getVirtualFileBasedOnModule(module, OSGiConstants.OSGI_INFO_ROOT);
-    if(osgi != null) {
-      final CompositePackagingElement<?> osgiRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.OSGI_INFO_ROOT));
-      osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(osgi.getPath(), "/"));
-    }
-    VirtualFile meta = getVirtualFileBasedOnModule(module, OSGiConstants.META_INFO_ROOT);
-    if(meta != null) {
-      final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.META_INFO_ROOT));
-      metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(meta.getPath(), "/"));
-    }
+    final CompositePackagingElement<?> osgiRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.OSGI_INFO_ROOT));
+    osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getConfiguration().getOsgiInfLocation(), "/"));
 
-    return new NewArtifactConfiguration(archive, name, OSGiArtifactType.getInstance());
+    final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.META_INFO_ROOT));
+    metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getConfiguration().getMetaInfLocation(), "/"));
+
+    return new NewArtifactConfiguration(archive, "OSGi:" + name, OSGiArtifactType.getInstance());
   }
 
   @Nullable
-  public VirtualFile getVirtualFileBasedOnModule(@NotNull Module module, @NotNull String root) {
+  public static VirtualFile getVirtualFileBasedOnModule(@NotNull Module module, @NotNull String root) {
     final VirtualFile moduleFile = module.getModuleFile();
     if(moduleFile == null) {
       return null;

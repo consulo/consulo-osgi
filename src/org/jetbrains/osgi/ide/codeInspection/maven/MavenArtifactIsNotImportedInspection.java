@@ -45,7 +45,7 @@ public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspect
       return;
     }
 
-    final BundleManifest bundleManifest = OSGiFacetUtil.findFacet(module).getConfiguration().getBundleManifest(module.getProject());
+    final BundleManifest bundleManifest = OSGiFacetUtil.findFacet(module).getManifest();
 
     BundleManager bundleManager = BundleManager.getInstance(module.getProject());
 
