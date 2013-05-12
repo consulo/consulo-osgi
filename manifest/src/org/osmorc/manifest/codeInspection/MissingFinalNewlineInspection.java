@@ -23,7 +23,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.osmorc.inspection;
+package org.osmorc.manifest.codeInspection;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInspection.*;
@@ -45,7 +45,7 @@ public class MissingFinalNewlineInspection extends LocalInspectionTool {
   @Nls
   @NotNull
   public String getGroupDisplayName() {
-    return "OSGi";
+    return "Manifest";
   }
 
   @Nls
@@ -56,7 +56,7 @@ public class MissingFinalNewlineInspection extends LocalInspectionTool {
 
   @NotNull
   public String getShortName() {
-    return "osmorcMissingFinalNewline";
+    return getClass().getSimpleName();
   }
 
   public boolean isEnabledByDefault() {
@@ -86,7 +86,7 @@ public class MissingFinalNewlineInspection extends LocalInspectionTool {
         }
       }
     }
-    return new ProblemDescriptor[0];
+    return ProblemDescriptor.EMPTY_ARRAY;
   }
 
   private static class AddNewlineQuickFix implements LocalQuickFix {

@@ -64,6 +64,9 @@
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
+    <localInspection shortName="MissingFinalNewlineInspection" displayName="Missing Final New Line" groupName="Manifest" enabledByDefault="true"
+                     level="ERROR" implementationClass="org.osmorc.manifest.codeInspection.MissingFinalNewlineInspection"/>
+
     <colorSettingsPage implementation="org.osmorc.manifest.lang.ManifestColorsAndFontsPage"/>
     <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     <lang.parserDefinition language="MANIFEST" implementationClass="org.osmorc.manifest.lang.ManifestParserDefinition"/>
