@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
  * @author yole
  */
 public class ManifestFileTypeFactory extends FileTypeFactory {
-  @NotNull
   public void createFileTypes(@NotNull FileTypeConsumer consumer) {
     consumer.consume(ManifestFileType.INSTANCE, "MF");
   }

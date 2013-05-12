@@ -34,17 +34,17 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ManifestLexer extends LexerBase {
 
-  private CharSequence myBuffer;
-  private int myEndOffset;
-  private int myTokenStart;
-  private int myTokenEnd;
-  private int myCurrentState;
-  private IElementType myTokenType;
+  protected CharSequence myBuffer;
+  protected int myEndOffset;
+  protected int myTokenStart;
+  protected int myTokenEnd;
+  protected int myCurrentState;
+  protected IElementType myTokenType;
 
-  private static final int INITIAL_STATE = 0;
-  private static final int WAITING_FOR_HEADER_ASSIGNMENT_STATE = 1;
-  private static final int WAITING_FOR_HEADER_ASSIGNMENT_AFTER_BAD_CHARACTER_STATE = 2;
-  private static final int WAITING_FOR_SPACE_AFTER_HEADER_NAME_STATE = 3;
+  protected static final int INITIAL_STATE = 0;
+  protected static final int WAITING_FOR_HEADER_ASSIGNMENT_STATE = 1;
+  protected static final int WAITING_FOR_HEADER_ASSIGNMENT_AFTER_BAD_CHARACTER_STATE = 2;
+  protected static final int WAITING_FOR_SPACE_AFTER_HEADER_NAME_STATE = 3;
 
   public ManifestLexer() {
   }
@@ -88,7 +88,7 @@ public class ManifestLexer extends LexerBase {
     return myBuffer;
   }
 
-  private void parseNextToken() {
+  protected void parseNextToken() {
     if (myTokenStart < myEndOffset) {
       if (isNewline(myTokenStart)) {
         myTokenType = isLineStart(myTokenStart) ? ManifestTokenType.SECTION_END : ManifestTokenType.NEWLINE;
@@ -151,43 +151,43 @@ public class ManifestLexer extends LexerBase {
     }
   }
 
-  private boolean isNewline(int position) {
+  protected boolean isNewline(int position) {
     return '\n' == myBuffer.charAt(position);
   }
 
-  private boolean isHeaderStart(int position) {
+  protected boolean isHeaderStart(int position) {
     return isLineStart(position) && !Character.isWhitespace(myBuffer.charAt(position));
   }
 
-  private boolean isAlphaNum(int position) {
+  protected boolean isAlphaNum(int position) {
     return Character.isLetterOrDigit(myBuffer.charAt(position));
   }
 
-  private boolean isHeaderChar(int position) {
+  protected boolean isHeaderChar(int position) {
     return isAlphaNum(position) || myBuffer.charAt(position) == '-' || myBuffer.charAt(position) == '_';
   }
 
-  private boolean isContinuationStart(int position) {
+  protected boolean isContinuationStart(int position) {
     return isLineStart(position) && !isHeaderStart(position);
   }
 
-  private boolean isLineStart(int position) {
+  protected boolean isLineStart(int position) {
     return (position == 0 || isNewline(position - 1));
   }
 
-  private boolean isSpace(int position) {
+  protected boolean isSpace(int position) {
     return myBuffer.charAt(position) == ' ';
   }
 
-  private boolean isColon(int position) {
+  protected boolean isColon(int position) {
     return myBuffer.charAt(position) == ':';
   }
 
-  private boolean isSpecialCharacter(int position) {
+  protected boolean isSpecialCharacter(int position) {
     return getToken(position) != null;
   }
 
-  private int getTokenSize(IElementType tokenType) {
+  protected int getTokenSize(IElementType tokenType) {
     if(tokenType == ManifestTokenType.COLON_EQUALS) {
       return 2;
     }

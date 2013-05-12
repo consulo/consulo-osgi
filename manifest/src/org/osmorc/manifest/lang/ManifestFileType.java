@@ -50,7 +50,7 @@ public class ManifestFileType extends LanguageFileType {
 
   @NotNull
   public String getDescription() {
-    return "Manifest";
+    return "Manifest files";
   }
 
   @NotNull

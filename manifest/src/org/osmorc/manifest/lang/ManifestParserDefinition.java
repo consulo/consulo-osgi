@@ -47,34 +47,41 @@ import org.osmorc.manifest.lang.psi.impl.ManifestFileImpl;
  */
 public class ManifestParserDefinition implements ParserDefinition {
 
+  @Override
   @NotNull
   public Lexer createLexer(Project project) {
     return new ManifestLexer();
   }
 
+  @Override
   public PsiParser createParser(Project project) {
     return new ManifestParser();
   }
 
+  @Override
   public IFileElementType getFileNodeType() {
     return ManifestStubElementTypes.FILE;
   }
 
+  @Override
   @NotNull
   public TokenSet getWhitespaceTokens() {
     return TokenSet.EMPTY;
   }
 
+  @Override
   @NotNull
   public TokenSet getCommentTokens() {
     return TokenSet.EMPTY;
   }
 
+  @Override
   @NotNull
   public TokenSet getStringLiteralElements() {
     return TokenSet.EMPTY;
   }
 
+  @Override
   @NotNull
   public PsiElement createElement(ASTNode node) {
     final IElementType type = node.getElementType();
@@ -85,11 +92,12 @@ public class ManifestParserDefinition implements ParserDefinition {
     return PsiUtil.NULL_PSI_ELEMENT;
   }
 
+  @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
     return new ManifestFileImpl(viewProvider);
   }
 
-  @SuppressWarnings({"MethodNameWithMistakes"})
+  @Override
   public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
     return (left.getPsi() instanceof Header || right.getPsi() instanceof Header)
            ? SpaceRequirements.MUST_LINE_BREAK
