@@ -31,6 +31,7 @@ public class BndLexer extends ManifestLexer {
         while (myTokenEnd < myEndOffset && !isNewline(myTokenEnd)) {
           myTokenEnd++;
         }
+        myTokenEnd ++; // line end
         myTokenType = BndTokenTypes.LINE_COMMENT;
       }
       else if (isNewline(myTokenStart)) {
