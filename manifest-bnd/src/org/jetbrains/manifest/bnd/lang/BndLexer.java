@@ -19,7 +19,7 @@ public class BndLexer extends ManifestLexer {
     final char c = myBuffer.charAt(position);
     switch (c) {
       case '#':
-        return BndTokenType.SHARP;
+        return BndTokenTypes.SHARP;
     }
     return null;
   }
@@ -27,11 +27,11 @@ public class BndLexer extends ManifestLexer {
   @Override
   protected void parseNextToken() {
     if (myTokenStart < myEndOffset) {
-      if(getToken(myTokenStart) == BndTokenType.SHARP) {
+      if(getToken(myTokenStart) == BndTokenTypes.SHARP) {
         while (myTokenEnd < myEndOffset && !isNewline(myTokenEnd)) {
           myTokenEnd++;
         }
-        myTokenType = BndTokenType.LINE_COMMENT;
+        myTokenType = BndTokenTypes.LINE_COMMENT;
       }
       else if (isNewline(myTokenStart)) {
         myTokenType = isLineStart(myTokenStart) ? ManifestTokenType.SECTION_END : ManifestTokenType.NEWLINE;

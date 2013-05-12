@@ -15,7 +15,7 @@ import org.osmorc.manifest.lang.psi.impl.ManifestFileImpl;
  * @since 1:18/12.05.13
  */
 public class BndParsingDefinition extends ManifestParserDefinition {
-  private static final TokenSet COMMENTS = TokenSet.create(BndTokenType.LINE_COMMENT);
+  private static final TokenSet COMMENTS = TokenSet.create(BndTokenTypes.LINE_COMMENT);
 
   @Override
   public IFileElementType getFileNodeType() {

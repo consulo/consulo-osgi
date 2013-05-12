@@ -6,9 +6,11 @@
   <idea-version since-build="129.000"/>
 
   <extensions defaultExtensionNs="com.intellij">
+    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     <fileTypeFactory implementation="org.jetbrains.manifest.bnd.lang.BndFileTypeFactory" />
     <lang.parserDefinition language="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndParsingDefinition" />
-    <syntaxHighlighter key="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndSyntaxHighlighter" />
+    <lang.syntaxHighlighterFactory key="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndSyntaxHighlighterFactory" />
     <lang.commenter language="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndCommenter" />
+    <lang.ast.factory language="BND" implementationClass="org.osmorc.manifest.lang.psi.impl.ManifestASTFactory"/>
   </extensions>
 </idea-plugin>

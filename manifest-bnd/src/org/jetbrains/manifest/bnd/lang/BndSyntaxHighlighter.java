@@ -12,7 +12,7 @@ import org.osmorc.manifest.lang.ManifestSyntaxHighlighter;
 public class BndSyntaxHighlighter extends ManifestSyntaxHighlighter {
   public BndSyntaxHighlighter() {
     super();
-    safeMap(keys, BndTokenType.LINE_COMMENT, DefaultLanguageHighlighterColors.LINE_COMMENT);
+    safeMap(keys, BndTokenTypes.LINE_COMMENT, DefaultLanguageHighlighterColors.LINE_COMMENT);
   }
 
   @NotNull

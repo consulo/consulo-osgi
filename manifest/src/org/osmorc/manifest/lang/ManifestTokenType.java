@@ -24,14 +24,16 @@
  */
 package org.osmorc.manifest.lang;
 
+import com.intellij.lang.Language;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public final class ManifestTokenType extends IElementType {
+public class ManifestTokenType extends IElementType {
   public static final ManifestTokenType HEADER_NAME = new ManifestTokenType("HEADER_NAME_TOKEN");
   public static final ManifestTokenType NEWLINE = new ManifestTokenType("NEWLINE_TOKEN");
   public static final ManifestTokenType SECTION_END = new ManifestTokenType("SECTION_END_TOKEN");
@@ -49,7 +51,11 @@ public final class ManifestTokenType extends IElementType {
   public static final ManifestTokenType CLOSING_BRACKET_TOKEN = new ManifestTokenType("CLOSING_BRACKET_TOKEN");
 
   private ManifestTokenType(@NotNull @NonNls String debugName) {
-    super(debugName, ManifestLanguage.INSTANCE);
+    this(debugName, ManifestLanguage.INSTANCE);
+  }
+
+  public ManifestTokenType(@NotNull @NonNls String debugName, @Nullable Language language) {
+    super(debugName, language);
   }
 
   public String toString() {
