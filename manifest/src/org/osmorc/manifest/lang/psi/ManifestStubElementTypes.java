@@ -33,21 +33,18 @@ import org.osmorc.manifest.lang.psi.elementtype.*;
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
-public class ManifestStubElementTypes {
-  public static final HeaderElementType HEADER = new HeaderElementType();
-  public static final SectionElementType SECTION = new SectionElementType();
-  public static final HeaderValuePartElementType HEADER_VALUE_PART = new HeaderValuePartElementType();
-  public static final AttributeElementType ATTRIBUTE = new AttributeElementType();
-  public static final DirectiveElementType DIRECTIVE = new DirectiveElementType();
-  public static final ClauseElementType CLAUSE = new ClauseElementType();
+public interface ManifestStubElementTypes {
+  HeaderElementType HEADER = new HeaderElementType();
+  SectionElementType SECTION = new SectionElementType();
+  HeaderValuePartElementType HEADER_VALUE_PART = new HeaderValuePartElementType();
+  AttributeElementType ATTRIBUTE = new AttributeElementType();
+  DirectiveElementType DIRECTIVE = new DirectiveElementType();
+  ClauseElementType CLAUSE = new ClauseElementType();
 
-  public static final IFileElementType FILE = new IStubFileElementType("ManifestFile", ManifestLanguage.INSTANCE) {
+  IFileElementType FILE = new IStubFileElementType("ManifestFile", ManifestLanguage.INSTANCE) {
     @Override
     public int getStubVersion() {
       return 2;
     }
   };
-
-  private ManifestStubElementTypes() {
-  }
 }

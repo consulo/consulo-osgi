@@ -11,6 +11,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="manifest" exported="" />
+    <orderEntry type="module" module-name="manifest-bnd" exported="" />
     <orderEntry type="module" module-name="felix" />
     <orderEntry type="module" module-name="consierge" />
     <orderEntry type="module" module-name="equinox" />

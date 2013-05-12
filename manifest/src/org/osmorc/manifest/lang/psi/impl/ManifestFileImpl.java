@@ -25,6 +25,7 @@
 package org.osmorc.manifest.lang.psi.impl;
 
 import com.intellij.extapi.psi.PsiFileBase;
+import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
@@ -33,7 +34,6 @@ import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.ManifestFileType;
-import org.osmorc.manifest.lang.ManifestLanguage;
 import org.osmorc.manifest.lang.ManifestTokenType;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Header;
@@ -48,14 +48,16 @@ import java.util.List;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ManifestFileImpl extends PsiFileBase implements ManifestFile {
+  private final FileType myFileType;
 
-  public ManifestFileImpl(FileViewProvider viewProvider) {
-    super(viewProvider, ManifestLanguage.INSTANCE);
+  public ManifestFileImpl(@NotNull FileViewProvider viewProvider, @NotNull Language language, @NotNull FileType fileType) {
+    super(viewProvider, language);
+    myFileType = fileType;
   }
 
   @NotNull
   public FileType getFileType() {
-    return ManifestFileType.INSTANCE;
+    return myFileType;
   }
 
   @Override

@@ -1,0 +1,11 @@
+ManifestFile:Comment.bnd
+  PsiComment(BndTokenType: LINE_COMMENT)('# test')
+  SectionImpl [SECTION]
+    PsiElement(ManifestTokenType: NEWLINE_TOKEN)('\n')
+    HeaderImpl [HEADER]
+      PsiElement(ManifestTokenType: HEADER_NAME_TOKEN)('Header')
+      PsiElement(ManifestTokenType: COLON_TOKEN)(':')
+      PsiElement(ManifestTokenType: SIGNIFICANT_SPACE_TOKEN)(' ')
+      ClauseImpl [CLAUSE]
+        HeaderValuePartImpl [HEADER_VALUE_PART]
+          PsiElement(ManifestTokenType: HEADER_VALUE_PART_TOKEN)('Header')

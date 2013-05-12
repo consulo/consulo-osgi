@@ -94,7 +94,7 @@ public class ManifestParserDefinition implements ParserDefinition {
 
   @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
-    return new ManifestFileImpl(viewProvider);
+    return new ManifestFileImpl(viewProvider, ManifestLanguage.INSTANCE, ManifestFileType.INSTANCE);
   }
 
   @Override

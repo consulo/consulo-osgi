@@ -37,6 +37,13 @@ import java.util.Map;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ManifestSyntaxHighlighter extends SyntaxHighlighterBase {
+  protected final Map<IElementType, TextAttributesKey> keys = new HashMap<IElementType, TextAttributesKey>();
+
+  public ManifestSyntaxHighlighter() {
+    safeMap(keys, ManifestTokenType.HEADER_NAME, ManifestColorsAndFonts.HEADER_NAME_KEY);
+    safeMap(keys, ManifestTokenType.HEADER_VALUE_PART, ManifestColorsAndFonts.HEADER_VALUE_KEY);
+  }
+
   @NotNull
   public Lexer getHighlightingLexer() {
     return new ManifestLexer();
@@ -44,15 +51,6 @@ public class ManifestSyntaxHighlighter extends SyntaxHighlighterBase {
 
   @NotNull
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-    return pack(KEYS.get(tokenType));
-  }
-
-  private static final Map<IElementType, TextAttributesKey> KEYS;
-
-  static {
-    KEYS = new HashMap<IElementType, TextAttributesKey>();
-
-    KEYS.put(ManifestTokenType.HEADER_NAME, ManifestColorsAndFonts.HEADER_NAME_KEY);
-    KEYS.put(ManifestTokenType.HEADER_VALUE_PART, ManifestColorsAndFonts.HEADER_VALUE_KEY);
+    return pack(keys.get(tokenType));
   }
 }

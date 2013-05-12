@@ -1,0 +1,14 @@
+<idea-plugin version="2">
+  <id>org.jetbrains.manifest.bnd</id>
+  <name>Bnd support</name>
+  <version>1.0</version>
+  <depends>org.osmorc.manifest</depends>
+  <idea-version since-build="129.000"/>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="org.jetbrains.manifest.bnd.lang.BndFileTypeFactory" />
+    <lang.parserDefinition language="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndParsingDefinition" />
+    <syntaxHighlighter key="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndSyntaxHighlighter" />
+    <lang.commenter language="BND" implementationClass="org.jetbrains.manifest.bnd.lang.BndCommenter" />
+  </extensions>
+</idea-plugin>
