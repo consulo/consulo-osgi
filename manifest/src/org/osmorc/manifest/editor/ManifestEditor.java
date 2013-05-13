@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -61,7 +62,12 @@ public class ManifestEditor extends UserDataHolderBase implements FileEditor {
     myVirtualFile = file;
     myRoot = new JPanel(new BorderLayout());
     myRoot.setBorder(IdeBorderFactory.createEmptyBorder(0, 5, 0, 0));
-    myIsReadonlyFile = !ReadonlyStatusHandler.ensureFilesWritable(myProject, myVirtualFile);
+    myIsReadonlyFile = ApplicationManager.getApplication().runReadAction(new Computable<Boolean>() {
+      @Override
+      public Boolean compute() {
+        return !ReadonlyStatusHandler.ensureFilesWritable(myProject, myVirtualFile);
+      }
+    });
 
     JBSplitter splitter = new JBSplitter();
     splitter.setSplitterProportionKey(getClass().getName());
