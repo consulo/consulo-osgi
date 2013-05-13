@@ -13,6 +13,7 @@ public interface OSGiIcons {
   Icon ExportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/exportPackage.png");
   Icon ImportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/importPackage.png");
   Icon OsgiComponentFile = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentFile.png");
-  Icon OsgiComponent = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponent.png");
+  Icon OsgiComponentImplementation = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentImplementation.png");
+  Icon OsgiComponentInterface = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentInterface.png");
   Icon OsgiBundleActivator = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiBundleActivator.png");
 }
