@@ -33,7 +33,6 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.CompilerProjectExtension;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.vfs.VfsUtil;
@@ -41,6 +40,7 @@ import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.ui.PanelWithAnchor;
 import com.intellij.ui.RawCommandLineEditor;
 import com.intellij.ui.components.JBLabel;
+import org.consulo.compiler.CompilerPathsManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
@@ -275,9 +275,9 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
     boolean useUserDefinedFields = !osgiRunConfiguration.isGenerateWorkingDir();
     workingDirField.setText(osgiRunConfiguration.getWorkingDir());
     if (workingDirField.getText().length() == 0) {
-      final CompilerProjectExtension extension = CompilerProjectExtension.getInstance(project);
-      if (extension != null) {
-        final VirtualFilePointer outputDirPointer = extension.getCompilerOutputPointer();
+      final CompilerPathsManager compilerPathsManager = CompilerPathsManager.getInstance(project);
+      if (compilerPathsManager != null) {
+        final VirtualFilePointer outputDirPointer = compilerPathsManager.getCompilerOutputPointer();
         if (outputDirPointer != null) {
           workingDirField.setText(VfsUtil.urlToPath(outputDirPointer.getUrl() + "/run.osgi/"));
         }

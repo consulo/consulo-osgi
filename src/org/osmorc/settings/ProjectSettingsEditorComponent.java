@@ -25,27 +25,22 @@
 
 package org.osmorc.settings;
 
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.jetbrains.annotations.NotNull;
-import org.osmorc.facet.OsmorcFacet;
-import org.osmorc.facet.OsmorcFacetConfiguration;
-import org.osmorc.facet.OsmorcFacetUtil;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -120,7 +115,7 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
 
 
   private void onApplyToAllClick() {
-    final Application application = ApplicationManager.getApplication();
+   /* final Application application = ApplicationManager.getApplication();
     application.runWriteAction(new Runnable() {
       @Override
       public void run() {
@@ -142,7 +137,7 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
           }
         });
       }
-    });
+    }); */
   }
 
 

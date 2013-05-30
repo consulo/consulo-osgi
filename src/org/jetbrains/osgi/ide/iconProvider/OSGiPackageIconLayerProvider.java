@@ -6,14 +6,14 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiPackage;
+import com.intellij.psi.PsiJavaPackage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.manifest.BundleManifest;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 /**
  * @author VISTALL
@@ -29,7 +29,7 @@ public abstract class OSGiPackageIconLayerProvider implements IconLayerProvider 
   @Override
   public Icon getLayerIcon(@NotNull Iconable element, boolean isLocked) {
     if (element instanceof PsiDirectory) {
-      final PsiPackage dirPackage = JavaDirectoryService.getInstance().getPackage((PsiDirectory)element);
+      final PsiJavaPackage dirPackage = JavaDirectoryService.getInstance().getPackage((PsiDirectory)element);
       if (dirPackage == null) {
         return null;
       }
@@ -37,7 +37,7 @@ public abstract class OSGiPackageIconLayerProvider implements IconLayerProvider 
       if (module == null) {
         return null;
       }
-      final OSGiFacet facet = OSGiFacetUtil.findFacet(module);
+      final OSGiModuleExtension facet = OSGiFacetUtil.findFacet(module);
       if (facet == null) {
         return null;
       }

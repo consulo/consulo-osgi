@@ -12,8 +12,8 @@ import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +45,11 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
     if (selectedModules.size() != 1) {
       return null;
     }
-    final OSGiFacet facet = OSGiFacetUtil.findFacet(selectedModules.get(0));
+    final OSGiModuleExtension facet = OSGiFacetUtil.findFacet(selectedModules.get(0));
     return doCreateArtifactTemplate(facet);
   }
 
-  public static NewArtifactConfiguration doCreateArtifactTemplate(OSGiFacet facet) {
+  public static NewArtifactConfiguration doCreateArtifactTemplate(OSGiModuleExtension facet) {
     final Module module = facet.getModule();
     final String name = module.getName();
 
@@ -59,10 +59,10 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
     archive.addOrFindChild(factory.createModuleOutput(module));
 
     final CompositePackagingElement<?> osgiRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.OSGI_INFO_ROOT));
-    osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getConfiguration().getOsgiInfLocation(), "/"));
+    osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getOSGiInf(), "/"));
 
     final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.META_INFO_ROOT));
-    metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getConfiguration().getMetaInfLocation(), "/"));
+    metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getMETAInf(), "/"));
 
     return new NewArtifactConfiguration(archive, "OSGi:" + name, OSGiArtifactType.getInstance());
   }

@@ -9,8 +9,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +42,7 @@ public class OSGiLineMarkerProvider implements LineMarkerProvider {
       return;
     }
 
-    final OSGiFacet osGiFacet = OSGiFacetUtil.findFacet(module);
+    final OSGiModuleExtension osGiFacet = OSGiFacetUtil.findFacet(module);
     if (osGiFacet == null) {
       return;
     }

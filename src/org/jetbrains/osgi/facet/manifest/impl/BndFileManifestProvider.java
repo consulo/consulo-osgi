@@ -3,8 +3,8 @@ package org.jetbrains.osgi.facet.manifest.impl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.facet.manifest.ManifestProviderWithLocation;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
 /**
  * @author VISTALL
@@ -23,7 +23,7 @@ public class BndFileManifestProvider extends ManifestProviderWithLocation {
 
   @Nullable
   @Override
-  protected BundleManifest getBundleManifestImpl(OSGiFacet facet) {
+  protected BundleManifest getBundleManifestImpl(OSGiModuleExtension facet) {
     return null;
   }
 }

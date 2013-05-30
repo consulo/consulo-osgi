@@ -1,14 +1,10 @@
 package aQute.bnd.test;
 
-import aQute.libg.reporter.Reporter;
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-
 import java.util.List;
 
-public abstract class BndTestCase extends TestCase {
+public abstract class BndTestCase /*extends TestCase*/ {
 
-  protected void assertOk(Reporter reporter) {
+ /* protected void assertOk(Reporter reporter) {
     try {
       assertEquals(0, reporter.getErrors().size());
       assertEquals(0, reporter.getWarnings().size());
@@ -18,7 +14,7 @@ public abstract class BndTestCase extends TestCase {
       print("Warnings", reporter.getWarnings());
       throw t;
     }
-  }
+  }    */
 
 
   private void print(String title, List<?> strings) {

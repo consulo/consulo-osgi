@@ -4,12 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/patched-libs/bndlib/bndlib.iml" filepath="$PROJECT_DIR$/patched-libs/bndlib/bndlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/impl/consierge/consierge.iml" filepath="$PROJECT_DIR$/impl/consierge/consierge.iml" group="impl" />
+      <module fileurl="file://$PROJECT_DIR$/consulo-osgi.iml" filepath="$PROJECT_DIR$/consulo-osgi.iml" />
       <module fileurl="file://$PROJECT_DIR$/impl/equinox/equinox.iml" filepath="$PROJECT_DIR$/impl/equinox/equinox.iml" group="impl" />
       <module fileurl="file://$PROJECT_DIR$/impl/felix/felix.iml" filepath="$PROJECT_DIR$/impl/felix/felix.iml" group="impl" />
       <module fileurl="file://$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" filepath="$PROJECT_DIR$/impl/knopflerfish/knopflerfish.iml" group="impl" />
-      <module fileurl="file://$PROJECT_DIR$/manifest/manifest.iml" filepath="$PROJECT_DIR$/manifest/manifest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/manifest-bnd/manifest-bnd.iml" filepath="$PROJECT_DIR$/manifest-bnd/manifest-bnd.iml" />
-      <module fileurl="file://$PROJECT_DIR$/osgi.iml" filepath="$PROJECT_DIR$/osgi.iml" />
     </modules>
   </component>
 </project>

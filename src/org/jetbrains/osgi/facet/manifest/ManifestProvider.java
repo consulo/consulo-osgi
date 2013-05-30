@@ -8,9 +8,9 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.DummyBundleManifestImpl;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
 /**
  * @author VISTALL
@@ -31,7 +31,7 @@ public abstract class ManifestProvider implements JDOMExternalizable{
   }
 
   @NotNull
-  public final BundleManifest getBundleManifest(@NotNull OSGiFacet facet) {
+  public final BundleManifest getBundleManifest(@NotNull OSGiModuleExtension facet) {
     BundleManifest bundleManifestImpl = getBundleManifestImpl(facet);
     return bundleManifestImpl == null ? DummyBundleManifestImpl.INSTANCE : bundleManifestImpl;
   }
@@ -40,7 +40,7 @@ public abstract class ManifestProvider implements JDOMExternalizable{
   public abstract ManifestProviderConfigurable createConfigurable(Module module);
 
   @Nullable
-  protected abstract BundleManifest getBundleManifestImpl(OSGiFacet facet);
+  protected abstract BundleManifest getBundleManifestImpl(OSGiModuleExtension facet);
 
    public void expandPaths(PathMacroManager pathMacroManager) {
 

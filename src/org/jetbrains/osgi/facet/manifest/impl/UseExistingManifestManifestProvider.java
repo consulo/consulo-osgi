@@ -11,9 +11,9 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
 import org.jetbrains.osgi.facet.manifest.ManifestProvider;
 import org.jetbrains.osgi.facet.manifest.ManifestProviderConfigurable;
-import org.jetbrains.osgi.facet.OSGiFacet;
 import org.jetbrains.osgi.manifest.BundleManifest;
 import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 
 import javax.swing.JComponent;
@@ -60,8 +60,8 @@ public class UseExistingManifestManifestProvider extends ManifestProvider {
 
   @Nullable
   @Override
-  protected BundleManifest getBundleManifestImpl(OSGiFacet facet) {
-    final VirtualFile virtualFile = VcsUtil.getVirtualFile(facet.getConfiguration().getMetaInfLocation() + "/" + OSGiConstants.MANIFEST_NAME);
+  protected BundleManifest getBundleManifestImpl(OSGiModuleExtension facet) {
+    final VirtualFile virtualFile = VcsUtil.getVirtualFile(facet.getMETAInf() + "/" + OSGiConstants.MANIFEST_NAME);
     if (virtualFile == null) {
       return null;
     }

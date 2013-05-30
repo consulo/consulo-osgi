@@ -64,7 +64,7 @@ public class BundleSelector extends JDialog {
   private JPanel contentPane;
   private JButton buttonOK;
   private JButton buttonCancel;
-  private JList<SelectedBundle> bundlesList;
+  private JList bundlesList;
   private JTextField searchField;
   private FrameworkInstanceDefinition usedFramework;
   private List<SelectedBundle> hideBundles = new ArrayList<SelectedBundle>();
@@ -185,7 +185,7 @@ public class BundleSelector extends JDialog {
     ArrayList<SelectedBundle> theList = new ArrayList<SelectedBundle>(allAvailableBundles);
     // now filter
     String filterText = searchField.getText().toLowerCase();
-    DefaultListModel<SelectedBundle> newModel = new DefaultListModel<SelectedBundle>();
+    DefaultListModel newModel = new DefaultListModel();
     for (SelectedBundle selectedBundle : theList) {
       boolean needsFiltering = filterText.length() > 0;
       if (needsFiltering && !selectedBundle.getName().toLowerCase().contains(filterText)) {
@@ -198,7 +198,10 @@ public class BundleSelector extends JDialog {
 
   private void onOK() {
 
-    selectedBundles = bundlesList.getSelectedValuesList();
+    selectedBundles = new ArrayList<SelectedBundle>();
+    for(Object o : bundlesList.getSelectedValues()) {
+      selectedBundles.add((SelectedBundle)o);
+    }
 
     dispose();
   }

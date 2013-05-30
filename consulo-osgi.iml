@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="DevKit.ModuleBuildProperties" url="file://$MODULE_DIR$/META-INF/plugin.xml" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/rsc" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="felix" />
+    <orderEntry type="module" module-name="consierge" />
+    <orderEntry type="module" module-name="equinox" />
+    <orderEntry type="module" module-name="knopflerfish" />
+    <orderEntry type="library" exported="" name="binding" level="project" />
+    <orderEntry type="library" name="org.eclipse.osgi" level="project" />
+    <orderEntry type="library" name="pax-runner" level="project" />
+    <orderEntry type="module" module-name="bndlib" />
+    <orderEntry type="library" name="Consulo 1.SNAPSHOT" level="application" />
+  </component>
+</module>
+

@@ -13,7 +13,7 @@ import org.jetbrains.osgi.OSGiIcons;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.jetbrains.osgi.serviceComponent.dom.TComponent;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 /**
  * @author VISTALL

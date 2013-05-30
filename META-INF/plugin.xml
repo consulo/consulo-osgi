@@ -4,7 +4,9 @@
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
   <depends>org.jetbrains.manifest.bnd</depends>
-  <depends>org.jetbrains.idea.maven</depends>
+  <depends>com.intellij.xml.dom</depends>
+  <depends>org.consulo.java</depends>
+  <!--<depends>org.jetbrains.idea.maven</depends>-->
 
   <project-components>
     <component>
@@ -14,20 +16,6 @@
       <implementation-class>org.osmorc.ModuleChangeHandler</implementation-class>
     </component>
   </project-components>
-
-  <module-components>
-    <component>
-      <implementation-class>org.osmorc.OsmorcModuleComponent</implementation-class>
-    </component>
-  </module-components>
-
-  <actions>
-    <group id="osmorc.viewGeneratedManifests" class="org.osmorc.ide.actions.ViewGeneratedManifestGroup" popup="true"
-           text="View Generated Manifest" description="View the manifest of a recently generated OSGi bundle"
-           icon="/org/jetbrains/osmorc2/icons/osmorc2Facet.png">
-      <add-to-group group-id="ToolsMenu" anchor="last"/>
-    </group>
-  </actions>
 
   <extensionPoints>
     <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
@@ -50,7 +38,7 @@
   </extensions>
 
   <extensions defaultExtensionNs="org.jetbrains.idea.maven">
-    <!--- <importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/> -->
+    <!--<importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/> -->
   </extensions>
 
   <extensions defaultExtensionNs="org.osmorc.manifest">
@@ -124,15 +112,14 @@
     <localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
                      enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
 
-    <localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
+    <!--<localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
                      level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
     <localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
-                     level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
+                     level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>-->
 
-    <facetType implementation="org.jetbrains.osgi.facet.OSGiFacetType"/>
-    <!---<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
+    <moduleExtensionProvider key="osgi" parent-key="java" implementationClass="org.jetbrains.osgi.module.extension.OSGiModuleExtensionProvider" />
+    <!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
-    <refactoring.elementListenerProvider implementation="org.osmorc.facet.OSGiFacetRefactoringListenerProvider"/>
 
     <projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
                          displayName="OSGi"/>
@@ -150,12 +137,18 @@
 
     <compiler implementation="org.jetbrains.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
     <packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType"/>
-    <!--Service component dom model-->
-    <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
-    <standardResource url="http://www.osgi.org/xmlns/metatype/v1.0.0" path="/standardSchemas/metatype.xsd" version="1.0.0"/>
-    <dom.fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
+
     <localInspection shortName="ServiceComponentInspection"
                      implementationClass="org.jetbrains.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
                      displayName="Component Problems" groupName="OSGi" level="ERROR"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="com.intellij.xml">
+    <!--Service component dom model-->
+    <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
+    <standardResource url="http://www.osgi.org/xmlns/metatype/v1.0.0" path="/standardSchemas/metatype.xsd" version="1.0.0"/>
+  </extensions>
+  <extensions defaultExtensionNs="com.intellij.xml.dom">
+    <fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
   </extensions>
 </idea-plugin>

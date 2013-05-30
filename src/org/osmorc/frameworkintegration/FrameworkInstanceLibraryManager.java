@@ -38,7 +38,7 @@ import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osmorc.facet.OsmorcFacetUtil;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
 import org.osmorc.frameworkintegration.util.FileUtil;
 import org.osmorc.settings.ApplicationSettings;
 import org.osmorc.settings.ProjectSettings;
@@ -136,7 +136,7 @@ public class FrameworkInstanceLibraryManager {
   private boolean existsAtLeastOneOsmorcFacetInProject() {
     Module[] modules = myModuleManager.getModules();
     for (Module module : modules) {
-      if (OsmorcFacetUtil.hasOsmorcFacet(module)) {
+      if (OSGiFacetUtil.findFacet(module) != null) {
         return true;
       }
     }

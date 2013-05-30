@@ -1,14 +1,15 @@
 package org.jetbrains.osgi.facet;
 
-import com.intellij.facet.FacetManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.vcsUtil.VcsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
 
 /**
  * @author VISTALL
@@ -16,12 +17,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public class OSGiFacetUtil {
   @Nullable
-  public static OSGiFacet findFacet(@NotNull Module module) {
-    return FacetManager.getInstance(module).getFacetByType(OSGiFacetType.ID);
+  public static OSGiModuleExtension findFacet(@NotNull Module module) {
+    return ModuleUtilCore.getExtension(module, OSGiModuleExtension.class);
   }
 
   @Nullable
-  public static OSGiFacet findFacet(@NotNull PsiElement psiElement) {
+  public static OSGiModuleExtension findFacet(@NotNull PsiElement psiElement) {
     Module moduleForPsiElement = ModuleUtil.findModuleForPsiElement(psiElement);
     if(moduleForPsiElement == null) {
       return null;
@@ -31,16 +32,16 @@ public class OSGiFacetUtil {
 
   @Nullable
   public static VirtualFile getOSGiInf(@NotNull Module module) {
-    OSGiFacet facet = findFacet(module);
+    OSGiModuleExtension facet = findFacet(module);
     if(facet == null) {
       return null;
     }
 
-    return VcsUtil.getVirtualFile(facet.getConfiguration().getOsgiInfLocation());
+    return VcsUtil.getVirtualFile(facet.getOSGiInf());
   }
  
   public static boolean isBundleActivator(PsiClass psiClass) {
-    final OSGiFacet facet = findFacet(psiClass);
+    final OSGiModuleExtension facet = findFacet(psiClass);
     if(facet == null) {
       return false;
     }
