@@ -18,6 +18,7 @@ public class OSGiMutableModuleExtension extends OSGiModuleExtension implements M
   public OSGiMutableModuleExtension(@NotNull String id, @NotNull Module module, @NotNull OSGiModuleExtension moduleExtension) {
     super(id, module);
     myModuleExtension = moduleExtension;
+    commit(moduleExtension);
   }
 
   @Nullable
