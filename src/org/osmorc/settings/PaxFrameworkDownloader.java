@@ -10,7 +10,7 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
+import com.intellij.openapi.projectRoots.impl.JavaAwareProjectSdkTableImpl;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -99,7 +99,7 @@ public class PaxFrameworkDownloader {
 
   private JavaParameters createJavaParameters() throws ExecutionException {
     JavaParameters parameters = new JavaParameters();
-    Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
+    Sdk sdk = JavaAwareProjectSdkTableImpl.getInstanceEx().getInternalJdk();
     if (sdk == null) {
       throw new ExecutionException("No Java SDK available.");
     }
