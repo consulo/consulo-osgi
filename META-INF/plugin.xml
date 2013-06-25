@@ -3,7 +3,6 @@
   <name>OSGi support</name>
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
-  <depends>org.jetbrains.manifest.bnd</depends>
   <depends>com.intellij.xml.dom</depends>
   <depends>org.consulo.java</depends>
   <!--<depends>org.jetbrains.idea.maven</depends>-->

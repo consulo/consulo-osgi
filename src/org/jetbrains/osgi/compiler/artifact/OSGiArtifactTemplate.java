@@ -8,7 +8,6 @@ import com.intellij.packaging.artifacts.ArtifactTemplate;
 import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementFactory;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
-import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
@@ -54,7 +53,7 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
     final String name = module.getName();
 
     final PackagingElementFactory factory = PackagingElementFactory.getInstance();
-    final CompositePackagingElement<?> archive = factory.createArchive(ArtifactUtil.suggestArtifactFileName(name) + ".jar");
+    final CompositePackagingElement<?> archive = OSGiArtifactType.getInstance().createRootElement(name);
 
     archive.addOrFindChild(factory.createModuleOutput(module));
 

@@ -7,7 +7,7 @@ import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementOutputKind;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.elements.ArchivePackagingElement;
+import com.intellij.packaging.impl.elements.JarArchivePackagingElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +43,7 @@ public class OSGiArtifactType extends ArtifactType {
   @NotNull
   @Override
   public CompositePackagingElement<?> createRootElement(@NotNull String artifactName) {
-    return new ArchivePackagingElement(ArtifactUtil.suggestArtifactFileName(artifactName) + ".jar");
+    return new JarArchivePackagingElement(ArtifactUtil.suggestArtifactFileName(artifactName) + ".jar");
   }
 
   @NotNull
