@@ -4,10 +4,7 @@ import aQute.bnd.make.component.ComponentAnnotationReader;
 import aQute.lib.osgi.Clazz;
 import aQute.lib.osgi.FileResource;
 import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.openapi.compiler.ClassInstrumentingCompiler;
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompileScope;
-import com.intellij.openapi.compiler.ValidityState;
+import com.intellij.openapi.compiler.*;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.io.FileUtilRt;
@@ -120,6 +117,10 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler {
   @Override
   public boolean validateConfiguration(CompileScope scope) {
     return true;
+  }
+
+  @Override
+  public void init(@NotNull CompilerManager compilerManager) {
   }
 
   @Override
