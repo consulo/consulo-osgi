@@ -3,12 +3,11 @@ package org.jetbrains.osgi.compiler.artifact;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.ArtifactTemplate;
 import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementFactory;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
-import org.jetbrains.annotations.NotNull;
+import org.consulo.java.platform.roots.SpecialDirUtil;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiConstants;
 import org.jetbrains.osgi.facet.OSGiFacetUtil;
@@ -60,23 +59,10 @@ public class OSGiArtifactTemplate extends ArtifactTemplate {
     final CompositePackagingElement<?> osgiRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.OSGI_INFO_ROOT));
     osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getOSGiInf(), "/"));
 
-    final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.META_INFO_ROOT));
+    final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(SpecialDirUtil.META_INF));
     metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getMETAInf(), "/"));
 
     return new NewArtifactConfiguration(archive, "OSGi:" + name, OSGiArtifactType.getInstance());
-  }
-
-  @Nullable
-  public static VirtualFile getVirtualFileBasedOnModule(@NotNull Module module, @NotNull String root) {
-    final VirtualFile moduleFile = module.getModuleFile();
-    if(moduleFile == null) {
-      return null;
-    }
-    final VirtualFile parent = moduleFile.getParent();
-    if(parent == null) {
-      return null;
-    }
-    return parent.findChild(root);
   }
 
   @Override

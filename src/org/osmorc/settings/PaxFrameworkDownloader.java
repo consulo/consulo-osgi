@@ -9,8 +9,9 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.projectRoots.JavaSdk;
 import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectSdkTableImpl;
+import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -98,12 +99,18 @@ public class PaxFrameworkDownloader {
   }
 
   private JavaParameters createJavaParameters() throws ExecutionException {
-    JavaParameters parameters = new JavaParameters();
-    Sdk sdk = JavaAwareProjectSdkTableImpl.getInstanceEx().getInternalJdk();
-    if (sdk == null) {
+    Sdk internalSdk = null;
+    for (Sdk sdk : SdkTable.getInstance().getAllSdks()) {
+      if(sdk.isBundled() && sdk.getSdkType() == JavaSdk.getInstance()) {
+        internalSdk = sdk;
+        break;
+      }
+    }
+    if (internalSdk == null) {
       throw new ExecutionException("No Java SDK available.");
     }
-    parameters.setJdk(sdk);
+    JavaParameters parameters = new JavaParameters();
+    parameters.setJdk(internalSdk);
     parameters.setMainClass(AbstractPaxBasedFrameworkRunner.PaxRunnerMainClass);
     PathsList classpath = parameters.getClassPath();
     for (VirtualFile libraryFile : AbstractPaxBasedFrameworkRunner.getPaxLibraries()) {
