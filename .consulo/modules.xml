@@ -40,7 +40,7 @@
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-rt.jar!/" />
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/jdk-annotations.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -53,7 +53,7 @@
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-intellilang.jar!/" />
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -62,7 +62,7 @@
             <CLASSES>
               <root url="jar://$MODULE_DIR$/lib/pax-runner.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -71,7 +71,7 @@
             <CLASSES>
               <root url="jar://$MODULE_DIR$/lib/binding-2.0.6.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -80,7 +80,7 @@
             <CLASSES>
               <root url="jar://$MODULE_DIR$/lib/org.eclipse.osgi.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -89,7 +89,7 @@
             <CLASSES>
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml-dom/lib/xml-dom.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
@@ -99,16 +99,16 @@
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml-copyright.jar!/" />
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>
         <orderEntry type="module-library">
           <library>
             <CLASSES>
-              <root url="jar://G:/consulo-ext-plugins/manifest/lib/manifest.jar!/" />
+              <root url="jar://$MODULE_DIR$/dep/java-manifest/lib/manifest.jar!/" />
             </CLASSES>
-            <JAVADOC />
+            <DOCUMENTATION />
             <SOURCES />
           </library>
         </orderEntry>

@@ -36,9 +36,9 @@ import com.intellij.openapi.fileEditor.ex.FileEditorProviderManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -71,7 +71,7 @@ public class ViewManifestAction extends AnAction implements DumbAware {
     }
 
     // that seems a rather cumbersome way of opening a file... maybe there is a more efficient way to do this....
-    VirtualFile jarRoot = JarFileSystem.getInstance().getJarRootForLocalFile(jarFile);
+    VirtualFile jarRoot = ArchiveVfsUtil.getJarRootForLocalFile(jarFile);
     if (jarRoot != null) {
       final VirtualFile manifestFile = jarRoot.findFileByRelativePath("META-INF/MANIFEST.MF");
 

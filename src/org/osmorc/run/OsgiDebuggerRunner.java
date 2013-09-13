@@ -3,7 +3,6 @@ package org.osmorc.run;
 import com.intellij.debugger.engine.DebuggerUtils;
 import com.intellij.debugger.impl.GenericDebuggerRunner;
 import com.intellij.execution.ExecutionException;
-import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
 import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.runners.ExecutionEnvironment;
@@ -34,18 +33,17 @@ public class OsgiDebuggerRunner extends GenericDebuggerRunner {
 
   @Override
   protected RunContentDescriptor createContentDescriptor(Project project,
-                                                         Executor executor,
                                                          RunProfileState state,
                                                          RunContentDescriptor contentToReuse,
                                                          ExecutionEnvironment env) throws ExecutionException {
     OsgiRunState runState = (OsgiRunState)state;
-    final RunnerSettings myRunnerSettings = state.getRunnerSettings();
+    final RunnerSettings myRunnerSettings = ((OsgiRunState) state).getRunnerSettings();
 
     if (runState.requiresRemoteDebugger()) {
       // this is actually copied from the default, but well
       String myDebugPort = null;
-      if (myRunnerSettings.getData() instanceof DebuggingRunnerData) {
-        myDebugPort = ((DebuggingRunnerData)myRunnerSettings.getData()).getDebugPort();
+      if (myRunnerSettings instanceof DebuggingRunnerData) {
+        myDebugPort = ((DebuggingRunnerData)myRunnerSettings).getDebugPort();
         if (myDebugPort.length() == 0) {
           try {
             myDebugPort = DebuggerUtils.getInstance().findAvailableDebugAddress(true);
@@ -53,16 +51,16 @@ public class OsgiDebuggerRunner extends GenericDebuggerRunner {
           catch (ExecutionException e) {
             logger.error(e);
           }
-          ((DebuggingRunnerData)myRunnerSettings.getData()).setDebugPort(myDebugPort);
+          ((DebuggingRunnerData)myRunnerSettings).setDebugPort(myDebugPort);
         }
-        ((DebuggingRunnerData)myRunnerSettings.getData()).setLocal(false);
+        ((DebuggingRunnerData)myRunnerSettings).setLocal(false);
       }
       final RemoteConnection connection = new RemoteConnection(true, "127.0.0.1", myDebugPort, true);
-      return attachVirtualMachine(project, executor, state, contentToReuse, env, connection, false);
+      return attachVirtualMachine(project, state, contentToReuse, env, connection, false);
     }
     else {
       // let the default debugger do it's job.
-      return super.createContentDescriptor(project, executor, state, contentToReuse, env);
+      return super.createContentDescriptor(project, state, contentToReuse, env);
     }
   }
 }

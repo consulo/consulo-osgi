@@ -32,14 +32,14 @@ import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
 import org.jetbrains.osgi.manifest.BundleManifest;
+import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -79,7 +79,7 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl<Librar
             classDir = classRoot;
           }
           else {
-            classDir = JarFileSystem.getInstance().getJarRootForLocalFile(classRoot);
+            classDir = ArchiveVfsUtil.getJarRootForLocalFile(classRoot);
           }
 
           if (classDir != null) {
@@ -137,7 +137,7 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl<Librar
         classDir = classRoot;
       }
       else {
-        classDir = JarFileSystem.getInstance().getJarRootForLocalFile(classRoot);
+        classDir = ArchiveVfsUtil.getJarRootForLocalFile(classRoot);
       }
 
       if (classDir != null) {

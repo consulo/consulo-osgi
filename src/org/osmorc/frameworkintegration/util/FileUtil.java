@@ -24,8 +24,8 @@
  */
 package org.osmorc.frameworkintegration.util;
 
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,7 +59,7 @@ public class FileUtil {
         result = file;
       }
       else {
-        result = JarFileSystem.getInstance().getJarRootForLocalFile(file);
+        result = ArchiveVfsUtil.getJarRootForLocalFile(file);
       }
     }
 

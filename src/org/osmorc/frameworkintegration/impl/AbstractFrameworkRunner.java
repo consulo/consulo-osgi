@@ -98,7 +98,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
    * @return true if this run is a debug run, false otherwise.
    */
   protected boolean isDebugRun() {
-    return myRunnerSettings.getData() instanceof DebuggingRunnerData;
+    return myRunnerSettings instanceof DebuggingRunnerData;
   }
 
   /**
@@ -111,7 +111,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     if (!isDebugRun()) {
       return "-1";
     }
-    DebuggingRunnerData data = (DebuggingRunnerData)myRunnerSettings.getData();
+    DebuggingRunnerData data = (DebuggingRunnerData)myRunnerSettings;
     return data.getDebugPort();
   }
 
