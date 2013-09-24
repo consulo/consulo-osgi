@@ -3,14 +3,11 @@
   <name>OSGi support</name>
   <version>2.0</version>
   <depends>org.osmorc.manifest</depends>
-  <depends>com.intellij.xml.dom</depends>
+  <depends>com.intellij.xml</depends>
   <depends>org.consulo.java</depends>
-  <!--<depends>org.jetbrains.idea.maven</depends>-->
+  <depends>org.jetbrains.idea.maven</depends>
 
   <project-components>
-    <component>
-      <implementation-class>org.osmorc.OsmorcProjectComponent</implementation-class>
-    </component>
     <component>
       <implementation-class>org.osmorc.ModuleChangeHandler</implementation-class>
     </component>
@@ -111,10 +108,10 @@
     <localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
                      enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
 
-    <!--<localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
+    <localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
                      level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
     <localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
-                     level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>-->
+                     level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
 
     <moduleExtensionProvider key="osgi" parent-key="java" implementationClass="org.jetbrains.osgi.module.extension.OSGiModuleExtensionProvider" />
     <!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->

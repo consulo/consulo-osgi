@@ -25,6 +25,23 @@
 
 package org.osmorc.inspection.maven;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.idea.maven.dom.MavenDomUtil;
+import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
+import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
+import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
+import org.jetbrains.idea.maven.model.MavenArtifact;
+import org.jetbrains.osgi.ide.codeInspection.maven.MavenDependencyInspection;
+import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
+import org.osmorc.obrimport.MavenRepository;
+import org.osmorc.obrimport.ObrSearchDialog;
+import org.osmorc.obrimport.springsource.ObrMavenResult;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -39,23 +56,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.dom.MavenDomUtil;
-import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
-import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
-import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
-import org.jetbrains.idea.maven.model.MavenArtifact;
-import org.jetbrains.osgi.ide.codeInspection.maven.MavenDependencyInspection;
-import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
-import org.osmorc.obrimport.MavenRepository;
-import org.osmorc.obrimport.ObrSearchDialog;
-import org.osmorc.obrimport.springsource.ObrMavenResult;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Inspection which detects non-OSGi dependencies.

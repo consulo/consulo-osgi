@@ -5,7 +5,7 @@
       <module name="bndlib" dirurl="file://$PROJECT_DIR$/patched-libs/bndlib">
         <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="sourceFolder" forTests="false" />
@@ -14,7 +14,7 @@
         <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
@@ -25,38 +25,13 @@
         <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/rsc" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/rsc" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
         <orderEntry type="sourceFolder" forTests="false" />
         <orderEntry type="module" module-name="bndlib" />
-        <orderEntry type="module-library">
-          <library name="consulo:Java Platform">
-            <CLASSES>
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-compiler-artifact-impl.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-platform.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-rt.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/jdk-annotations.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library">
-          <library name="consulo:Java">
-            <CLASSES>
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-copyright.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-debugger-api.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-debugger-impl.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-intellilang.jar!/" />
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
         <orderEntry type="module-library" exported="">
           <library>
             <CLASSES>
@@ -85,9 +60,34 @@
           </library>
         </orderEntry>
         <orderEntry type="module-library">
-          <library name="consulo:XML Dom">
+          <library>
             <CLASSES>
-              <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml-dom/lib/xml-dom.jar!/" />
+              <root url="jar://$MODULE_DIR$/dep/java-manifest/lib/manifest.jar!/" />
+            </CLASSES>
+            <DOCUMENTATION />
+            <SOURCES />
+          </library>
+        </orderEntry>
+        <orderEntry type="module-library">
+          <library name="consulo:Java">
+            <CLASSES>
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-copyright.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-debugger-api.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-debugger-impl.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java-intellilang.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/java.jar!/" />
+            </CLASSES>
+            <DOCUMENTATION />
+            <SOURCES />
+          </library>
+        </orderEntry>
+        <orderEntry type="module-library">
+          <library name="consulo:Java Platform">
+            <CLASSES>
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-compiler-artifact-impl.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-platform.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/java-rt.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/java-platform/lib/jdk-annotations.jar!/" />
             </CLASSES>
             <DOCUMENTATION />
             <SOURCES />
@@ -97,6 +97,8 @@
           <library name="consulo:XML">
             <CLASSES>
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml-copyright.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml-dom.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml-intellilang.jar!/" />
               <root url="jar://$APPLICATION_HOME_DIR$/plugins/xml/lib/xml.jar!/" />
             </CLASSES>
             <DOCUMENTATION />
@@ -104,9 +106,14 @@
           </library>
         </orderEntry>
         <orderEntry type="module-library">
-          <library>
+          <library name="consulo:Maven Integration">
             <CLASSES>
-              <root url="jar://$MODULE_DIR$/dep/java-manifest/lib/manifest.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/lucene-core-2.4.1.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven-server-api.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven2-server-impl.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3-server-impl.jar!/" />
+              <root url="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/wadl-core.jar!/" />
             </CLASSES>
             <DOCUMENTATION />
             <SOURCES />
@@ -117,7 +124,7 @@
         <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
@@ -128,7 +135,7 @@
         <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
@@ -139,7 +146,7 @@
         <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
         <content url="file://$MODULE_DIR$">
-          <content-folder type="SOURCE" url="file://$MODULE_DIR$/src" />
+          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
