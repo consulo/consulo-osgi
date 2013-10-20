@@ -1,17 +1,17 @@
 package org.jetbrains.osgi.compiler.artifact;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import com.intellij.packaging.impl.artifacts.DefaultPackagingElementResolvingContext;
 import com.intellij.packaging.impl.elements.ModuleOutputPackagingElement;
-import com.intellij.packaging.impl.elements.ProductionModuleOutputElementType;
+import com.intellij.packaging.impl.elements.moduleContent.ProductionModuleOutputElementType;
 import com.intellij.util.Processor;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author VISTALL
@@ -23,7 +23,7 @@ public class OSGiArtifactUtil {
     final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(project);
     final List<Module> list = new ArrayList<Module>();
     ArtifactUtil
-      .processPackagingElements(artifact, ProductionModuleOutputElementType.ELEMENT_TYPE, new Processor<ModuleOutputPackagingElement>() {
+      .processPackagingElements(artifact, ProductionModuleOutputElementType.getInstance(), new Processor<ModuleOutputPackagingElement>() {
         @Override
         public boolean process(ModuleOutputPackagingElement moduleOutputPackagingElement) {
           final Module module = moduleOutputPackagingElement.findModule(context);
