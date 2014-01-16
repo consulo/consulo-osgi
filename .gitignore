@@ -3,3 +3,4 @@
 /out
 /patched-libs/bndlib/build
 /.consulo/workspace.xml
+/dep
