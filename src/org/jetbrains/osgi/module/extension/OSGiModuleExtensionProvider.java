@@ -1,12 +1,12 @@
 package org.jetbrains.osgi.module.extension;
 
-import com.intellij.openapi.module.Module;
+import javax.swing.Icon;
+
 import org.consulo.module.extension.ModuleExtensionProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.osgi.OSGiIcons;
-
-import javax.swing.Icon;
+import com.intellij.openapi.module.Module;
 
 /**
  * @author VISTALL
@@ -23,12 +23,6 @@ public class OSGiModuleExtensionProvider implements ModuleExtensionProvider<OSGi
   @Override
   public String getName() {
     return "OSGi";
-  }
-
-  @NotNull
-  @Override
-  public Class<OSGiModuleExtension> getImmutableClass() {
-    return OSGiModuleExtension.class;
   }
 
   @NotNull

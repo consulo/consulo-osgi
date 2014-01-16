@@ -11,8 +11,8 @@
         <orderEntry type="sourceFolder" forTests="false" />
       </module>
       <module name="impl/consierge" dirurl="file://$PROJECT_DIR$/impl/consierge">
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
@@ -22,9 +22,9 @@
         <orderEntry type="module" module-name="consulo-osgi" />
       </module>
       <module name="consulo-osgi" dirurl="file://$PROJECT_DIR$">
+        <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" custom-plugin-dir-url="file://$MODULE_DIR$/dep" />
         <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="MODULE_DIR" />
         <extension id="lombok" />
-        <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" custom-plugin-dir-url="file://$MODULE_DIR$/dep" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/rsc" />
@@ -103,8 +103,8 @@
         </orderEntry>
       </module>
       <module name="impl/equinox" dirurl="file://$PROJECT_DIR$/impl/equinox">
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
@@ -114,8 +114,8 @@
         <orderEntry type="module" module-name="consulo-osgi" />
       </module>
       <module name="impl/felix" dirurl="file://$PROJECT_DIR$/impl/felix">
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
@@ -125,8 +125,8 @@
         <orderEntry type="module" module-name="consulo-osgi" />
       </module>
       <module name="impl/knopflerfish" dirurl="file://$PROJECT_DIR$/impl/knopflerfish">
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>

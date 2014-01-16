@@ -1,3 +1,1 @@
-### Issues
-
-  http://napile.myjetbrains.com/youtrack/issues/OOSGI
+![Build Status](http://must-be.org:8080/vulcan_web/statusImage?name=consulo-osgi)
