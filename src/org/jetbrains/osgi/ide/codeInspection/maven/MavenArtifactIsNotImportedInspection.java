@@ -1,5 +1,13 @@
 package org.jetbrains.osgi.ide.codeInspection.maven;
 
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.idea.maven.model.MavenArtifact;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.osgi.manifest.BundleManifest;
+import org.osmorc.BundleManager;
+import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.editor.Editor;
@@ -12,13 +20,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.Processor;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.idea.maven.model.MavenArtifact;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.osmorc.BundleManager;
-import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 
 /**
  * @author VISTALL
