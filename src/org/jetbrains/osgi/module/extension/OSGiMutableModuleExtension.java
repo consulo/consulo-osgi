@@ -1,45 +1,41 @@
 package org.jetbrains.osgi.module.extension;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.roots.ModifiableRootModel;
+import javax.swing.JComponent;
+
 import org.consulo.module.extension.MutableModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.JComponent;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.roots.ModifiableRootModel;
 
 /**
  * @author VISTALL
  * @since 16:02/30.05.13
  */
-public class OSGiMutableModuleExtension extends OSGiModuleExtension implements MutableModuleExtension<OSGiModuleExtension> {
-  @NotNull
-  private final OSGiModuleExtension myModuleExtension;
+public class OSGiMutableModuleExtension extends OSGiModuleExtension implements MutableModuleExtension<OSGiModuleExtension>
+{
 
-  public OSGiMutableModuleExtension(@NotNull String id, @NotNull Module module, @NotNull OSGiModuleExtension moduleExtension) {
-    super(id, module);
-    myModuleExtension = moduleExtension;
-    commit(moduleExtension);
-  }
+	public OSGiMutableModuleExtension(@NotNull String id, @NotNull Module module)
+	{
+		super(id, module);
+	}
 
-  @Nullable
-  @Override
-  public JComponent createConfigurablePanel(@NotNull ModifiableRootModel modifiableRootModel, @Nullable Runnable runnable) {
-    return null;
-  }
+	@Nullable
+	@Override
+	public JComponent createConfigurablePanel(@NotNull ModifiableRootModel modifiableRootModel, @Nullable Runnable runnable)
+	{
+		return null;
+	}
 
-  @Override
-  public void setEnabled(boolean b) {
-    myIsEnabled = b;
-  }
+	@Override
+	public void setEnabled(boolean b)
+	{
+		myIsEnabled = b;
+	}
 
-  @Override
-  public boolean isModified() {
-    return myIsEnabled != myModuleExtension.isEnabled();
-  }
-
-  @Override
-  public void commit() {
-    myModuleExtension.commit(this);
-  }
+	@Override
+	public boolean isModified(@NotNull OSGiModuleExtension extension)
+	{
+		return myIsEnabled != extension.isEnabled();
+	}
 }
