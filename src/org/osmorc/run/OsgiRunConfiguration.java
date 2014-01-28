@@ -25,21 +25,12 @@
 
 package org.osmorc.run;
 
-import com.intellij.execution.ExecutionBundle;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.*;
-import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.options.SettingsEditor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.projectRoots.impl.JavaSdkImpl;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.WriteExternalException;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.packaging.artifacts.ArtifactManager;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
@@ -53,8 +44,27 @@ import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.OsgiRunConfigurationEditor;
 import org.osmorc.run.ui.SelectedBundle;
 import org.osmorc.settings.ApplicationSettings;
-
-import java.util.*;
+import com.intellij.execution.ExecutionBundle;
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.Executor;
+import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.ModuleRunConfiguration;
+import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.execution.configurations.RunConfigurationBase;
+import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.configurations.RuntimeConfigurationError;
+import com.intellij.execution.configurations.RuntimeConfigurationException;
+import com.intellij.execution.configurations.RuntimeConfigurationWarning;
+import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.options.SettingsEditor;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.projectRoots.impl.JavaSdkImpl;
+import com.intellij.openapi.util.InvalidDataException;
+import com.intellij.openapi.util.WriteExternalException;
+import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
 
 /**
  * A run configuration for an OSGI server.
@@ -286,7 +296,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
   public RunProfileState getState(@NotNull final Executor executor, @NotNull final ExecutionEnvironment env) throws ExecutionException {
     // prepare the state
 
-    return new OsgiRunState(executor, env, this, getProject(), ProjectRootManager.getInstance(getProject()).getProjectSdk());
+    return new OsgiRunState(executor, env, this, getProject(), null);
   }
 
   public void checkConfiguration() throws RuntimeConfigurationException {
