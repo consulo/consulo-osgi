@@ -7,7 +7,7 @@ import org.jetbrains.osgi.OSGiConstants;
 import org.jetbrains.osgi.facet.manifest.ManifestProvider;
 import org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider;
 import org.jetbrains.osgi.manifest.BundleManifest;
-import com.intellij.openapi.module.Module;
+import com.intellij.openapi.roots.ModifiableRootModel;
 
 /**
  * @author VISTALL
@@ -15,7 +15,7 @@ import com.intellij.openapi.module.Module;
  */
 public class OSGiModuleExtension extends ModuleExtensionImpl<OSGiModuleExtension>
 {
-	public OSGiModuleExtension(@NotNull String id, @NotNull Module module)
+	public OSGiModuleExtension(@NotNull String id, @NotNull ModifiableRootModel module)
 	{
 		super(id, module);
 	}

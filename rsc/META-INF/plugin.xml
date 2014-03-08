@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>org.jetbrains.osgi</id>
   <name>OSGi support</name>
-  <version>2.0</version>
+  <version>SNAPSHOT</version>
   <depends>com.intellij.xml</depends>
   <depends>org.consulo.java</depends>
   <depends>org.jetbrains.idea.maven</depends>
@@ -112,7 +112,12 @@
     <localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
                      level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
 
-    <moduleExtensionProvider key="osgi" parent-key="java" implementationClass="org.jetbrains.osgi.module.extension.OSGiModuleExtensionProvider" />
+    <moduleExtensionProvider key="osgi"
+							 parentKey="java"
+							 icon="/org/jetbrains/osgi/icons/osgiFacet.png"
+							 name="OSGi"
+							 immutableClass="org.jetbrains.osgi.module.extension.OSGiModuleExtension"
+							 mutableClass="org.jetbrains.osgi.module.extension.OSGiMutableModuleExtension" />
     <!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
 
