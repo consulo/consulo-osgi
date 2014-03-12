@@ -24,20 +24,8 @@
  */
 package org.osmorc.i18n;
 
-import com.intellij.AbstractBundle;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.PropertyKey;
+import org.consulo.lombok.annotations.Bundle;
 
-public class OsmorcBundle extends AbstractBundle {
-  @NonNls
-  private static final String BUNDLE = "org.osmorc.i18n.OsmorcBundle";
-  private static final OsmorcBundle INSTANCE = new OsmorcBundle();
-
-  private OsmorcBundle() {
-    super(BUNDLE);
-  }
-
-  public static String message(@PropertyKey(resourceBundle = BUNDLE) String key, Object... params) {
-    return INSTANCE.getMessage(key, params);
-  }
+@Bundle(value = "org.osmorc.i18n.OsmorcBundle")
+public class OsmorcBundle {
 }
