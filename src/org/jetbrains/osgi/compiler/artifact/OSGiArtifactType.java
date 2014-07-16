@@ -17,7 +17,6 @@ import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementOutputKind;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.elements.JarArchiveElementType;
 import com.intellij.packaging.impl.elements.JarArchivePackagingElement;
 
 /**
@@ -60,7 +59,7 @@ public class OSGiArtifactType extends ArtifactType
 	@Override
 	public CompositePackagingElement<?> createRootElement(@NotNull String artifactName)
 	{
-		return new JarArchivePackagingElement(JarArchiveElementType.getInstance(), ArtifactUtil.suggestArtifactFileName(artifactName) + ".jar");
+		return new JarArchivePackagingElement(ArtifactUtil.suggestArtifactFileName(artifactName) + ".jar");
 	}
 
 	@NotNull
