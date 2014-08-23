@@ -2,146 +2,144 @@
 <project version="4">
   <component name="ModuleManager">
     <modules>
-      <module name="bndlib" dirurl="file://$PROJECT_DIR$/patched-libs/bndlib">
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="sourceFolder" forTests="false" />
+      <module name="bndlib" dirurl="file://$PROJECT_DIR$/patched-libs/bndlib" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="sourceFolder" forTests="false" />
+        </module-layer>
       </module>
-      <module name="impl/consierge" dirurl="file://$PROJECT_DIR$/impl/consierge">
-        <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="consulo-osgi" />
+      <module name="impl/consierge" dirurl="file://$PROJECT_DIR$/impl/consierge" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="consulo-osgi" />
+        </module-layer>
       </module>
-      <module name="consulo-osgi" dirurl="file://$PROJECT_DIR$">
-        <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" custom-plugin-dir-url="file://$MODULE_DIR$/dep" />
-        <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
-        <extension id="lombok" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-          <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/rsc" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="bndlib" />
-        <orderEntry type="module-library" exported="">
-          <library>
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/lib/pax-runner.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library" exported="">
-          <library>
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/lib/binding-2.0.6.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library" exported="">
-          <library>
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/lib/org.eclipse.osgi.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library">
-          <library name="consulo:Java">
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/dep/java/lib/java-manifest.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/java/lib/java-rt.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/java/lib/java.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/java/lib/jdk-annotations.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library">
-          <library name="consulo:XML">
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/dep/xml/lib/jaxen-1.1.3.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/xml/lib/jsr173_1.0_api.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/xml/lib/resolver.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/xml/lib/xerces.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/xml/lib/xml.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library">
-          <library name="consulo:Maven Integration">
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/lucene-core-2.4.1.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/maven-server-api.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/maven.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/maven2-server-impl.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/maven3-server-impl.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/plexus-utils-2.0.6.jar!/" />
-              <root url="jar://$MODULE_DIR$/dep/maven/lib/wadl-core.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module-library" exported="">
-          <library>
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/lib/javax.inject-1.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
+      <module name="consulo-osgi" dirurl="file://$PROJECT_DIR$" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" custom-plugin-dir-url="file://$MODULE_DIR$/dep" />
+          <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
+          <extension id="lombok" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/rsc" />
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="bndlib" />
+          <orderEntry type="module-library" exported="">
+            <library>
+              <binaries>
+                <root url="jar://$MODULE_DIR$/lib/pax-runner.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library" exported="">
+            <library>
+              <binaries>
+                <root url="jar://$MODULE_DIR$/lib/binding-2.0.6.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library" exported="">
+            <library>
+              <binaries>
+                <root url="jar://$MODULE_DIR$/lib/org.eclipse.osgi.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library">
+            <library name="consulo:Java">
+              <binaries>
+                <root url="jar://$MODULE_DIR$/dep/java/lib/java-manifest.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/java/lib/java-rt.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/java/lib/java.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/java/lib/jdk-annotations.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library">
+            <library name="consulo:XML">
+              <binaries>
+                <root url="jar://$MODULE_DIR$/dep/xml/lib/jaxen-1.1.3.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/xml/lib/jsr173_1.0_api.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/xml/lib/resolver.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/xml/lib/xerces.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/xml/lib/xml.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library">
+            <library name="consulo:Maven Integration">
+              <binaries>
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/lucene-core-2.4.1.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/maven-server-api.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/maven.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/maven2-server-impl.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/maven3-server-impl.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/plexus-utils-2.0.6.jar!/" />
+                <root url="jar://$MODULE_DIR$/dep/maven/lib/wadl-core.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+          <orderEntry type="module-library" exported="">
+            <library>
+              <binaries>
+                <root url="jar://$MODULE_DIR$/lib/javax.inject-1.jar!/" />
+              </binaries>
+            </library>
+          </orderEntry>
+        </module-layer>
       </module>
-      <module name="impl/equinox" dirurl="file://$PROJECT_DIR$/impl/equinox">
-        <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="consulo-osgi" />
+      <module name="impl/equinox" dirurl="file://$PROJECT_DIR$/impl/equinox" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="consulo-osgi" />
+        </module-layer>
       </module>
-      <module name="impl/felix" dirurl="file://$PROJECT_DIR$/impl/felix">
-        <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="consulo-osgi" />
+      <module name="impl/felix" dirurl="file://$PROJECT_DIR$/impl/felix" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="consulo-osgi" />
+        </module-layer>
       </module>
-      <module name="impl/knopflerfish" dirurl="file://$PROJECT_DIR$/impl/knopflerfish">
-        <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="consulo-osgi" />
+      <module name="impl/knopflerfish" dirurl="file://$PROJECT_DIR$/impl/knopflerfish" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-osgi" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-osgi" sdk-name="" language-level-module-name="consulo-osgi" language-level-name="" special-dir-location="MODULE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="consulo-osgi" />
+        </module-layer>
       </module>
     </modules>
   </component>
