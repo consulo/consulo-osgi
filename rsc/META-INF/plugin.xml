@@ -99,9 +99,6 @@
 
     <configurationType implementation="org.osmorc.run.OsgiConfigurationType"/>
 
-    <project.converterProvider
-        implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxRunConfigurationConverterProvider"/>
-
     <localInspection shortName="osmorcUnregisteredActivator" displayName="Bundle Activator not registered" groupName="OSGi"
                      enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.UnregisteredActivatorInspection"/>
     <localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
