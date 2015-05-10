@@ -1,12 +1,12 @@
 package org.jetbrains.osgi.module.extension;
 
-import org.consulo.java.platform.roots.SpecialDirUtil;
 import org.consulo.module.extension.impl.ModuleExtensionImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.osgi.OSGiConstants;
 import org.jetbrains.osgi.facet.manifest.ManifestProvider;
 import org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider;
 import org.jetbrains.osgi.manifest.BundleManifest;
+import org.mustbe.consulo.java.roots.SpecialDirUtil;
 import com.intellij.openapi.roots.ModuleRootLayer;
 
 /**

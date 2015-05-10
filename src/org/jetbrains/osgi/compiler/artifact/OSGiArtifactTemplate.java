@@ -1,5 +1,13 @@
 package org.jetbrains.osgi.compiler.artifact;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.OSGiConstants;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
+import org.mustbe.consulo.java.roots.SpecialDirUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog;
@@ -7,14 +15,6 @@ import com.intellij.packaging.artifacts.ArtifactTemplate;
 import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementFactory;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
-import org.consulo.java.platform.roots.SpecialDirUtil;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.OSGiConstants;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
-import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author VISTALL
