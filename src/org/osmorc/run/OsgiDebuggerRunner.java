@@ -3,6 +3,7 @@ package org.osmorc.run;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.debugger.engine.DebuggerUtils;
 import com.intellij.debugger.impl.GenericDebuggerRunner;
+import com.intellij.debugger.settings.DebuggerSettings;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.DebuggingRunnerData;
 import com.intellij.execution.configurations.RemoteConnection;
@@ -54,7 +55,7 @@ public class OsgiDebuggerRunner extends GenericDebuggerRunner
 				{
 					try
 					{
-						myDebugPort = DebuggerUtils.getInstance().findAvailableDebugAddress(true);
+						myDebugPort = DebuggerUtils.getInstance().findAvailableDebugAddress(DebuggerSettings.SOCKET_TRANSPORT).address();
 					}
 					catch(ExecutionException e)
 					{
