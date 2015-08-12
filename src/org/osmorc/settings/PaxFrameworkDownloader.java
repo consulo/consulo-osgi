@@ -99,13 +99,7 @@ public class PaxFrameworkDownloader {
   }
 
   private JavaParameters createJavaParameters() throws ExecutionException {
-    Sdk internalSdk = null;
-    for (Sdk sdk : SdkTable.getInstance().getAllSdks()) {
-      if(sdk.isBundled() && sdk.getSdkType() == JavaSdk.getInstance()) {
-        internalSdk = sdk;
-        break;
-      }
-    }
+    Sdk internalSdk = SdkTable.getInstance().findPredefinedSdkByType(JavaSdk.getInstance());
     if (internalSdk == null) {
       throw new ExecutionException("No Java SDK available.");
     }
