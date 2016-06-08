@@ -25,6 +25,7 @@
 
 package org.osmorc.settings;
 
+import com.intellij.compiler.CompilerConfiguration;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
@@ -32,7 +33,6 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.util.EventDispatcher;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import org.consulo.compiler.CompilerPathsManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,12 +65,10 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    */
   @NotNull
   public static String getDefaultBundlesOutputPath(Project project) {
-    CompilerPathsManager instance = CompilerPathsManager.getInstance(project);
-    if (instance != null) {
-      final VirtualFilePointer compilerOutput = instance.getCompilerOutputPointer();
-      if (compilerOutput != null) {
-        return VfsUtil.urlToPath(compilerOutput.getUrl()) + "/bundles";
-      }
+      CompilerConfiguration instance = CompilerConfiguration.getInstance(project);
+    final VirtualFilePointer compilerOutput = instance.getCompilerOutputPointer();
+    if (compilerOutput != null) {
+      return VfsUtil.urlToPath(compilerOutput.getUrl()) + "/bundles";
     }
     // this actually should never happen (only in tests)
     return FileUtil.getTempDirectory();
