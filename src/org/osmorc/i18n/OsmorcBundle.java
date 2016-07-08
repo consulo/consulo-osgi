@@ -24,8 +24,8 @@
  */
 package org.osmorc.i18n;
 
-import org.consulo.lombok.annotations.Bundle;
+import consulo.lombok.annotations.Bundle;
 
-@Bundle(value = "org.osmorc.i18n.OsmorcBundle")
+@Bundle("org.osmorc.i18n.OsmorcBundle")
 public class OsmorcBundle {
 }
