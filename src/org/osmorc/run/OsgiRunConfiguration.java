@@ -36,7 +36,7 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.artifact.OSGiArtifactUtil;
+import consulo.osgi.compiler.artifact.OSGiArtifactUtil;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.impl.GenericRunProperties;
 import org.osmorc.i18n.OsmorcBundle;

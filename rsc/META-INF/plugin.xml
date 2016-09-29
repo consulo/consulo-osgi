@@ -15,8 +15,8 @@
 	<extensionPoints>
 		<extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
 		<extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository"/>
-		<extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.facet.manifest.ManifestProviderEP">
-			<with attribute="implementation" implements="org.jetbrains.osgi.facet.manifest.ManifestProvider"/>
+		<extensionPoint name="manifestProvider" beanClass="consulo.osgi.module.manifest.ManifestProviderEP">
+			<with attribute="implementation" implements="consulo.osgi.module.manifest.ManifestProvider"/>
 		</extensionPoint>
 	</extensionPoints>
 
@@ -28,8 +28,8 @@
 
 		<openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
 
-		<manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider" order="first"/>
-		<manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.BndFileManifestProvider"/>
+		<manifestProvider implementation="consulo.osgi.module.manifest.impl.ui.UseExistingManifestManifestProvider" order="first"/>
+		<manifestProvider implementation="consulo.osgi.module.manifest.impl.BndFileManifestProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="org.jetbrains.idea.maven">
@@ -73,7 +73,7 @@
 		<manifest.headerParser key="DynamicImport-Package" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
 		<manifest.headerParser key="Export-Service" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
 		<manifest.headerParser key="Import-Service" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-		<manifest.headerParser key="Service-Component" implementationClass="org.jetbrains.osgi.manifest.headerparser.ServiceComponentHeaderParser"/>
+		<manifest.headerParser key="Service-Component" implementationClass="consulo.osgi.manifest.headerparser.ServiceComponentHeaderParser"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
@@ -106,14 +106,14 @@
 		<localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
 						 level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
 		<localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
-						 level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
+						 level="WARNING" implementationClass="consulo.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
 
 		<moduleExtensionProvider key="osgi"
 								 parentKey="java"
 								 icon="/org/jetbrains/osgi/icons/osgiFacet.png"
 								 name="OSGi"
-								 immutableClass="org.jetbrains.osgi.module.extension.OSGiModuleExtension"
-								 mutableClass="org.jetbrains.osgi.module.extension.OSGiMutableModuleExtension"/>
+								 immutableClass="consulo.osgi.module.extension.OSGiModuleExtension"
+								 mutableClass="consulo.osgi.module.extension.OSGiMutableModuleExtension"/>
 		<!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
 
@@ -127,15 +127,15 @@
 						  displayName="Library Bundling"/>
 		</applicationConfigurable>
 
-		<codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
-		<iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
-		<iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider"/>
+		<codeInsight.lineMarkerProvider language="JAVA" implementationClass="consulo.osgi.ide.OSGiLineMarkerProvider"/>
+		<iconDescriptorUpdater implementation="consulo.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
+		<iconDescriptorUpdater implementation="consulo.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider"/>
 
-		<compiler implementation="org.jetbrains.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
-		<packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType"/>
+		<compiler implementation="consulo.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
+		<packaging.artifactType implementation="consulo.osgi.compiler.artifact.OSGiArtifactType"/>
 
 		<localInspection shortName="ServiceComponentInspection"
-						 implementationClass="org.jetbrains.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
+						 implementationClass="consulo.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
 						 displayName="Component Problems" groupName="OSGi" level="ERROR"/>
 	</extensions>
 
@@ -145,6 +145,6 @@
 		<standardResource url="http://www.osgi.org/xmlns/metatype/v1.0.0" path="/standardSchemas/metatype.xsd" version="1.0.0"/>
 	</extensions>
 	<extensions defaultExtensionNs="com.intellij.xml.dom">
-		<fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
+		<fileDescription implementation="consulo.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
 	</extensions>
 </idea-plugin>

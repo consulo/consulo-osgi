@@ -12,8 +12,8 @@ import com.intellij.util.messages.Topic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
-import org.jetbrains.osgi.manifest.BundleManifest;
+import consulo.osgi.module.OSGiModuleExtensionUtil;
+import consulo.osgi.manifest.BundleManifest;
 import org.osmorc.BundleManager;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
@@ -101,7 +101,7 @@ public class MyBundleManager extends BundleManager {
     }
 
     // if the module has an OSGi facet, treat it as a bundle and add it to the cache
-    if (OSGiFacetUtil.findFacet(module) != null) {
+    if (OSGiModuleExtensionUtil.findExtension(module) != null) {
       ManifestHolder manifestHolder = ModuleServiceManager.getService(module, ManifestHolder.class);
       boolean needsNotification = myBundleCache.updateWith(manifestHolder);
       needsNotification |= myBundleCache.cleanup();

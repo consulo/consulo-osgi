@@ -33,8 +33,8 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
+import consulo.osgi.manifest.BundleManifest;
+import consulo.osgi.manifest.impl.BundleManifestImpl;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.psi.ManifestFile;

@@ -33,7 +33,7 @@ import com.intellij.psi.*;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import consulo.osgi.module.OSGiModuleExtensionUtil;
 
 /**
  * Inspection that reports classes which are located in the default package. These classes cannot be imported or
@@ -76,7 +76,7 @@ public class ClassInDefaultPackageInspection extends LocalInspectionTool {
     return new JavaElementVisitor() {
       @Override
       public void visitClass(PsiClass psiClass) {
-        if (OSGiFacetUtil.findFacet(psiClass) != null) {
+        if (OSGiModuleExtensionUtil.findExtension(psiClass) != null) {
           PsiJavaFile file = (PsiJavaFile)psiClass.getContainingFile();
           if ("".equals(file.getPackageName())) {
             PsiIdentifier nameIdentifier = psiClass.getNameIdentifier();

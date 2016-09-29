@@ -34,9 +34,9 @@ import com.intellij.psi.PsiType;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
+import consulo.osgi.module.OSGiModuleExtensionUtil;
+import consulo.osgi.manifest.BundleManifest;
+import consulo.osgi.module.extension.OSGiModuleExtension;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.Constants;
 
@@ -82,7 +82,7 @@ public class UnregisteredActivatorInspection extends LocalInspectionTool {
     return new JavaElementVisitor() {
       @Override
       public void visitClass(PsiClass psiClass) {
-        OSGiModuleExtension facet = OSGiFacetUtil.findFacet(psiClass);
+        OSGiModuleExtension facet = OSGiModuleExtensionUtil.findExtension(psiClass);
         if (facet != null) {
           BundleManifest bundleManifest = facet.getManifest();
           for (PsiType type : psiClass.getSuperTypes()) {

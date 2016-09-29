@@ -36,7 +36,7 @@ import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.ui.DocumentAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.compiler.artifact.OSGiArtifactType;
+import consulo.osgi.compiler.artifact.OSGiArtifactType;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.i18n.OsmorcBundle;
 

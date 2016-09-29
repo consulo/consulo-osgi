@@ -26,8 +26,8 @@
 package org.osmorc.run.ui;
 
 import com.intellij.util.PlatformIcons;
-import org.jetbrains.osgi.OSGiIcons;
-import org.jetbrains.osgi.compiler.artifact.OSGiArtifactType;
+import consulo.osgi.OSGiIcons;
+import consulo.osgi.compiler.artifact.OSGiArtifactType;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;

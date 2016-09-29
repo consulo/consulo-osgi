@@ -37,7 +37,7 @@ import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
 import org.jetbrains.idea.maven.dom.model.MavenDomRepository;
 import org.jetbrains.idea.maven.model.MavenArtifact;
-import org.jetbrains.osgi.ide.codeInspection.maven.MavenDependencyInspection;
+import consulo.osgi.ide.codeInspection.maven.MavenDependencyInspection;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.obrimport.MavenRepository;
 import org.osmorc.obrimport.ObrSearchDialog;

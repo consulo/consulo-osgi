@@ -2,7 +2,7 @@ import aQute.bnd.make.component.ComponentAnnotationReader;
 import aQute.lib.osgi.Clazz;
 import aQute.lib.osgi.FileResource;
 import aQute.libg.reporter.Reporter;
-import org.jetbrains.osgi.compiler.artifact.bndTools.serviceComponent.BndServiceComponentUtil;
+import consulo.osgi.compiler.artifact.bndTools.serviceComponent.BndServiceComponentUtil;
 
 import java.io.File;
 import java.util.ArrayList;

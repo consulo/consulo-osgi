@@ -27,9 +27,9 @@ package org.osmorc.manifest.impl;
 
 import com.intellij.openapi.module.Module;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
+import consulo.osgi.module.OSGiModuleExtensionUtil;
+import consulo.osgi.manifest.BundleManifest;
+import consulo.osgi.module.extension.OSGiModuleExtension;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 
 /**
@@ -48,7 +48,7 @@ public class ModuleManifestHolderImpl extends AbstractManifestHolderImpl<Module>
     if (isDisposed()) {
       throw new ManifestHolderDisposedException();
     }
-    final OSGiModuleExtension facet = OSGiFacetUtil.findFacet(myModule);
+    final OSGiModuleExtension facet = OSGiModuleExtensionUtil.findExtension(myModule);
     return facet == null ? null : facet.getManifest();
   }
 

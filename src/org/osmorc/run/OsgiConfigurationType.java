@@ -30,7 +30,7 @@ import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.OSGiIcons;
+import consulo.osgi.OSGiIcons;
 import org.osmorc.i18n.OsmorcBundle;
 
 import javax.swing.*;
