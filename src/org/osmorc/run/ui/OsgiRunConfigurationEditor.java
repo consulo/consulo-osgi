@@ -25,7 +25,33 @@
 
 package org.osmorc.run.ui;
 
-import com.intellij.compiler.CompilerConfiguration;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.text.DefaultFormatterFactory;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.osmorc.frameworkintegration.BundleSelectionAction;
+import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
+import org.osmorc.frameworkintegration.FrameworkIntegrator;
+import org.osmorc.frameworkintegration.FrameworkIntegratorUtil;
+import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.OsgiRunConfigurationChecker;
+import org.osmorc.run.OsgiRunConfigurationCheckerProvider;
+import org.osmorc.settings.ApplicationSettings;
 import com.intellij.execution.ui.AlternativeJREPanel;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
@@ -41,31 +67,7 @@ import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.ui.PanelWithAnchor;
 import com.intellij.ui.RawCommandLineEditor;
 import com.intellij.ui.components.JBLabel;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.osmorc.frameworkintegration.BundleSelectionAction;
-import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
-import org.osmorc.frameworkintegration.FrameworkIntegrator;
-import org.osmorc.frameworkintegration.FrameworkIntegratorUtil;
-import org.osmorc.run.OsgiRunConfiguration;
-import org.osmorc.run.OsgiRunConfigurationChecker;
-import org.osmorc.run.OsgiRunConfigurationCheckerProvider;
-import org.osmorc.settings.ApplicationSettings;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.text.DefaultFormatterFactory;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import consulo.compiler.CompilerConfiguration;
 
 /**
  * Editor for a bundle run configuration.

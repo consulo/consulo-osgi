@@ -24,6 +24,20 @@
  */
 package org.osmorc.manifest.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.osgi.manifest.BundleManifest;
+import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
+import org.osmorc.manifest.ManifestHolder;
+import org.osmorc.manifest.ManifestHolderDisposedException;
+import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.application.Result;
@@ -33,18 +47,9 @@ import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.jetbrains.osgi.manifest.impl.BundleManifestImpl;
-import org.osmorc.manifest.ManifestHolder;
-import org.osmorc.manifest.ManifestHolderDisposedException;
-import org.osmorc.manifest.lang.psi.ManifestFile;
-
-import java.util.*;
+import consulo.vfs.util.ArchiveVfsUtil;
 
 /**
  * Author: Robert F. Beeger (robert@beeger.net)

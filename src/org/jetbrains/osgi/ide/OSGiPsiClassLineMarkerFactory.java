@@ -1,5 +1,14 @@
 package org.jetbrains.osgi.ide;
 
+import java.awt.event.MouseEvent;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.osgi.OSGiIcons;
+import org.jetbrains.osgi.facet.OSGiFacetUtil;
+import org.jetbrains.osgi.manifest.BundleManifest;
+import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
+import org.osgi.framework.Constants;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.DefaultGutterIconNavigationHandler;
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
@@ -12,15 +21,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.util.ConstantFunction;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.osgi.OSGiIcons;
-import org.jetbrains.osgi.facet.OSGiFacetUtil;
-import org.jetbrains.osgi.manifest.BundleManifest;
-import org.jetbrains.osgi.module.extension.OSGiModuleExtension;
-import org.osgi.framework.Constants;
-
-import java.awt.event.MouseEvent;
-import java.util.List;
 
 /**
  * @author VISTALL
@@ -48,7 +48,7 @@ public enum OSGiPsiClassLineMarkerFactory {
     @Override
     public LineMarkerInfo<PsiElement> getLineMarker(@NotNull PsiIdentifier nameIdentifier, @NotNull PsiClass psiClass, @NotNull OSGiModuleExtension facet) {
       return OSGiFacetUtil.isBundleActivator(psiClass) ? new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(),
-                                                                                        OSGiIcons.OsgiBundleActivator, Pass.UPDATE_OVERRIDEN_MARKERS,
+                                                                                        OSGiIcons.OsgiBundleActivator, Pass.LINE_MARKERS,
                                                                                         new ConstantFunction<PsiElement, String>("Bundle activator"),
                                                                                         myNavigationHandler, GutterIconRenderer.Alignment.LEFT) : null;
     }
@@ -61,7 +61,7 @@ public enum OSGiPsiClassLineMarkerFactory {
         return null;
       }
 
-      return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), OSGiIcons.OsgiComponentImplementation, Pass.UPDATE_OVERRIDEN_MARKERS,
+      return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), OSGiIcons.OsgiComponentImplementation, Pass.LINE_MARKERS,
                                             new ConstantFunction<PsiElement, String>("OSGi component implementation"),
                                             new DefaultGutterIconNavigationHandler<PsiElement>(pairs,
                                                                                                "Open component descriptors"),
@@ -77,7 +77,7 @@ public enum OSGiPsiClassLineMarkerFactory {
         return null;
       }
 
-      return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), OSGiIcons.OsgiComponentInterface, Pass.UPDATE_OVERRIDEN_MARKERS,
+      return new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), OSGiIcons.OsgiComponentInterface, Pass.LINE_MARKERS,
                                             new ConstantFunction<PsiElement, String>("OSGi component provider"), new GutterIconNavigationHandler<PsiElement>() {
         @Override
         public void navigate(MouseEvent e, PsiElement elt) {

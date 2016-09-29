@@ -1,151 +1,150 @@
-<idea-plugin version="2">
-  <id>org.jetbrains.osgi</id>
-  <name>OSGi support</name>
-  <version>SNAPSHOT</version>
-  <depends>com.intellij.xml</depends>
-  <depends>org.consulo.java</depends>
-  <depends>org.jetbrains.idea.maven</depends>
+<idea-plugin>
+	<id>org.jetbrains.osgi</id>
+	<name>OSGi support</name>
+	<version>SNAPSHOT</version>
+	<depends>com.intellij.xml</depends>
+	<depends>consulo.java</depends>
+	<depends>org.jetbrains.idea.maven</depends>
 
-  <project-components>
-    <component>
-      <implementation-class>org.osmorc.ModuleChangeHandler</implementation-class>
-    </component>
-  </project-components>
+	<project-components>
+		<component>
+			<implementation-class>org.osmorc.ModuleChangeHandler</implementation-class>
+		</component>
+	</project-components>
 
-  <extensionPoints>
-    <extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
-    <extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository"/>
-    <extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.facet.manifest.ManifestProviderEP">
-      <with attribute="implementation" implements="org.jetbrains.osgi.facet.manifest.ManifestProvider"/>
-    </extensionPoint>
-  </extensionPoints>
+	<extensionPoints>
+		<extensionPoint name="frameworkIntegration" interface="org.osmorc.frameworkintegration.FrameworkIntegrator"/>
+		<extensionPoint name="openBundleRepository" interface="org.osmorc.obrimport.OpenBundleRepository"/>
+		<extensionPoint name="manifestProvider" beanClass="org.jetbrains.osgi.facet.manifest.ManifestProviderEP">
+			<with attribute="implementation" implements="org.jetbrains.osgi.facet.manifest.ManifestProvider"/>
+		</extensionPoint>
+	</extensionPoints>
 
-  <extensions defaultExtensionNs="org.jetbrains.osgi">
-    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.felix.FelixIntegrator"/>
-    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator"/>
-    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator"/>
-    <frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishIntegrator"/>
+	<extensions defaultExtensionNs="org.jetbrains.osgi">
+		<frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.felix.FelixIntegrator"/>
+		<frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.concierge.ConciergeIntegrator"/>
+		<frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.equinox.EquinoxIntegrator"/>
+		<frameworkIntegration implementation="org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishIntegrator"/>
 
-    <openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
+		<openBundleRepository implementation="org.osmorc.obrimport.springsource.SpringSourceOpenBundleRepository"/>
 
-    <manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider" order="first"/>
-    <manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.BndFileManifestProvider"/>
-  </extensions>
+		<manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.UseExistingManifestManifestProvider" order="first"/>
+		<manifestProvider implementation="org.jetbrains.osgi.facet.manifest.impl.BndFileManifestProvider"/>
+	</extensions>
 
-  <extensions defaultExtensionNs="org.jetbrains.idea.maven">
-    <!--<importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/> -->
-  </extensions>
+	<extensions defaultExtensionNs="org.jetbrains.idea.maven">
+		<!--<importer implementation="org.osmorc.facet.maven.OsmorcFacetImporter"/> -->
+	</extensions>
 
-  <extensions defaultExtensionNs="org.consulo.java">
-    <manifest.headerParser key="Private-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Tool" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Bnd-LastModified" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Include-Resource" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Eclipse-PlatformFilter" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Eclipse-BuddyPolicy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Eclipse-RegisterBuddy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Eclipse-ExtensibleAPI" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Eclipse-GenericCapability"
-                  implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Eclipse-GenericRequire" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-ManifestVersion" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Name" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-SymbolicName" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleSymbolicNameParser"/>
-    <manifest.headerParser key="Bundle-Version" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleVersionParser"/>
-    <manifest.headerParser key="Export-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ExportPackageParser"/>
-    <manifest.headerParser key="Import-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ImportPackageParser"/>
-    <!--<manifest.headerParser key="Require-Bundle" implementationClass="org.osmorc.manifest.lang.headerparser.impl.RequireBundleParser"/>  -->\
-    <manifest.headerParser key="Bundle-RequiredExecutionEnvironment"
-                  implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
-    <manifest.headerParser key="Fragment-Host" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-ActivationPolicy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Activator" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleActivatorParser"/>
-    <manifest.headerParser key="Bundle-Category" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-ClassPath" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-ContactAddress" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Copyright" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Description" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-DocURL" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Localization" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-NativeCode" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-UpdateLocation" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Bundle-Vendor" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="DynamicImport-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Export-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Import-Service" implementationClass="org.osmorc.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
-    <manifest.headerParser key="Service-Component" implementationClass="org.jetbrains.osgi.manifest.headerparser.ServiceComponentHeaderParser"/>
-  </extensions>
+	<extensions defaultExtensionNs="consulo.java">
+		<manifest.headerParser key="Private-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Tool" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Bnd-LastModified" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Include-Resource" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Eclipse-PlatformFilter" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Eclipse-BuddyPolicy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Eclipse-RegisterBuddy" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Eclipse-ExtensibleAPI" implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Eclipse-GenericCapability"
+							   implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Eclipse-GenericRequire" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-ManifestVersion" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Name" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-SymbolicName" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleSymbolicNameParser"/>
+		<manifest.headerParser key="Bundle-Version" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleVersionParser"/>
+		<manifest.headerParser key="Export-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ExportPackageParser"/>
+		<manifest.headerParser key="Import-Package" implementationClass="org.osmorc.manifest.lang.headerparser.impl.ImportPackageParser"/>
+		<!--<manifest.headerParser key="Require-Bundle" implementationClass="org.osmorc.manifest.lang.headerparser.impl.RequireBundleParser"/>  -->\
+		<manifest.headerParser key="Bundle-RequiredExecutionEnvironment"
+							   implementationClass="org.osmorc.manifest.lang.headerparser.impl.GenericComplexHeaderParser"/>
+		<manifest.headerParser key="Fragment-Host" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-ActivationPolicy" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Activator" implementationClass="org.osmorc.manifest.lang.headerparser.impl.BundleActivatorParser"/>
+		<manifest.headerParser key="Bundle-Category" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-ClassPath" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-ContactAddress" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Copyright" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Description" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-DocURL" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Localization" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-NativeCode" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-UpdateLocation" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Bundle-Vendor" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="DynamicImport-Package" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Export-Service" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Import-Service" implementationClass="consulo.java.manifest.lang.headerparser.impl.SimpleHeaderParser"/>
+		<manifest.headerParser key="Service-Component" implementationClass="org.jetbrains.osgi.manifest.headerparser.ServiceComponentHeaderParser"/>
+	</extensions>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
-    <applicationService serviceInterface="org.osmorc.settings.ApplicationSettings"
-                        serviceImplementation="org.osmorc.settings.ApplicationSettings"/>
+	<extensions defaultExtensionNs="com.intellij">
+		<applicationService serviceInterface="org.osmorc.settings.ApplicationSettings"
+							serviceImplementation="org.osmorc.settings.ApplicationSettings"/>
 
-    <!-- Module services -->
-    <moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
-                   serviceImplementation="org.osmorc.manifest.impl.ModuleManifestHolderImpl"/>
+		<!-- Module services -->
+		<moduleService serviceInterface="org.osmorc.manifest.ManifestHolder"
+					   serviceImplementation="org.osmorc.manifest.impl.ModuleManifestHolderImpl"/>
 
-    <!-- Project services -->
-    <!-- Project settings and editors -->
-    <projectService serviceInterface="org.osmorc.settings.ProjectSettings"
-                    serviceImplementation="org.osmorc.settings.ProjectSettings"/>
+		<!-- Project services -->
+		<!-- Project settings and editors -->
+		<projectService serviceInterface="org.osmorc.settings.ProjectSettings"
+						serviceImplementation="org.osmorc.settings.ProjectSettings"/>
 
-    <!-- Other project services -->
-    <projectService serviceInterface="org.osmorc.BundleManager"
-                    serviceImplementation="org.osmorc.impl.MyBundleManager"/>
+		<!-- Other project services -->
+		<projectService serviceInterface="org.osmorc.BundleManager"
+						serviceImplementation="org.osmorc.impl.MyBundleManager"/>
 
-    <projectService serviceInterface="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"
-                    serviceImplementation="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"/>
+		<projectService serviceInterface="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"
+						serviceImplementation="org.osmorc.frameworkintegration.FrameworkInstanceLibraryManager"/>
 
-    <configurationType implementation="org.osmorc.run.OsgiConfigurationType"/>
+		<configurationType implementation="org.osmorc.run.OsgiConfigurationType"/>
 
-    <localInspection shortName="osmorcUnregisteredActivator" displayName="Bundle Activator not registered" groupName="OSGi"
-                     enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.UnregisteredActivatorInspection"/>
-    <localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
-                     enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
+		<localInspection shortName="osmorcUnregisteredActivator" displayName="Bundle Activator not registered" groupName="OSGi"
+						 enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.UnregisteredActivatorInspection"/>
+		<localInspection shortName="osmorcClassInDefaultPackage" displayName="Class is in default package" groupName="OSGi"
+						 enabledByDefault="true" level="ERROR" implementationClass="org.osmorc.inspection.ClassInDefaultPackageInspection"/>
 
-    <localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
-                     level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
-    <localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
-                     level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
+		<localInspection shortName="NonOsgiMavenDependencyInspection" displayName="Non-OSGi dependency" groupName="OSGi" enabledByDefault="true"
+						 level="WARNING" implementationClass="org.osmorc.inspection.maven.NonOsgiMavenDependencyInspection"/>
+		<localInspection shortName="MavenArtifactIsNotImportedInspection" displayName="Artifact is not imported in MANIFEST.MF" groupName="OSGi" enabledByDefault="true"
+						 level="WARNING" implementationClass="org.jetbrains.osgi.ide.codeInspection.maven.MavenArtifactIsNotImportedInspection"/>
 
-    <moduleExtensionProvider key="osgi"
-							 parentKey="java"
-							 icon="/org/jetbrains/osgi/icons/osgiFacet.png"
-							 name="OSGi"
-							 immutableClass="org.jetbrains.osgi.module.extension.OSGiModuleExtension"
-							 mutableClass="org.jetbrains.osgi.module.extension.OSGiMutableModuleExtension" />
-    <!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
+		<moduleExtensionProvider key="osgi"
+								 parentKey="java"
+								 icon="/org/jetbrains/osgi/icons/osgiFacet.png"
+								 name="OSGi"
+								 immutableClass="org.jetbrains.osgi.module.extension.OSGiModuleExtension"
+								 mutableClass="org.jetbrains.osgi.module.extension.OSGiMutableModuleExtension"/>
+		<!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
 
-    <projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
-                         displayName="OSGi"/>
+		<projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
+							 displayName="OSGi"/>
 
-    <applicationConfigurable instance="org.osmorc.settings.ApplicationSettingsEditor" id="osmorc.ide.settings" displayName="OSGi">
-      <configurable instance="org.osmorc.settings.FrameworkDefinitionsEditor" id="reference.settings.project.osgi.framework.definitions"
-                    displayName="Framework Definitions"/>
-      <configurable instance="org.osmorc.settings.LibraryBundlingEditor" id="reference.settings.project.osgi.library.bundling"
-                    displayName="Library Bundling"/>
-    </applicationConfigurable>
+		<applicationConfigurable instance="org.osmorc.settings.ApplicationSettingsEditor" id="osmorc.ide.settings" displayName="OSGi">
+			<configurable instance="org.osmorc.settings.FrameworkDefinitionsEditor" id="reference.settings.project.osgi.framework.definitions"
+						  displayName="Framework Definitions"/>
+			<configurable instance="org.osmorc.settings.LibraryBundlingEditor" id="reference.settings.project.osgi.library.bundling"
+						  displayName="Library Bundling"/>
+		</applicationConfigurable>
 
-    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
-    <iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
-    <iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider"/>
+		<codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.jetbrains.osgi.ide.OSGiLineMarkerProvider"/>
+		<iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiExportPackageIconLayerProvider"/>
+		<iconDescriptorUpdater implementation="org.jetbrains.osgi.ide.iconProvider.OSGiImportPackageIconLayerProvider"/>
 
-    <compiler implementation="org.jetbrains.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
-    <packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType"/>
+		<compiler implementation="org.jetbrains.osgi.compiler.impl.ComponentAnnotationCompiler" order="before artifactsCompiler"/>
+		<packaging.artifactType implementation="org.jetbrains.osgi.compiler.artifact.OSGiArtifactType"/>
 
-    <localInspection shortName="ServiceComponentInspection"
-                     implementationClass="org.jetbrains.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
-                     displayName="Component Problems" groupName="OSGi" level="ERROR"/>
-  </extensions>
+		<localInspection shortName="ServiceComponentInspection"
+						 implementationClass="org.jetbrains.osgi.ide.codeInspection.ServiceComponentResolveInspection" enabledByDefault="true"
+						 displayName="Component Problems" groupName="OSGi" level="ERROR"/>
+	</extensions>
 
-  <extensions defaultExtensionNs="com.intellij.xml">
-    <!--Service component dom model-->
-    <standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
-    <standardResource url="http://www.osgi.org/xmlns/metatype/v1.0.0" path="/standardSchemas/metatype.xsd" version="1.0.0"/>
-  </extensions>
-  <extensions defaultExtensionNs="com.intellij.xml.dom">
-    <fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
-  </extensions>
+	<extensions defaultExtensionNs="com.intellij.xml">
+		<!--Service component dom model-->
+		<standardResource url="http://www.osgi.org/xmlns/scr/v1.1.0" path="/standardSchemas/scr.xsd" version="1.1.0"/>
+		<standardResource url="http://www.osgi.org/xmlns/metatype/v1.0.0" path="/standardSchemas/metatype.xsd" version="1.0.0"/>
+	</extensions>
+	<extensions defaultExtensionNs="com.intellij.xml.dom">
+		<fileDescription implementation="org.jetbrains.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
+	</extensions>
 </idea-plugin>

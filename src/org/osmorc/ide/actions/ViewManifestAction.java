@@ -25,6 +25,7 @@
 
 package org.osmorc.ide.actions;
 
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -38,8 +39,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
-import org.jetbrains.annotations.Nullable;
+import consulo.vfs.util.ArchiveVfsUtil;
 
 /**
  * Action which allows view the manifest of a given jar file. The action will open the manifest in a new editor tab.

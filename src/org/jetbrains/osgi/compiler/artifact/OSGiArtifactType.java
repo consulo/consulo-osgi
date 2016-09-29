@@ -17,7 +17,7 @@ import com.intellij.packaging.elements.CompositePackagingElement;
 import com.intellij.packaging.elements.PackagingElementOutputKind;
 import com.intellij.packaging.elements.PackagingElementResolvingContext;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.elements.JarArchivePackagingElement;
+import consulo.java.packaging.impl.elements.JarArchivePackagingElement;
 
 /**
  * @author VISTALL

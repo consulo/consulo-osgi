@@ -24,7 +24,7 @@ public class MultiMap<K, V> extends HashMap<K, Set<V>> {
     return set.addAll(value);
   }
 
-  public boolean remove(K key, V value) {
+  public boolean remove(Object key, Object value) {
     Set<V> set = get(key);
     if (set == null) {
       return false;

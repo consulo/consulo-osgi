@@ -24,10 +24,10 @@
  */
 package org.osmorc.frameworkintegration.util;
 
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.vfs.util.ArchiveVfsUtil;
 
 /**
  * Author: Robert F. Beeger (robert@beeger.net)
