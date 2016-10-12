@@ -1,9 +1,12 @@
 package consulo.osgi.compiler.impl;
 
+import java.io.File;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.compiler.FileProcessingCompiler;
 import com.intellij.openapi.compiler.ValidityState;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 
 /**
@@ -23,9 +26,9 @@ public class ClassProcessingItem implements FileProcessingCompiler.ProcessingIte
 
 	@NotNull
 	@Override
-	public VirtualFile getFile()
+	public File getFile()
 	{
-		return myVirtualFile;
+		return VfsUtilCore.virtualToIoFile(myVirtualFile);
 	}
 
 	@Nullable

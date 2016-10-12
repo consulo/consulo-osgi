@@ -21,7 +21,6 @@ import com.intellij.openapi.compiler.ValidityState;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.io.FileUtilRt;
-import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.vcsUtil.VcsUtil;
 import consulo.osgi.OSGiConstants;
@@ -78,11 +77,9 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 		for(ProcessingItem processingItem : items)
 		{
 			ClassProcessingItem classProcessingItem = (ClassProcessingItem) processingItem;
-			final VirtualFile file = classProcessingItem.getFile();
+			final File file = classProcessingItem.getFile();
 
-			final String path = file.getPath();
-
-			Clazz clazz = new Clazz(path, new FileResource(new File(path)));
+			Clazz clazz = new Clazz(file.getPath(), new FileResource(file));
 			try
 			{
 				final Map<String, String> definition = ComponentAnnotationReader.getDefinition(clazz, new BndReporter(context));
@@ -104,9 +101,9 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 				{
 					@NotNull
 					@Override
-					public VirtualFile getFile()
+					public File getFile()
 					{
-						return LocalFileSystem.getInstance().refreshAndFindFileByIoFile(outFile);
+						return outFile;
 					}
 
 					@Nullable
