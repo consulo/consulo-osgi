@@ -25,15 +25,7 @@
 
 package org.osmorc.settings;
 
-import java.util.EventListener;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VfsUtil;
@@ -41,6 +33,10 @@ import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.util.EventDispatcher;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import consulo.compiler.CompilerConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.EventListener;
 
 /**
  * This class stores Osmorc's project settings.
@@ -48,10 +44,7 @@ import consulo.compiler.CompilerConfiguration;
  * @author Robert F. Beeger (robert@beeger.net)
  * @author Jan Thom&auml; (janthomae@janthomae.de)
  */
-@State(
-  name = "Osmorc",
-  storages = {@Storage(
-    file = StoragePathMacros.PROJECT_FILE)})
+@State(name = "Osmorc", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/misc.xml"))
 public class ProjectSettings implements PersistentStateComponent<ProjectSettings> {
 
   private EventDispatcher<ProjectSettingsListener> dispatcher = EventDispatcher.create(ProjectSettingsListener.class);
