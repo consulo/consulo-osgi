@@ -16,7 +16,6 @@ import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.openapi.compiler.ClassInstrumentingCompiler;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompileScope;
-import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.compiler.ValidityState;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.io.FileUtil;
@@ -135,11 +134,6 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 	public boolean validateConfiguration(CompileScope scope)
 	{
 		return true;
-	}
-
-	@Override
-	public void init(@NotNull CompilerManager compilerManager)
-	{
 	}
 
 	@Override
