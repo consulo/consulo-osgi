@@ -1,1 +1,1 @@
-![Build Status](http://must-be.org/vulcan/statusImage?name=consulo-osgi)
+[![Build Status](https://ci.consulo.io/job/consulo-osgi/badge/icon)](https://ci.consulo.io/job/consulo-osgi/)
