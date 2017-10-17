@@ -25,6 +25,18 @@
 
 package org.osmorc.settings;
 
+import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.osmorc.frameworkintegration.LibraryBundlificationRule;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -41,14 +53,6 @@ import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
-import org.osmorc.frameworkintegration.LibraryBundlificationRule;
-
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
@@ -72,7 +76,7 @@ public class LibraryBundlingEditorComponent {
     // Am not sure if this is really a good idea. However using the default project produces some nice NPEs somehwere
     // deep inside the EnterHandler.
     final DataContext dataContext = DataManager.getInstance().getDataContext();
-    Project project = PlatformDataKeys.PROJECT.getData(dataContext);
+    Project project = dataContext.getData(PlatformDataKeys.PROJECT);
     if (project == null) {
       project = ProjectManager.getInstance().getDefaultProject();
     }

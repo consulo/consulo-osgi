@@ -29,7 +29,6 @@ import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationNamesInfo;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
@@ -58,7 +57,7 @@ public class ViewManifestAction extends AnAction implements DumbAware {
   @Override
   public void actionPerformed(AnActionEvent e) {
 
-    @Nullable Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
+    @Nullable Project project = e.getProject();
     if (project == null) {
       return;
     }
