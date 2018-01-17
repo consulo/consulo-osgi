@@ -24,11 +24,27 @@
  */
 package org.osmorc.run;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import javax.swing.SwingUtilities;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
+import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
+import org.osmorc.frameworkintegration.FrameworkIntegrator;
+import org.osmorc.frameworkintegration.FrameworkIntegratorUtil;
+import org.osmorc.frameworkintegration.FrameworkRunner;
+import org.osmorc.run.ui.BundleType;
+import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.execution.CantRunException;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaCommandLineState;
-import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.execution.configurations.ParametersList;
 import com.intellij.execution.filters.TextConsoleBuilderImpl;
 import com.intellij.execution.process.OSProcessHandler;
@@ -49,14 +65,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.util.PathsList;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.osmorc.frameworkintegration.*;
-import org.osmorc.run.ui.BundleType;
-import org.osmorc.run.ui.SelectedBundle;
-
-import javax.swing.SwingUtilities;
-import java.util.*;
+import consulo.java.execution.configurations.OwnJavaParameters;
 
 /**
  * RunState for launching the OSGI framework.
@@ -106,17 +115,17 @@ public class OsgiRunState extends JavaCommandLineState {
     return runner instanceof ExternalVMFrameworkRunner;
   }
 
-  protected JavaParameters createJavaParameters() throws ExecutionException {
+  protected OwnJavaParameters createJavaParameters() throws ExecutionException {
     if (jdkForRun == null) {
       throw CantRunException.noJdkConfigured();
     }
-    final JavaParameters params = new JavaParameters();
+    final OwnJavaParameters params = new OwnJavaParameters();
 
     params.setWorkingDirectory(runner.getWorkingDir());
 
     // only add JDK classes to the classpath
     // the rest is is to be provided by bundles
-    params.configureByProject(project, JavaParameters.JDK_ONLY, jdkForRun);
+    params.configureByProject(project, OwnJavaParameters.JDK_ONLY, jdkForRun);
     PathsList classpath = params.getClassPath();
     for (VirtualFile libraryFile : runner.getFrameworkStarterLibraries()) {
       classpath.add(libraryFile);
