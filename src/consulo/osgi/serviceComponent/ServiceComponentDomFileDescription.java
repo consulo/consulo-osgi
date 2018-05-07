@@ -14,6 +14,7 @@ import com.intellij.util.xml.DomFileDescription;
 import consulo.osgi.OSGiIcons;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import consulo.osgi.serviceComponent.dom.TComponent;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -28,17 +29,15 @@ public class ServiceComponentDomFileDescription extends DomFileDescription<TComp
 	}
 
 	@Override
-	public boolean isMyFile(@NotNull XmlFile file, @Nullable Module module)
+	public boolean isMyFile(@NotNull XmlFile file)
 	{
 		final VirtualFile virtualFile = file.getVirtualFile();
 		if(virtualFile == null)
 		{
 			return false;
 		}
-		if(module == null)
-		{
-			module = ModuleUtil.findModuleForFile(virtualFile, file.getProject());
-		}
+
+		Module module = ModuleUtil.findModuleForFile(virtualFile, file.getProject());
 
 		if(module == null)
 		{
@@ -51,7 +50,7 @@ public class ServiceComponentDomFileDescription extends DomFileDescription<TComp
 
 	@Nullable
 	@Override
-	public Icon getFileIcon(@Iconable.IconFlags int flags)
+	public Image getFileIcon(@Iconable.IconFlags int flags)
 	{
 		return OSGiIcons.OsgiComponentFile;
 	}

@@ -22,6 +22,7 @@ import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.impl.RenameableFakePsiElement;
+import consulo.awt.TargetAWT;
 import consulo.osgi.OSGiIcons;
 
 /**
@@ -68,7 +69,7 @@ public class NavigatablePsiElementWrapper extends RenameableFakePsiElement
 
 	public Icon getIcon()
 	{
-		return OSGiIcons.OsgiComponentFile;
+		return TargetAWT.to(OSGiIcons.OsgiComponentFile);
 	}
 
 	@Override
