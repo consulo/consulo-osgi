@@ -31,6 +31,7 @@ import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import consulo.osgi.OSGiIcons;
+import consulo.ui.image.Image;
 import org.osmorc.i18n.OsmorcBundle;
 
 import javax.swing.*;
@@ -67,7 +68,7 @@ public class OsgiConfigurationType implements ConfigurationType {
     return OsmorcBundle.message("runconfiguration.description");
   }
 
-  public Icon getIcon() {
+  public Image getIcon() {
     return OSGiIcons.FacetType;
   }
 

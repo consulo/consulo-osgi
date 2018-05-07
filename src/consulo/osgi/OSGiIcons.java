@@ -3,6 +3,7 @@ package consulo.osgi;
 import javax.swing.Icon;
 
 import com.intellij.openapi.util.IconLoader;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -10,7 +11,7 @@ import com.intellij.openapi.util.IconLoader;
  */
 public interface OSGiIcons
 {
-	Icon FacetType = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiFacet.png");
+	Image FacetType = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiFacet.png");
 	Icon ExportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/exportPackage.png");
 	Icon ImportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/importPackage.png");
 	Icon OsgiComponentFile = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentFile.png");

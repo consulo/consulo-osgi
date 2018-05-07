@@ -25,14 +25,16 @@
 
 package org.osmorc.run.ui;
 
-import com.intellij.util.PlatformIcons;
-import consulo.osgi.OSGiIcons;
-import consulo.osgi.compiler.artifact.OSGiArtifactType;
+import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import java.awt.Component;
+
+import com.intellij.util.PlatformIcons;
+import consulo.awt.TargetAWT;
+import consulo.osgi.OSGiIcons;
+import consulo.osgi.compiler.artifact.OSGiArtifactType;
 
 /**
  * ListCellRenderer that is rendering a Module
@@ -50,7 +52,7 @@ public class SelectedBundleListCellRenderer extends DefaultListCellRenderer {
       component.setIcon(OSGiArtifactType.getInstance().getIcon());
     }
     else if (selectedBundle.getBundleType() == BundleType.FrameworkBundle) {
-      component.setIcon(OSGiIcons.FacetType);
+      component.setIcon(TargetAWT.to(OSGiIcons.FacetType));
     }
     else {
       component.setIcon(PlatformIcons.JAR_ICON);
