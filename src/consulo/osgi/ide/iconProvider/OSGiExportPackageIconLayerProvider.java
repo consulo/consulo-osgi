@@ -1,10 +1,9 @@
 package consulo.osgi.ide.iconProvider;
 
-import javax.swing.Icon;
-
 import org.jetbrains.annotations.NotNull;
 import consulo.osgi.OSGiIcons;
 import consulo.osgi.manifest.BundleManifest;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -20,7 +19,7 @@ public class OSGiExportPackageIconLayerProvider extends OSGiPackageIconLayerProv
 
 	@NotNull
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return OSGiIcons.ExportPackage;
 	}

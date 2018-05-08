@@ -1,7 +1,5 @@
 package consulo.osgi.ide.iconProvider;
 
-import javax.swing.Icon;
-
 import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -14,6 +12,7 @@ import consulo.ide.IconDescriptorUpdater;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import consulo.osgi.module.extension.OSGiModuleExtension;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -24,7 +23,7 @@ public abstract class OSGiPackageIconLayerProvider implements IconDescriptorUpda
 	protected abstract boolean isApplicable(@NotNull String qName, @NotNull BundleManifest bundleManifest);
 
 	@NotNull
-	public abstract Icon getIcon();
+	public abstract Image getIcon();
 
 	@Override
 	public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int flags)
