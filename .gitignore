@@ -1,6 +1,5 @@
-/.idea/workspace.xml
-
 /out
 /patched-libs/bndlib/build
-/.consulo/workspace.xml
+.consulo/
+target/
 /dep
