@@ -27,10 +27,11 @@ package org.osmorc.frameworkintegration;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.openapi.actionSystem.AnAction;
 
@@ -54,7 +55,7 @@ public abstract class BundleSelectionAction extends AnAction {
     super(text, description, icon);
   }
 
-  public void setContext(@NotNull Context context) {
+  public void setContext(@Nonnull Context context) {
     this.context = context;
   }
 
@@ -63,12 +64,12 @@ public abstract class BundleSelectionAction extends AnAction {
   }
 
   public interface Context {
-    @NotNull
+    @Nonnull
     List<SelectedBundle> getCurrentlySelectedBundles();
 
-    void addBundle(@NotNull SelectedBundle bundle);
+    void addBundle(@Nonnull SelectedBundle bundle);
 
-    void removeBundle(@NotNull SelectedBundle bundle);
+    void removeBundle(@Nonnull SelectedBundle bundle);
 
     @Nullable
     FrameworkInstanceDefinition getUsedFrameworkInstance();

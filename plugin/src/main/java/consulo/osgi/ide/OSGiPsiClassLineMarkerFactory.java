@@ -3,7 +3,8 @@ package consulo.osgi.ide;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.osgi.framework.Constants;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.DefaultGutterIconNavigationHandler;
@@ -52,7 +53,7 @@ public enum OSGiPsiClassLineMarkerFactory
 				};
 
 				@Override
-				public LineMarkerInfo<PsiElement> getLineMarker(@NotNull PsiIdentifier nameIdentifier, @NotNull PsiClass psiClass, @NotNull OSGiModuleExtension facet)
+				public LineMarkerInfo<PsiElement> getLineMarker(@Nonnull PsiIdentifier nameIdentifier, @Nonnull PsiClass psiClass, @Nonnull OSGiModuleExtension facet)
 				{
 					return OSGiModuleExtensionUtil.isBundleActivator(psiClass) ? new LineMarkerInfo<PsiElement>(nameIdentifier, nameIdentifier.getTextRange(), OSGiIcons.OsgiBundleActivator, Pass
 							.LINE_MARKERS, new ConstantFunction<PsiElement, String>("Bundle activator"), myNavigationHandler, GutterIconRenderer.Alignment.LEFT) : null;
@@ -61,7 +62,7 @@ public enum OSGiPsiClassLineMarkerFactory
 	COMPONENT_IMPLEMENTATION
 			{
 				@Override
-				public LineMarkerInfo<PsiElement> getLineMarker(@NotNull PsiIdentifier nameIdentifier, @NotNull PsiClass psiClass, @NotNull OSGiModuleExtension facet)
+				public LineMarkerInfo<PsiElement> getLineMarker(@Nonnull PsiIdentifier nameIdentifier, @Nonnull PsiClass psiClass, @Nonnull OSGiModuleExtension facet)
 				{
 					final List<NavigatablePsiElement> pairs = OSGiComponentResolver.resolveImpl(psiClass);
 					if(pairs.isEmpty())
@@ -76,7 +77,7 @@ public enum OSGiPsiClassLineMarkerFactory
 	COMPONENT_INTERFACE
 			{
 				@Override
-				public LineMarkerInfo<PsiElement> getLineMarker(@NotNull PsiIdentifier nameIdentifier, @NotNull final PsiClass psiClass, @NotNull OSGiModuleExtension facet)
+				public LineMarkerInfo<PsiElement> getLineMarker(@Nonnull PsiIdentifier nameIdentifier, @Nonnull final PsiClass psiClass, @Nonnull OSGiModuleExtension facet)
 				{
 
 					final List<NavigatablePsiElement> classes = OSGiComponentResolver.resolveProvide(psiClass);
@@ -105,5 +106,5 @@ public enum OSGiPsiClassLineMarkerFactory
 
 	public static final OSGiPsiClassLineMarkerFactory[] VALUES = values();
 
-	public abstract LineMarkerInfo<PsiElement> getLineMarker(@NotNull PsiIdentifier nameIdentifier, @NotNull PsiClass psiClass, @NotNull OSGiModuleExtension facet);
+	public abstract LineMarkerInfo<PsiElement> getLineMarker(@Nonnull PsiIdentifier nameIdentifier, @Nonnull PsiClass psiClass, @Nonnull OSGiModuleExtension facet);
 }

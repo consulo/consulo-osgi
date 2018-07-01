@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.concierge;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 
 import java.util.Map;
@@ -39,12 +39,12 @@ public class ConciergeFrameworkRunner extends AbstractPaxBasedFrameworkRunner<Co
   protected ConciergeFrameworkRunner() {
   }
 
-  @NotNull
+  @Nonnull
   protected ConciergeRunProperties convertProperties(Map<String, String> properties) {
     return new ConciergeRunProperties(properties);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected String getOsgiFrameworkName() {
     return "Concierge";

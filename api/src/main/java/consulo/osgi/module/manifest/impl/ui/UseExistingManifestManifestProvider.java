@@ -1,9 +1,9 @@
 package consulo.osgi.module.manifest.impl.ui;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
@@ -24,13 +24,13 @@ import consulo.osgi.module.manifest.ManifestProviderConfigurable;
  */
 public class UseExistingManifestManifestProvider extends ManifestProvider
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public ManifestProviderConfigurable createConfigurable(Module module)
 	{
 		return new ManifestProviderConfigurable<UseExistingManifestManifestProvider>(this)
 		{
-			@NotNull
+			@Nonnull
 			@Override
 			public String getHeaderName()
 			{

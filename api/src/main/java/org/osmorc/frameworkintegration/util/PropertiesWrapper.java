@@ -31,7 +31,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.jgoodies.binding.beans.Model;
 
 /**
@@ -52,11 +53,11 @@ public class PropertiesWrapper extends Model {
   }
 
 
-  protected String getProperty(@NotNull String name) {
+  protected String getProperty(@Nonnull String name) {
     return _properties.get(name);
   }
 
-  protected void putProperty(@NotNull String name, String value) {
+  protected void putProperty(@Nonnull String name, String value) {
     if (isBooleanProperty(name)) {
       putBooleanProperty(name, Boolean.parseBoolean(value));
     }
@@ -67,11 +68,11 @@ public class PropertiesWrapper extends Model {
     }
   }
 
-  protected boolean getBooleanProperty(@NotNull String name) {
+  protected boolean getBooleanProperty(@Nonnull String name) {
     return Boolean.parseBoolean(getProperty(name));
   }
 
-  protected void putBooleanProperty(@NotNull String name, boolean value) {
+  protected void putBooleanProperty(@Nonnull String name, boolean value) {
     boolean old = getBooleanProperty(name);
     _properties.put(name, String.valueOf(value));
     firePropertyChange(name, old, value);

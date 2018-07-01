@@ -2,8 +2,9 @@ package consulo.osgi.ide.codeInspection.maven;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.dom.MavenDomUtil;
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
 import org.jetbrains.idea.maven.model.MavenArtifact;
@@ -30,17 +31,17 @@ import consulo.osgi.module.OSGiModuleExtensionUtil;
 public abstract class MavenDependencyInspection extends XmlSuppressableInspectionTool
 {
 	@Nls
-	@NotNull
+	@Nonnull
 	public abstract String getDisplayName();
 
-	@NotNull
+	@Nonnull
 	public String getShortName()
 	{
 		return getClass().getSimpleName();
 	}
 
 	@Nls
-	@NotNull
+	@Nonnull
 	public String getGroupDisplayName()
 	{
 		return "OSGi";
@@ -52,9 +53,9 @@ public abstract class MavenDependencyInspection extends XmlSuppressableInspectio
 		return true;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public final PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder problemsHolder, boolean b)
+	public final PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder problemsHolder, boolean b)
 	{
 		return new XmlElementVisitor()
 		{
@@ -129,7 +130,7 @@ public abstract class MavenDependencyInspection extends XmlSuppressableInspectio
 
 
 	@Override
-	public ProblemDescriptor[] checkFile(@NotNull PsiFile psiFile, @NotNull InspectionManager inspectionManager, boolean b)
+	public ProblemDescriptor[] checkFile(@Nonnull PsiFile psiFile, @Nonnull InspectionManager inspectionManager, boolean b)
 	{
 		if(!MavenDomUtil.isMavenFile(psiFile) || OSGiModuleExtensionUtil.findExtension(psiFile) == null)
 		{

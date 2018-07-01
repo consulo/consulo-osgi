@@ -3,10 +3,9 @@ package consulo.osgi.compiler.artifact;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
@@ -36,7 +35,7 @@ public class OSGiArtifactType extends ArtifactType
 		super("osgi", "OSGi Artifact");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Image getIcon()
 	{
@@ -44,28 +43,28 @@ public class OSGiArtifactType extends ArtifactType
 	}
 
 	@Override
-	public boolean isAvailableForAdd(@NotNull ModulesProvider modulesProvider)
+	public boolean isAvailableForAdd(@Nonnull ModulesProvider modulesProvider)
 	{
 		return ModuleUtil.hasModuleExtension(modulesProvider, OSGiModuleExtension.class);
 	}
 
 	@Nullable
 	@Override
-	public String getDefaultPathFor(@NotNull PackagingElementOutputKind kind)
+	public String getDefaultPathFor(@Nonnull PackagingElementOutputKind kind)
 	{
 		return "/";
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public CompositePackagingElement<?> createRootElement(@NotNull String artifactName)
+	public CompositePackagingElement<?> createRootElement(@Nonnull String artifactName)
 	{
 		return new JarArchivePackagingElement(ArtifactUtil.suggestArtifactFileName(artifactName) + ".jar");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public List<? extends ArtifactTemplate> getNewArtifactTemplates(@NotNull PackagingElementResolvingContext context)
+	public List<? extends ArtifactTemplate> getNewArtifactTemplates(@Nonnull PackagingElementResolvingContext context)
 	{
 		return Collections.singletonList(new OSGiArtifactTemplate(context));
 	}

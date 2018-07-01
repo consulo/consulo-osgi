@@ -3,7 +3,7 @@
 
 package consulo.osgi.serviceComponent.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -21,7 +21,7 @@ public interface TProperties extends DomElement
 	 *
 	 * @return the value of the entry child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getEntry();
 

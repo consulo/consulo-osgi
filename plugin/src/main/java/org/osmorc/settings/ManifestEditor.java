@@ -25,6 +25,8 @@
 
 package org.osmorc.settings;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
@@ -32,7 +34,6 @@ import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.EditorTextField;
 import com.intellij.util.ui.UIUtil;
-import org.jetbrains.annotations.NotNull;
 import org.osmorc.manifest.lang.ManifestFileType;
 
 /**
@@ -55,7 +56,7 @@ public class ManifestEditor extends EditorTextField implements Disposable {
     });
   }
 
-  public void setText(@NotNull String text) {
+  public void setText(@Nonnull String text) {
     if (text == null) {
       text = "";
     }

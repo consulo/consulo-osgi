@@ -1,6 +1,6 @@
 package consulo.osgi.ide.iconProvider;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.osgi.OSGiIcons;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.ui.image.Image;
@@ -12,12 +12,12 @@ import consulo.ui.image.Image;
 public class OSGiExportPackageIconLayerProvider extends OSGiPackageIconLayerProvider
 {
 	@Override
-	protected boolean isApplicable(@NotNull String qName, @NotNull BundleManifest bundleManifest)
+	protected boolean isApplicable(@Nonnull String qName, @Nonnull BundleManifest bundleManifest)
 	{
 		return bundleManifest.exportsPackage(qName);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Image getIcon()
 	{

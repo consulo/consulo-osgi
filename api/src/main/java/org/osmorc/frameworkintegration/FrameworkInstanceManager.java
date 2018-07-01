@@ -24,8 +24,8 @@
  */
 package org.osmorc.frameworkintegration;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
@@ -37,8 +37,8 @@ public interface FrameworkInstanceManager {
    *
    * @param collector
    */
-  void collectLibraries(@NotNull FrameworkInstanceDefinition frameworkInstanceDefinition,
-                        @NotNull FrameworkLibraryCollector collector);
+  void collectLibraries(@Nonnull FrameworkInstanceDefinition frameworkInstanceDefinition,
+                        @Nonnull FrameworkLibraryCollector collector);
 
   /**
    * Checks if the given framework instance definition is valid.
@@ -47,5 +47,5 @@ public interface FrameworkInstanceManager {
    * @return null, if the instance definition is valid, an error message otherwise.
    */
   @Nullable
-  String checkValidity(@NotNull final FrameworkInstanceDefinition frameworkInstanceDefinition);
+  String checkValidity(@Nonnull final FrameworkInstanceDefinition frameworkInstanceDefinition);
 }

@@ -3,7 +3,8 @@
 
 package consulo.osgi.serviceComponent.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -31,7 +32,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the name child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getName();
 
 
@@ -40,7 +41,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the interface child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getInterface();
 
@@ -50,7 +51,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the cardinality child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<TCardinality> getCardinality();
 
 
@@ -59,7 +60,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the policy child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<TPolicy> getPolicy();
 
 
@@ -68,7 +69,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the target child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTarget();
 
 
@@ -77,7 +78,7 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the bind child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBind();
 
 
@@ -86,6 +87,6 @@ public interface TReference extends DomElement
 	 *
 	 * @return the value of the unbind child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUnbind();
 }

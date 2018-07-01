@@ -29,12 +29,10 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.osgi.OSGiIcons;
 import consulo.ui.image.Image;
 import org.osmorc.i18n.OsmorcBundle;
-
-import javax.swing.*;
 
 /**
  * Configuration type for a bundle run configuration.
@@ -72,7 +70,7 @@ public class OsgiConfigurationType implements ConfigurationType {
     return OSGiIcons.FacetType;
   }
 
-  @NotNull
+  @Nonnull
   public String getId() {
     return "#org.osmorc.OsgiConfigurationType";
   }

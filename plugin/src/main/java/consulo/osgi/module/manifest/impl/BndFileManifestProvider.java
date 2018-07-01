@@ -1,7 +1,8 @@
 package consulo.osgi.module.manifest.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.module.extension.OSGiModuleExtension;
 import consulo.osgi.module.manifest.ManifestProviderWithLocation;
@@ -17,7 +18,7 @@ public class BndFileManifestProvider extends ManifestProviderWithLocation
 		super("$MODULE_DIR$/bnd.bnd");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getHeaderName()
 	{

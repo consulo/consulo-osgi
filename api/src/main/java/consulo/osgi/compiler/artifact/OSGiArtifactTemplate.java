@@ -3,7 +3,7 @@ package consulo.osgi.compiler.artifact;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog;

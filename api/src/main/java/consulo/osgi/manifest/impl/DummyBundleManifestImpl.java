@@ -1,7 +1,7 @@
 package consulo.osgi.manifest.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.psi.NavigatablePsiElement;
@@ -17,7 +17,7 @@ public class DummyBundleManifestImpl extends AbstractBundleManifestImpl
 
 	@Nullable
 	@Override
-	protected Header getHeaderByName(@NotNull String heaaderName)
+	protected Header getHeaderByName(@Nonnull String heaaderName)
 	{
 		return null;
 	}
@@ -30,13 +30,13 @@ public class DummyBundleManifestImpl extends AbstractBundleManifestImpl
 	}
 
 	@Override
-	public NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name)
+	public NavigatablePsiElement getNavigateTargetByHeaderName(@Nonnull String name)
 	{
 		return null;
 	}
 
 	@Override
-	public void setHeaderValue(@NotNull String key, @NotNull String value)
+	public void setHeaderValue(@Nonnull String key, @Nonnull String value)
 	{
 	}
 

@@ -27,7 +27,7 @@ package org.osmorc.frameworkintegration.impl.concierge;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibrarySourceFinder;
 import org.osmorc.frameworkintegration.util.FileUtil;
 
@@ -38,11 +38,11 @@ import java.util.List;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ConciergeSourceFinder implements FrameworkInstanceLibrarySourceFinder {
-  public ConciergeSourceFinder(@NotNull VirtualFile conciergeRootFolder) {
+  public ConciergeSourceFinder(@Nonnull VirtualFile conciergeRootFolder) {
     _sourceFolder = conciergeRootFolder.findChild("src");
   }
 
-  public List<VirtualFile> getSourceForLibraryClasses(@NotNull VirtualFile libraryClasses) {
+  public List<VirtualFile> getSourceForLibraryClasses(@Nonnull VirtualFile libraryClasses) {
     List<VirtualFile> result = new ArrayList<VirtualFile>();
     if (_sourceFolder != null) {
       String sourceZIPName = FileUtil.getNameWithoutJarSuffix(libraryClasses) + ".zip";
@@ -55,7 +55,7 @@ public class ConciergeSourceFinder implements FrameworkInstanceLibrarySourceFind
     return result;
   }
 
-  public boolean containsOnlySources(@NotNull VirtualFile libraryClassesCondidate) {
+  public boolean containsOnlySources(@Nonnull VirtualFile libraryClassesCondidate) {
     return false;
   }
 

@@ -31,10 +31,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import consulo.osgi.manifest.BundleManifest;
-import consulo.osgi.manifest.impl.BundleManifestImpl;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.psi.ManifestFile;
@@ -49,6 +48,8 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import consulo.osgi.manifest.BundleManifest;
+import consulo.osgi.manifest.impl.BundleManifestImpl;
 import consulo.vfs.util.ArchiveVfsUtil;
 
 /**
@@ -122,8 +123,8 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl<Librar
    * @param project the prorject
    * @return the manifest holders
    */
-  @NotNull
-  public static synchronized Collection<ManifestHolder> createForLibrary(@NotNull Library library, @NotNull Project project) {
+  @Nonnull
+  public static synchronized Collection<ManifestHolder> createForLibrary(@Nonnull Library library, @Nonnull Project project) {
     cleanupHolderCache();
     List<ManifestHolder> result = new ArrayList<ManifestHolder>();
     if (isLibraryDisposed(library) || project.isDisposed()) {

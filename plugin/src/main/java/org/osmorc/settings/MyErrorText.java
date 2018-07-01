@@ -26,8 +26,8 @@
 package org.osmorc.settings;
 
 import com.intellij.icons.AllIcons;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

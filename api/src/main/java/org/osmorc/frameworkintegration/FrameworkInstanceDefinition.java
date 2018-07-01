@@ -24,7 +24,8 @@
  */
 package org.osmorc.frameworkintegration;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xmlb.annotations.Transient;
 
 /**
@@ -77,7 +78,7 @@ public class FrameworkInstanceDefinition {
     return myFrameworkIntegratorName;
   }
 
-  public void setFrameworkIntegratorName(@NotNull String frameworkIntegratorName) {
+  public void setFrameworkIntegratorName(@Nonnull String frameworkIntegratorName) {
     myFrameworkIntegratorName = frameworkIntegratorName;
   }
 
@@ -85,7 +86,7 @@ public class FrameworkInstanceDefinition {
     return myName;
   }
 
-  public void setName(@NotNull String name) {
+  public void setName(@Nonnull String name) {
     myName = name;
   }
 

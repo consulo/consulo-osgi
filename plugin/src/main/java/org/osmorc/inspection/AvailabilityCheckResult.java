@@ -1,6 +1,6 @@
 package org.osmorc.inspection;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Result of a class/package availability check.
@@ -21,7 +21,7 @@ public class AvailabilityCheckResult {
     this(ResultType.Ok, "");
   }
 
-  public AvailabilityCheckResult(@NotNull ResultType result, @NotNull String description) {
+  public AvailabilityCheckResult(@Nonnull ResultType result, @Nonnull String description) {
     myResult = result;
     myDescription = description;
   }
@@ -30,12 +30,12 @@ public class AvailabilityCheckResult {
     return myResult == ResultType.Ok;
   }
 
-  @NotNull
+  @Nonnull
   public String getDescription() {
     return myDescription;
   }
 
-  @NotNull
+  @Nonnull
   public ResultType getResult() {
     return myResult;
   }

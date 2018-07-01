@@ -3,7 +3,7 @@
 
 package consulo.osgi.serviceComponent.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.PsiClass;
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.Convert;
@@ -25,7 +25,7 @@ public interface Timplementation extends DomElement
 	 *
 	 * @return the value of the class child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("class")
 	@Convert(value = ClassValueConverterImpl.class, soft = false)
 	@Required

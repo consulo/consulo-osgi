@@ -1,8 +1,10 @@
 package consulo.osgi.module.manifest;
 
+import javax.annotation.Nonnull;
+
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;
@@ -62,10 +64,10 @@ public abstract class ManifestProviderWithLocation extends ManifestProvider
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	protected String myLocation;
 
-	protected ManifestProviderWithLocation(@NotNull String defaultValue)
+	protected ManifestProviderWithLocation(@Nonnull String defaultValue)
 	{
 		myLocation = defaultValue;
 	}
@@ -82,14 +84,14 @@ public abstract class ManifestProviderWithLocation extends ManifestProvider
 		element.setAttribute("location", myLocation);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public ManifestProviderConfigurable createConfigurable(Module module)
 	{
 		return new SimpleConfigurableWithLocation(getHeaderName(), this, module);
 	}
 
-	@NotNull
+	@Nonnull
 	public abstract String getHeaderName();
 
 	@Nullable
@@ -103,13 +105,13 @@ public abstract class ManifestProviderWithLocation extends ManifestProvider
 		return myCachedValue.getValue();
 	}
 
-	@NotNull
+	@Nonnull
 	public String getLocation()
 	{
 		return myLocation;
 	}
 
-	public void setLocation(@NotNull String location)
+	public void setLocation(@Nonnull String location)
 	{
 		myLocation = StringUtil.notNullize(location);
 	}

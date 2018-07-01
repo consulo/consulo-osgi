@@ -1,6 +1,7 @@
 package org.osmorc.run;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.debugger.engine.DebuggerUtils;
 import com.intellij.debugger.impl.GenericDebuggerRunner;
 import com.intellij.debugger.settings.DebuggerSettings;
@@ -26,12 +27,12 @@ public class OsgiDebuggerRunner extends GenericDebuggerRunner
 	private final Logger logger = Logger.getInstance("#org.osmorc.run.OsgiDebuggerRunner");
 
 	@Override
-	public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile)
+	public boolean canRun(@Nonnull String executorId, @Nonnull RunProfile profile)
 	{
 		return executorId.equals(DefaultDebugExecutor.EXECUTOR_ID) && profile instanceof OsgiRunConfiguration;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getRunnerId()
 	{
@@ -39,7 +40,7 @@ public class OsgiDebuggerRunner extends GenericDebuggerRunner
 	}
 
 	@Override
-	protected RunContentDescriptor createContentDescriptor(@NotNull RunProfileState state, @NotNull ExecutionEnvironment env) throws ExecutionException
+	protected RunContentDescriptor createContentDescriptor(@Nonnull RunProfileState state, @Nonnull ExecutionEnvironment env) throws ExecutionException
 	{
 		OsgiRunState runState = (OsgiRunState) state;
 		final RunnerSettings myRunnerSettings = ((OsgiRunState) state).getRunnerSettings();

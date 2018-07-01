@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.TextRange;
@@ -46,7 +46,7 @@ public class ComponentXmlFilePsiReference extends PsiReferenceBase<PsiElement>
 		return getComponents().get(myFilePath);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Object[] getVariants()
 	{
@@ -54,7 +54,7 @@ public class ComponentXmlFilePsiReference extends PsiReferenceBase<PsiElement>
 		return components.keySet().toArray(new String[components.size()]);
 	}
 
-	@NotNull
+	@Nonnull
 	private Map<String, XmlFile> getComponents()
 	{
 		final Module moduleForPsiElement = ModuleUtil.findModuleForPsiElement(myElement);

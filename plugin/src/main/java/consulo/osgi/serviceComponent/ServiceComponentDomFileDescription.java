@@ -1,9 +1,8 @@
 package consulo.osgi.serviceComponent;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.Iconable;
@@ -29,7 +28,7 @@ public class ServiceComponentDomFileDescription extends DomFileDescription<TComp
 	}
 
 	@Override
-	public boolean isMyFile(@NotNull XmlFile file)
+	public boolean isMyFile(@Nonnull XmlFile file)
 	{
 		final VirtualFile virtualFile = file.getVirtualFile();
 		if(virtualFile == null)

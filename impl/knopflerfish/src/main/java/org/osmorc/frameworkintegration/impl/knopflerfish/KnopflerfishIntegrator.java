@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.knopflerfish;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkRunner;
 import org.osmorc.frameworkintegration.impl.AbstractFrameworkIntegrator;
@@ -46,13 +46,13 @@ public class KnopflerfishIntegrator extends AbstractFrameworkIntegrator<Knopfler
     super(new KnopflerfishFrameworkInstanceManager());
   }
 
-  @NotNull
+  @Nonnull
   public FrameworkRunner createFrameworkRunner() {
     return new KnopflerfishFrameworkRunner();
   }
 
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return FRAMEWORK_NAME;
   }
@@ -62,7 +62,7 @@ public class KnopflerfishIntegrator extends AbstractFrameworkIntegrator<Knopfler
     return new KnopflerfishRunPropertiesEditor();
   }
 
-  @NotNull
+  @Nonnull
   public List<BundleSelectionAction> getBundleSelectionActions() {
     return Collections.emptyList();
   }

@@ -3,7 +3,7 @@ package org.osmorc.settings;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 
@@ -23,7 +23,7 @@ public class FrameworkDefinitionsEditor implements SearchableConfigurable {
     return "reference.settings.project.osgi.framework.definitions";
   }
 
-  @NotNull
+  @Nonnull
   public String getId() {
     return getHelpTopic();
   }

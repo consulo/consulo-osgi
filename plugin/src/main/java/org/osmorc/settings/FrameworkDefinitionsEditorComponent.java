@@ -28,7 +28,7 @@ package org.osmorc.settings;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.ui.*;
 import com.intellij.ui.components.JBList;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;

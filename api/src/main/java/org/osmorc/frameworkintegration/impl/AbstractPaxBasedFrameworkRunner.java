@@ -30,8 +30,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.run.ExternalVMFrameworkRunner;
@@ -58,7 +59,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 	{
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public final List<VirtualFile> getFrameworkStarterLibraries()
 	{
@@ -72,7 +73,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 		return Collections.singletonList(LocalFileSystem.getInstance().findFileByIoFile(new File(pluginPath, "runner/pax-runner.jar")));
 	}
 
-	public void fillCommandLineParameters(@NotNull ParametersList commandLineParameters, @NotNull SelectedBundle[] bundlesToInstall)
+	public void fillCommandLineParameters(@Nonnull ParametersList commandLineParameters, @Nonnull SelectedBundle[] bundlesToInstall)
 	{
 		commandLineParameters.add("--p=" + getOsgiFrameworkName().toLowerCase());
 		commandLineParameters.add("--nologo=true");
@@ -151,7 +152,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 		}
 	}
 
-	public void fillVmParameters(ParametersList vmParameters, @NotNull SelectedBundle[] bundlesToInstall)
+	public void fillVmParameters(ParametersList vmParameters, @Nonnull SelectedBundle[] bundlesToInstall)
 	{
 		vmParameters.addAll(HttpConfigurable.convertArguments(HttpConfigurable.getJvmPropertiesList(false, null)));
 
@@ -161,7 +162,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 		addAdditionalTargetVMProperties(vmParameters, bundlesToInstall);
 	}
 
-	public void runCustomInstallationSteps(@NotNull SelectedBundle[] bundlesToInstall) throws ExecutionException
+	public void runCustomInstallationSteps(@Nonnull SelectedBundle[] bundlesToInstall) throws ExecutionException
 	{
 		// nothing to do here either...
 	}
@@ -171,7 +172,7 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 	 *
 	 * @return the name of the osgi framework that the PAX runner should run.
 	 */
-	@NotNull
+	@Nonnull
 	protected abstract String getOsgiFrameworkName();
 
 
@@ -183,12 +184,12 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 	 * @param urlsOfBundlesToInstall the list of bundles to install
 	 * @return a string with VM parameters.
 	 */
-	protected void addAdditionalTargetVMProperties(@NotNull ParametersList vmParameters, @NotNull SelectedBundle[] urlsOfBundlesToInstall)
+	protected void addAdditionalTargetVMProperties(@Nonnull ParametersList vmParameters, @Nonnull SelectedBundle[] urlsOfBundlesToInstall)
 	{
 	}
 
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	public final String getMainClass()
 	{

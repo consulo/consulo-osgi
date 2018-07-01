@@ -26,7 +26,7 @@
 package org.osmorc.manifest.impl;
 
 import com.intellij.openapi.module.Module;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.module.extension.OSGiModuleExtension;

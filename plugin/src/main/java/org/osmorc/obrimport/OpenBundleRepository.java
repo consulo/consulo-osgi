@@ -27,7 +27,7 @@ package org.osmorc.obrimport;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.progress.ProgressIndicator;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.obrimport.springsource.ObrMavenResult;
 
 import java.io.IOException;
@@ -59,9 +59,9 @@ public interface OpenBundleRepository {
    * @throws IOException if the connection to the bundle repository failed.
    */
   public
-  @NotNull
-  ObrMavenResult[] queryForMavenArtifact(@NotNull String queryString,
-                                         @NotNull ProgressIndicator progressIndicator) throws
+  @Nonnull
+  ObrMavenResult[] queryForMavenArtifact(@Nonnull String queryString,
+                                         @Nonnull ProgressIndicator progressIndicator) throws
                                                                                        IOException;
 
   /**
@@ -70,6 +70,6 @@ public interface OpenBundleRepository {
    * @return a list of repositories or an empty array if this obr does not support maven.
    */
   public
-  @NotNull
+  @Nonnull
   MavenRepository[] getMavenRepositories();
 }

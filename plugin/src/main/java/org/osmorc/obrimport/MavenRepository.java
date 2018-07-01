@@ -25,7 +25,7 @@
 
 package org.osmorc.obrimport;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Class representing a maven repository.
@@ -38,37 +38,37 @@ public class MavenRepository {
   private String repositoryDescription;
   private String repositoryUrl;
 
-  public MavenRepository(@NotNull String repositoryId, @NotNull String repositoryDescription,
-                         @NotNull String repositoryUrl) {
+  public MavenRepository(@Nonnull String repositoryId, @Nonnull String repositoryDescription,
+                         @Nonnull String repositoryUrl) {
     this.repositoryId = repositoryId;
     this.repositoryDescription = repositoryDescription;
     this.repositoryUrl = repositoryUrl;
   }
 
-  @NotNull
+  @Nonnull
   public String getRepositoryId() {
     return repositoryId;
   }
 
-  public void setRepositoryId(@NotNull String repositoryId) {
+  public void setRepositoryId(@Nonnull String repositoryId) {
     this.repositoryId = repositoryId;
   }
 
-  @NotNull
+  @Nonnull
   public String getRepositoryDescription() {
     return repositoryDescription;
   }
 
-  public void setRepositoryDescription(@NotNull String repositoryDescription) {
+  public void setRepositoryDescription(@Nonnull String repositoryDescription) {
     this.repositoryDescription = repositoryDescription;
   }
 
-  @NotNull
+  @Nonnull
   public String getRepositoryUrl() {
     return repositoryUrl;
   }
 
-  public void setRepositoryUrl(@NotNull String repositoryUrl) {
+  public void setRepositoryUrl(@Nonnull String repositoryUrl) {
     this.repositoryUrl = repositoryUrl;
   }
 }

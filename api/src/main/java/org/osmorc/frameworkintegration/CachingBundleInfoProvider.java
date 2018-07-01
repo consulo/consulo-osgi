@@ -26,7 +26,7 @@
 package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.util.io.FileUtil;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.osgi.framework.Constants;
 
 import java.io.File;

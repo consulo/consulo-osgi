@@ -3,7 +3,8 @@ package consulo.osgi.compiler.artifact;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.packaging.artifacts.Artifact;
@@ -19,8 +20,8 @@ import com.intellij.util.Processor;
  */
 public class OSGiArtifactUtil
 {
-	@NotNull
-	public static Module[] collectModules(@NotNull Project project, @NotNull Artifact artifact)
+	@Nonnull
+	public static Module[] collectModules(@Nonnull Project project, @Nonnull Artifact artifact)
 	{
 		final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(project);
 		final List<Module> list = new ArrayList<Module>();

@@ -1,8 +1,8 @@
 package consulo.osgi.module.manifest;
 
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.InvalidDataException;
@@ -34,14 +34,14 @@ public abstract class ManifestProvider implements JDOMExternalizable
 	{
 	}
 
-	@NotNull
-	public final BundleManifest getBundleManifest(@NotNull OSGiModuleExtension facet)
+	@Nonnull
+	public final BundleManifest getBundleManifest(@Nonnull OSGiModuleExtension facet)
 	{
 		BundleManifest bundleManifestImpl = getBundleManifestImpl(facet);
 		return bundleManifestImpl == null ? DummyBundleManifestImpl.INSTANCE : bundleManifestImpl;
 	}
 
-	@NotNull
+	@Nonnull
 	public abstract ManifestProviderConfigurable createConfigurable(Module module);
 
 	@Nullable

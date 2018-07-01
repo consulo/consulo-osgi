@@ -18,7 +18,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
@@ -90,7 +90,7 @@ public class JSpinnerCellEditor extends AbstractCellEditor implements TableCellE
 
     private String myZeroValue;
 
-    public MyNumberFormatter(@NotNull String zeroValue) {
+    public MyNumberFormatter(@Nonnull String zeroValue) {
       myZeroValue = zeroValue;
       setValueClass(Integer.class);
     }

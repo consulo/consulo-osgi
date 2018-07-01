@@ -24,8 +24,9 @@
  */
 package org.osmorc.frameworkintegration.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.vfs.util.ArchiveVfsUtil;
 
@@ -34,15 +35,15 @@ import consulo.vfs.util.ArchiveVfsUtil;
  */
 public class FileUtil {
 
-  public static String getNameWithoutJarSuffix(@NotNull VirtualFile libraryClasses) {
+  public static String getNameWithoutJarSuffix(@Nonnull VirtualFile libraryClasses) {
     return getNameWithoutTail(libraryClasses, ".jar");
   }
 
-  public static String getNameWithoutTail(@NotNull VirtualFile libraryClasses, @NotNull String tail) {
+  public static String getNameWithoutTail(@Nonnull VirtualFile libraryClasses, @Nonnull String tail) {
     return getNameWithoutTail(libraryClasses.getName(), tail);
   }
 
-  public static String getNameWithoutTail(@NotNull String name, @NotNull String tail) {
+  public static String getNameWithoutTail(@Nonnull String name, @Nonnull String tail) {
     if (name.toLowerCase().endsWith(tail.toLowerCase())) {
       return name.substring(0, name.length() - tail.length());
     }

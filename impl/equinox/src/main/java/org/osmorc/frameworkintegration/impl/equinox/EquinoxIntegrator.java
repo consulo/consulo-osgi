@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.equinox;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkRunner;
 import org.osmorc.frameworkintegration.impl.AbstractFrameworkIntegrator;
@@ -52,12 +52,12 @@ public class EquinoxIntegrator extends AbstractFrameworkIntegrator<EquinoxFramew
   }
 
 
-  @NotNull
+  @Nonnull
   public FrameworkRunner createFrameworkRunner() {
     return new EquinoxFrameworkRunner();
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return FRAMEWORK_NAME;
   }
@@ -71,7 +71,7 @@ public class EquinoxIntegrator extends AbstractFrameworkIntegrator<EquinoxFramew
     return checker;
   }
 
-  @NotNull
+  @Nonnull
   public List<BundleSelectionAction> getBundleSelectionActions() {
     return Arrays.asList(ACTIONS);
   }

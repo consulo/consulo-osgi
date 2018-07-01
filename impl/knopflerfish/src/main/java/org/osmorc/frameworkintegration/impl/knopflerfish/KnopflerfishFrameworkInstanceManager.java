@@ -29,7 +29,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.AbstractFrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkLibraryCollector;
@@ -49,8 +49,8 @@ public class KnopflerfishFrameworkInstanceManager extends AbstractFrameworkInsta
   }
 
   @Override
-  public void collectLibraries(@NotNull final FrameworkInstanceDefinition frameworkInstanceDefinition,
-                               @NotNull final FrameworkLibraryCollector collector) {
+  public void collectLibraries(@Nonnull final FrameworkInstanceDefinition frameworkInstanceDefinition,
+                               @Nonnull final FrameworkLibraryCollector collector) {
     VirtualFile installFolder = LocalFileSystem.getInstance().findFileByPath(frameworkInstanceDefinition.getBaseFolder());
 
     if (installFolder == null) {
@@ -101,7 +101,7 @@ public class KnopflerfishFrameworkInstanceManager extends AbstractFrameworkInsta
     });
   }
 
-  public String checkValidity(@NotNull FrameworkInstanceDefinition frameworkInstanceDefinition) {
+  public String checkValidity(@Nonnull FrameworkInstanceDefinition frameworkInstanceDefinition) {
     if (frameworkInstanceDefinition.getName() == null || frameworkInstanceDefinition.getName().trim().length() == 0) {
       return "A name for the framework instance needs to be given.";
     }

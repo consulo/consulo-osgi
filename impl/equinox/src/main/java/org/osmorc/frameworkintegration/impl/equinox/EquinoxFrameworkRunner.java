@@ -25,7 +25,7 @@
 package org.osmorc.frameworkintegration.impl.equinox;
 
 import com.intellij.execution.configurations.ParametersList;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 import org.osmorc.run.ui.SelectedBundle;
 
@@ -42,15 +42,15 @@ public class EquinoxFrameworkRunner extends AbstractPaxBasedFrameworkRunner<Equi
   protected EquinoxFrameworkRunner() {
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected EquinoxRunProperties convertProperties(Map<String, String> properties) {
     return new EquinoxRunProperties(properties);
   }
 
   @Override
-  protected void addAdditionalTargetVMProperties(@NotNull ParametersList vmParameters,
-                                                 @NotNull SelectedBundle[] urlsOfBundlesToInstall) {
+  protected void addAdditionalTargetVMProperties(@Nonnull ParametersList vmParameters,
+                                                 @Nonnull SelectedBundle[] urlsOfBundlesToInstall) {
     String product = getFrameworkProperties().getEquinoxProduct();
     if (product != null && product.length() > 0) {
       vmParameters.defineProperty("eclipse.product", product);
@@ -68,7 +68,7 @@ public class EquinoxFrameworkRunner extends AbstractPaxBasedFrameworkRunner<Equi
     }
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected String getOsgiFrameworkName() {
     return "Equinox";

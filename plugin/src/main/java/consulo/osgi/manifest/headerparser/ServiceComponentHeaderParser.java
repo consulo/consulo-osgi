@@ -1,6 +1,6 @@
 package consulo.osgi.manifest.headerparser;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.manifest.lang.headerparser.impl.AbstractHeaderParserImpl;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.HeaderValuePart;
@@ -13,7 +13,7 @@ import consulo.osgi.manifest.headerparser.serviceComponent.ComponentXmlFilePsiRe
  */
 public class ServiceComponentHeaderParser extends AbstractHeaderParserImpl
 {
-	public PsiReference[] getReferences(@NotNull HeaderValuePart headerValuePart)
+	public PsiReference[] getReferences(@Nonnull HeaderValuePart headerValuePart)
 	{
 		if(headerValuePart.getParent() instanceof Clause)
 		{

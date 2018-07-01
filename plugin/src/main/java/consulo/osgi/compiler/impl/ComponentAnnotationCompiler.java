@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import aQute.bnd.make.component.ComponentAnnotationReader;
 import aQute.lib.osgi.Clazz;
 import aQute.lib.osgi.FileResource;
@@ -33,7 +34,7 @@ import consulo.osgi.module.OSGiModuleExtensionUtil;
  */
 public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public ProcessingItem[] getProcessingItems(CompileContext context)
 	{
@@ -98,7 +99,7 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 				FileUtil.writeToFile(outFile, fileText);
 				itemList.add(new ProcessingItem()
 				{
-					@NotNull
+					@Nonnull
 					@Override
 					public File getFile()
 					{
@@ -123,7 +124,7 @@ public class ComponentAnnotationCompiler implements ClassInstrumentingCompiler
 		return itemList.toArray(new ProcessingItem[itemList.size()]);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getDescription()
 	{

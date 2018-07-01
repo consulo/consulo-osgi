@@ -25,8 +25,8 @@
 package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.run.ui.FrameworkRunPropertiesEditor;
 
 import java.util.List;
@@ -42,20 +42,20 @@ public interface FrameworkIntegrator<I extends FrameworkInstanceManager> {
   /**
    * @return the display name of the framework
    */
-  @NotNull
+  @Nonnull
   String getDisplayName();
 
   /**
    * @return the {@link org.osmorc.frameworkintegration.FrameworkInstanceManager} that controls data about a specific
    *         framework instance.
    */
-  @NotNull
+  @Nonnull
   I getInstanceManager();
 
   /**
    * @return the framework runnner which is used to get runtime specific information about a framework.
    */
-  @NotNull
+  @Nonnull
   FrameworkRunner createFrameworkRunner();
 
   /**
@@ -66,6 +66,6 @@ public interface FrameworkIntegrator<I extends FrameworkInstanceManager> {
   @Nullable
   FrameworkRunPropertiesEditor createRunPropertiesEditor();
 
-  @NotNull
+  @Nonnull
   List<BundleSelectionAction> getBundleSelectionActions();
 }

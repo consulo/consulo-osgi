@@ -9,8 +9,9 @@ import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.impl.libraries.ProjectLibraryTable;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.util.messages.Topic;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.TestOnly;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import consulo.osgi.manifest.BundleManifest;
@@ -68,7 +69,7 @@ public class MyBundleManager extends BundleManager {
   }
 
   @Override
-  public void reindex(@NotNull final Module module) {
+  public void reindex(@Nonnull final Module module) {
     doReindex(module, true);
   }
 
@@ -78,7 +79,7 @@ public class MyBundleManager extends BundleManager {
    * @param manifestHolder the manifest holder to add.
    */
   @TestOnly
-  public void addManifestHolder(@NotNull ManifestHolder manifestHolder) {
+  public void addManifestHolder(@Nonnull ManifestHolder manifestHolder) {
     myBundleCache.updateWith(manifestHolder);
   }
 
@@ -114,7 +115,7 @@ public class MyBundleManager extends BundleManager {
   }
 
   @Override
-  public void reindex(@NotNull Collection<Library> libraries) {
+  public void reindex(@Nonnull Collection<Library> libraries) {
     doReindex(libraries, true);
   }
 
@@ -143,8 +144,8 @@ public class MyBundleManager extends BundleManager {
 
 
   @Override
-  @NotNull
-  public Set<Object> resolveDependenciesOf(@NotNull final Module module) {
+  @Nonnull
+  public Set<Object> resolveDependenciesOf(@Nonnull final Module module) {
     BundleManifest manifest = getManifestByObject(module);
     if (manifest == null) {
       return Collections.emptySet();
@@ -200,8 +201,8 @@ public class MyBundleManager extends BundleManager {
    * @param requireBundleSpec    the spec to resolve
    * @param resolvedDependencies the resolved dependencies.
    */
-  private void resolveRequiredBundle(@NotNull String requireBundleSpec,
-                                     @NotNull List<ManifestHolder> resolvedDependencies) {
+  private void resolveRequiredBundle(@Nonnull String requireBundleSpec,
+                                     @Nonnull List<ManifestHolder> resolvedDependencies) {
 
     // first get the manifest holder of the required bundle
     ManifestHolder manifestHolder = myBundleCache.whoIsRequiredBundle(requireBundleSpec);
@@ -269,7 +270,7 @@ public class MyBundleManager extends BundleManager {
    * @return a set of libraries that are dependencies according to the given classpath entries. Returns an empty set if no libraries
    *         could be found.
    */
-  private Set<Library> resolveBundleClassPath(@NotNull Collection<String> classPathEntries) {
+  private Set<Library> resolveBundleClassPath(@Nonnull Collection<String> classPathEntries) {
     Library[] libraries = ProjectLibraryTable.getInstance(myProject).getLibraries();
 
     Set<Library> result = new HashSet<Library>();
@@ -300,8 +301,8 @@ public class MyBundleManager extends BundleManager {
    * @param bundleSymbolicName the bundle symbolic name to lookup
    * @return the object representing
    */
-  @NotNull
-  private List<Object> whoIs(@NotNull String bundleSymbolicName) {
+  @Nonnull
+  private List<Object> whoIs(@Nonnull String bundleSymbolicName) {
     List<ManifestHolder> holders = myBundleCache.whoIs(bundleSymbolicName);
     if (holders.isEmpty()) {
       return Collections.emptyList();
@@ -320,7 +321,7 @@ public class MyBundleManager extends BundleManager {
 
 
   @Override
-  public boolean isReExported(@NotNull Object dependency, @NotNull Module module) {
+  public boolean isReExported(@Nonnull Object dependency, @Nonnull Module module) {
     BundleManifest depManifest = getManifestByObject(dependency);
     BundleManifest moduleManifest = getManifestByObject(module);
 
@@ -333,7 +334,7 @@ public class MyBundleManager extends BundleManager {
 
 
   @Nullable
-  public BundleManifest getManifestByObject(@NotNull Object object) {
+  public BundleManifest getManifestByObject(@Nonnull Object object) {
     ManifestHolder manifestHolder = myBundleCache.getManifestHolder(object);
     if (manifestHolder != null) {
       try {
@@ -347,7 +348,7 @@ public class MyBundleManager extends BundleManager {
     return null;
   }
 
-  public BundleManifest getManifestBySymbolicName(@NotNull String bundleSymbolicName) {
+  public BundleManifest getManifestBySymbolicName(@Nonnull String bundleSymbolicName) {
     List<Object> objects = whoIs(bundleSymbolicName);
     if (!objects.isEmpty()) {
       return getManifestByObject(objects.get(0));
@@ -357,7 +358,7 @@ public class MyBundleManager extends BundleManager {
 
 
   @Override
-  public boolean isFragmentHost(@NotNull Object host, @NotNull Object fragment) {
+  public boolean isFragmentHost(@Nonnull Object host, @Nonnull Object fragment) {
     BundleManifest fragmentManifest = getManifestByObject(fragment);
     if (fragmentManifest == null || !fragmentManifest.isFragmentBundle()) {
       return false;

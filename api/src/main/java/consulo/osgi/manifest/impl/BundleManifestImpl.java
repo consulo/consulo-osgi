@@ -24,8 +24,8 @@
  */
 package consulo.osgi.manifest.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.Header;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
@@ -39,22 +39,22 @@ public class BundleManifestImpl extends AbstractBundleManifestImpl
 {
 	private static final String SET_HEADER = "%s : %s\n";
 
-	@NotNull
+	@Nonnull
 	private final ManifestFile myManifestFile;
 
-	public BundleManifestImpl(@NotNull ManifestFile manifestFile)
+	public BundleManifestImpl(@Nonnull ManifestFile manifestFile)
 	{
 		myManifestFile = manifestFile;
 	}
 
 	@Nullable
 	@Override
-	protected Header getHeaderByName(@NotNull String heaaderName)
+	protected Header getHeaderByName(@Nonnull String heaaderName)
 	{
 		return myManifestFile.getHeaderByName(heaaderName);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public ManifestFile getManifestFile()
 	{
@@ -62,13 +62,13 @@ public class BundleManifestImpl extends AbstractBundleManifestImpl
 	}
 
 	@Override
-	public NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name)
+	public NavigatablePsiElement getNavigateTargetByHeaderName(@Nonnull String name)
 	{
 		return (NavigatablePsiElement) getHeaderByName(name);
 	}
 
 	@Override
-	public void setHeaderValue(@NotNull String key, @NotNull String value)
+	public void setHeaderValue(@Nonnull String key, @Nonnull String value)
 	{
 		ReadonlyStatusHandler.OperationStatus status = ReadonlyStatusHandler.getInstance(myManifestFile.getProject()).ensureFilesWritable(myManifestFile.getVirtualFile());
 		if(status.hasReadonlyFiles())

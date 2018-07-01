@@ -3,7 +3,8 @@
 
 package consulo.osgi.serviceComponent.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -22,7 +23,7 @@ public interface TProperty extends DomElement
 	 *
 	 * @return the value of the simple content.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	String getValue1();
 
@@ -31,7 +32,7 @@ public interface TProperty extends DomElement
 	 *
 	 * @param value1 the new value to set
 	 */
-	void setValue1(@NotNull String value1);
+	void setValue1(@Nonnull String value1);
 
 
 	/**
@@ -39,7 +40,7 @@ public interface TProperty extends DomElement
 	 *
 	 * @return the value of the name child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getName();
 
@@ -49,7 +50,7 @@ public interface TProperty extends DomElement
 	 *
 	 * @return the value of the value child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("value")
 	GenericAttributeValue<String> getValue2();
 
@@ -59,6 +60,6 @@ public interface TProperty extends DomElement
 	 *
 	 * @return the value of the type child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<TJavaTypes> getType();
 }

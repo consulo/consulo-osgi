@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
 import org.osmorc.run.OsgiRunConfigurationChecker;
@@ -45,7 +45,7 @@ public abstract class AbstractFrameworkIntegrator<I extends FrameworkInstanceMan
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public I getInstanceManager() {
     return myFrameworkInstanceManager;
   }

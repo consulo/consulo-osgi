@@ -5,8 +5,8 @@ package consulo.osgi.serviceComponent.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.util.xml.DefinesXml;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -26,7 +26,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the enabled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEnabled();
 
 
@@ -46,7 +46,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the name child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getName();
 
 
@@ -55,7 +55,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the factory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFactory();
 
 
@@ -64,7 +64,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the immediate child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getImmediate();
 
 
@@ -73,7 +73,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the configuration-policy child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<TConfigurationPolicy> getConfigurationPolicy();
 
 
@@ -82,7 +82,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the activate child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActivate();
 
 
@@ -91,7 +91,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the deactivate child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDeactivate();
 
 
@@ -100,7 +100,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the modified child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getModified();
 
 
@@ -118,7 +118,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the list of reference children.
 	 */
-	@NotNull
+	@Nonnull
 	List<TReference> getReferences();
 
 	/**
@@ -134,7 +134,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the value of the implementation child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	Timplementation getImplementation();
 
@@ -144,7 +144,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the list of property children.
 	 */
-	@NotNull
+	@Nonnull
 	List<TProperty> getProperties();
 
 	/**
@@ -160,7 +160,7 @@ public interface TComponent extends DomElement
 	 *
 	 * @return the list of properties children.
 	 */
-	@NotNull
+	@Nonnull
 	List<TProperties> getPropertieses();
 
 	/**

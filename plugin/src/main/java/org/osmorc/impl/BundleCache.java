@@ -1,8 +1,8 @@
 package org.osmorc.impl;
 
 import com.intellij.util.containers.HashSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import consulo.osgi.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
@@ -34,7 +34,7 @@ public class BundleCache {
    * @param holder the holder
    * @return true, if the holder was added to the cache, false if the holder was already known.
    */
-  public synchronized boolean updateWith(@NotNull final ManifestHolder holder) {
+  public synchronized boolean updateWith(@Nonnull final ManifestHolder holder) {
     if (!myManifestHolders.contains(holder)) {
       // copy on write
       HashSet<ManifestHolder> copy = new HashSet<ManifestHolder>(myManifestHolders);
@@ -76,8 +76,8 @@ public class BundleCache {
    * @param packageSpec the package specification (may include version ranges)
    * @return set of matching manifest holders.
    */
-  @NotNull
-  public Set<ManifestHolder> whoProvides(@NotNull final String packageSpec) {
+  @Nonnull
+  public Set<ManifestHolder> whoProvides(@Nonnull final String packageSpec) {
     Set<ManifestHolder> result = new HashSet<ManifestHolder>();
     for (ManifestHolder manifestHolder : myManifestHolders) {
       BundleManifest bundleManifest;
@@ -104,8 +104,8 @@ public class BundleCache {
    * @param bundle the manifest holder to find the fragments for.
    * @return a set of matching manifest holders. If there are no fragments known, returns an empty set.
    */
-  @NotNull
-  public Set<ManifestHolder> getFragmentsForBundle(@NotNull ManifestHolder bundle) {
+  @Nonnull
+  public Set<ManifestHolder> getFragmentsForBundle(@Nonnull ManifestHolder bundle) {
     try {
       BundleManifest bundleManifest = bundle.getBundleManifest();
       // if it has no manifest, we can short cut here
@@ -141,8 +141,8 @@ public class BundleCache {
    * @param fragment the fragment
    * @return a set of fragment hosts. returns an empty set if no hosts could be found or if the given manifest holder does not represent a fragment bundle.
    */
-  @NotNull
-  public Set<ManifestHolder> getFragmentHosts(@NotNull ManifestHolder fragment) {
+  @Nonnull
+  public Set<ManifestHolder> getFragmentHosts(@Nonnull ManifestHolder fragment) {
     try {
       BundleManifest fragmentManifest = fragment.getBundleManifest();
       // if its not a fragment or has no manifest, we can short cut here
@@ -178,8 +178,8 @@ public class BundleCache {
    * @param bundleSymbolicName the symbolic name
    * @return the matching manifest holders. If no holder matches, returns an empty list.
    */
-  @NotNull
-  public List<ManifestHolder> whoIs(@NotNull final String bundleSymbolicName) {
+  @Nonnull
+  public List<ManifestHolder> whoIs(@Nonnull final String bundleSymbolicName) {
     List<ManifestHolder> result = new ArrayList<ManifestHolder>();
     for (ManifestHolder manifestHolder : myManifestHolders) {
       BundleManifest bundleManifest;
@@ -206,7 +206,7 @@ public class BundleCache {
    * @return the first matching manifest holder, or null if there is no match
    */
   @Nullable
-  public ManifestHolder whoIsRequiredBundle(@NotNull final String requiredBundleSpec) {
+  public ManifestHolder whoIsRequiredBundle(@Nonnull final String requiredBundleSpec) {
     List<ManifestHolder> candidates = new ArrayList<ManifestHolder>();
     for (ManifestHolder manifestHolder : myManifestHolders) {
       BundleManifest bundleManifest;
@@ -238,7 +238,7 @@ public class BundleCache {
    *         with the highest version in the respective set. If no highest version can be determined for any given set, then this result
    *         set will not contain an entry for the respective set.
    */
-  public static Set<ManifestHolder> getCandidatesWithHighestVersions(@NotNull Collection<ManifestHolder> manifestHolders) {
+  public static Set<ManifestHolder> getCandidatesWithHighestVersions(@Nonnull Collection<ManifestHolder> manifestHolders) {
     Map<String, Set<ManifestHolder>> sets = new HashMap<String, Set<ManifestHolder>>();
 
     // first build sets of entries with the same bundle symbolic name. This will also eliminate duplicate holders.
@@ -282,7 +282,7 @@ public class BundleCache {
    * @return the candidate with the highest version or null if no such candidate could be determined.
    */
   @Nullable
-  public static ManifestHolder getCandidateWithHighestVersion(@NotNull Collection<ManifestHolder> candidates) {
+  public static ManifestHolder getCandidateWithHighestVersion(@Nonnull Collection<ManifestHolder> candidates) {
     if (candidates.isEmpty()) {
       return null;
     }
@@ -341,7 +341,7 @@ public class BundleCache {
    * @return the manifest
    */
   @Nullable
-  public ManifestHolder getManifestHolder(@NotNull final Object bundle) {
+  public ManifestHolder getManifestHolder(@Nonnull final Object bundle) {
     for (ManifestHolder manifestHolder : myManifestHolders) {
       Object boundObject;
       try {

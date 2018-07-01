@@ -2,8 +2,9 @@ package consulo.osgi.compiler.impl;
 
 import java.io.File;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.compiler.FileProcessingCompiler;
 import com.intellij.openapi.compiler.ValidityState;
 import com.intellij.openapi.vfs.VfsUtilCore;
@@ -24,7 +25,7 @@ public class ClassProcessingItem implements FileProcessingCompiler.ProcessingIte
 		myModuleOutputDirectory = moduleOutputDirectory;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public File getFile()
 	{
@@ -38,7 +39,7 @@ public class ClassProcessingItem implements FileProcessingCompiler.ProcessingIte
 		return null;
 	}
 
-	@NotNull
+	@Nonnull
 	public VirtualFile getModuleOutputDirectory()
 	{
 		return myModuleOutputDirectory;

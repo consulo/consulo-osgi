@@ -1,6 +1,7 @@
 package consulo.osgi.module.extension;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import consulo.extension.impl.ModuleExtensionImpl;
 import consulo.java.roots.SpecialDirUtil;
 import consulo.osgi.OSGiConstants;
@@ -15,12 +16,12 @@ import consulo.roots.ModuleRootLayer;
  */
 public class OSGiModuleExtension extends ModuleExtensionImpl<OSGiModuleExtension>
 {
-	public OSGiModuleExtension(@NotNull String id, @NotNull ModuleRootLayer module)
+	public OSGiModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer module)
 	{
 		super(id, module);
 	}
 
-	@NotNull
+	@Nonnull
 	public BundleManifest getManifest()
 	{
 		final ManifestProvider activeManifestProvider = new UseExistingManifestManifestProvider();

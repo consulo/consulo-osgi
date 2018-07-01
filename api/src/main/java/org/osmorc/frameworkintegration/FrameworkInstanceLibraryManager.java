@@ -36,8 +36,9 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import org.osmorc.frameworkintegration.util.FileUtil;
 import org.osmorc.settings.ApplicationSettings;
@@ -79,7 +80,7 @@ public class FrameworkInstanceLibraryManager {
    * @param libraryOrderEntry the order entry
    * @return true if the given entry is a framework instance library, false otherwise.
    */
-  public static boolean isFrameworkInstanceLibrary(@NotNull LibraryOrderEntry libraryOrderEntry) {
+  public static boolean isFrameworkInstanceLibrary(@Nonnull LibraryOrderEntry libraryOrderEntry) {
     String libraryName = libraryOrderEntry.getLibraryName();
     return libraryName != null && libraryName.startsWith(OsmorcControlledLibrariesPrefix) &&
            LibraryTablesRegistrar.PROJECT_LEVEL.equals(libraryOrderEntry.getLibraryLevel());
@@ -157,8 +158,8 @@ public class FrameworkInstanceLibraryManager {
         integrator.getInstanceManager().collectLibraries(frameworkInstance, new JarFileLibraryCollector() {
 
           @Override
-          protected void collectFrameworkJars(@NotNull final Collection<VirtualFile> jarFiles,
-                                              @NotNull final FrameworkInstanceLibrarySourceFinder sourceFinder) {
+          protected void collectFrameworkJars(@Nonnull final Collection<VirtualFile> jarFiles,
+                                              @Nonnull final FrameworkInstanceLibrarySourceFinder sourceFinder) {
             myApplication.runWriteAction(new Runnable() {
               @Override
               public void run() {

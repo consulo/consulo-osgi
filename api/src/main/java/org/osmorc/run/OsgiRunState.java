@@ -30,10 +30,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.SwingUtilities;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
@@ -82,8 +82,8 @@ public class OsgiRunState extends JavaCommandLineState {
   private final FrameworkRunner runner;
   private static final String FILE_URL_PREFIX = "file:///";
 
-  public OsgiRunState(@NotNull Executor executor,
-                      @NotNull ExecutionEnvironment env,
+  public OsgiRunState(@Nonnull Executor executor,
+                      @Nonnull ExecutionEnvironment env,
                       OsgiRunConfiguration configuration,
                       Project project,
                       Sdk projectJdk) {
@@ -177,7 +177,7 @@ public class OsgiRunState extends JavaCommandLineState {
     if (mySelectedBundles == null) {
       ProgressManager.getInstance().run(new Task.Modal(project, "Preparing bundles...", false) {
 
-        public void run(@NotNull ProgressIndicator progressIndicator) {
+        public void run(@Nonnull ProgressIndicator progressIndicator) {
           progressIndicator.setIndeterminate(false);
           final HashSet<SelectedBundle> selectedBundles = new HashSet<SelectedBundle>();
 
@@ -248,7 +248,7 @@ public class OsgiRunState extends JavaCommandLineState {
     }
   }
 
-  @NotNull
+  @Nonnull
   protected OSProcessHandler startProcess() throws ExecutionException {
     // run any final configuration steps
     SelectedBundle[] bundles = getSelectedBundles();

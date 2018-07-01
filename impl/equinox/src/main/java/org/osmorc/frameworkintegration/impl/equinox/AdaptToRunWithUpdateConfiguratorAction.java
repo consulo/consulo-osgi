@@ -27,7 +27,7 @@ package org.osmorc.frameworkintegration.impl.equinox;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.run.ui.BundleType;
 import org.osmorc.run.ui.SelectedBundle;
@@ -85,8 +85,8 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
       FrameworkIntegrator frameworkIntegrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(instance);
       frameworkIntegrator.getInstanceManager().collectLibraries(instance, new JarFileLibraryCollector() {
         @Override
-        protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
-                                            @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
+        protected void collectFrameworkJars(@Nonnull Collection<VirtualFile> jarFiles,
+                                            @Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder) {
           for (VirtualFile jarFile : jarFiles) {
             String url = jarFile.getUrl();
             for (Iterator<String> iterator = necessaryFrameworkBundleURLs.iterator(); iterator.hasNext(); ) {
@@ -105,7 +105,7 @@ class AdaptToRunWithUpdateConfiguratorAction extends BundleSelectionAction {
     }
   }
 
-  private void adaptBundle(@NotNull SelectedBundle bundle) {
+  private void adaptBundle(@Nonnull SelectedBundle bundle) {
     String url = bundle.getBundlePath();
     assert url != null;
     if (url.contains(ORG_ECLIPSE_EQUINOX_COMMON_URL)) {

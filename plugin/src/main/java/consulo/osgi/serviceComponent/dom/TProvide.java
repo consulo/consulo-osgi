@@ -3,7 +3,7 @@
 
 package consulo.osgi.serviceComponent.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.PsiClass;
 import com.intellij.util.xml.Convert;
 import com.intellij.util.xml.DomElement;
@@ -24,7 +24,7 @@ public interface TProvide extends DomElement
 	 *
 	 * @return the value of the interface child.
 	 */
-	@NotNull
+	@Nonnull
 	@Convert(value = ClassValueConverterImpl.class, soft = false)
 	@Required
 	GenericAttributeValue<PsiClass> getInterface();

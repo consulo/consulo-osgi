@@ -2,7 +2,7 @@ package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.HashSet;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.util.FileUtil;
 
 import java.util.Collection;
@@ -16,8 +16,8 @@ import java.util.Set;
  */
 public abstract class JarFileLibraryCollector implements FrameworkLibraryCollector {
   @Override
-  public final void collectFrameworkLibraries(@NotNull FrameworkInstanceLibrarySourceFinder sourceFinder,
-                                              @NotNull Collection<VirtualFile> directoriesWithJars) {
+  public final void collectFrameworkLibraries(@Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder,
+                                              @Nonnull Collection<VirtualFile> directoriesWithJars) {
     Set<VirtualFile> classRoots = new HashSet<VirtualFile>();
     for (VirtualFile directoryWithJars : directoriesWithJars) {
       VirtualFile[] files = directoryWithJars.getChildren();
@@ -41,8 +41,8 @@ public abstract class JarFileLibraryCollector implements FrameworkLibraryCollect
    * @param jarFiles     the jar files that have been found in the jar paths
    * @param sourceFinder a source finder which can obtain sources for each of the given jar files, if this is required.
    */
-  protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
-                                      @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
+  protected void collectFrameworkJars(@Nonnull Collection<VirtualFile> jarFiles,
+                                      @Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder) {
 
   }
 }

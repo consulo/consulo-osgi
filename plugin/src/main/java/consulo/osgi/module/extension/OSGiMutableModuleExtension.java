@@ -1,9 +1,9 @@
 package consulo.osgi.module.extension;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 
@@ -14,7 +14,7 @@ import consulo.roots.ModuleRootLayer;
 public class OSGiMutableModuleExtension extends OSGiModuleExtension implements MutableModuleExtension<OSGiModuleExtension>
 {
 
-	public OSGiMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer module)
+	public OSGiMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer module)
 	{
 		super(id, module);
 	}
@@ -33,7 +33,7 @@ public class OSGiMutableModuleExtension extends OSGiModuleExtension implements M
 	}
 
 	@Override
-	public boolean isModified(@NotNull OSGiModuleExtension extension)
+	public boolean isModified(@Nonnull OSGiModuleExtension extension)
 	{
 		return myIsEnabled != extension.isEnabled();
 	}

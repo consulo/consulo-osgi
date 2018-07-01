@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.felix;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkRunner;
 import org.osmorc.frameworkintegration.impl.AbstractFrameworkIntegrator;
@@ -46,12 +46,12 @@ public class FelixIntegrator extends AbstractFrameworkIntegrator<FelixFrameworkI
     super(new FelixFrameworkInstanceManager());
   }
 
-  @NotNull
+  @Nonnull
   public FrameworkRunner createFrameworkRunner() {
     return new FelixFrameworkRunner();
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return FRAMEWORK_NAME;
   }
@@ -61,7 +61,7 @@ public class FelixIntegrator extends AbstractFrameworkIntegrator<FelixFrameworkI
     return new FelixRunPropertiesEditor();
   }
 
-  @NotNull
+  @Nonnull
   public List<BundleSelectionAction> getBundleSelectionActions() {
     return Collections.emptyList();
   }

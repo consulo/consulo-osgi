@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.knopflerfish;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 
 import java.util.Map;
@@ -41,12 +41,12 @@ public class KnopflerfishFrameworkRunner extends AbstractPaxBasedFrameworkRunner
   }
 
 
-  @NotNull
+  @Nonnull
   protected KnopflerfishRunProperties convertProperties(Map<String, String> properties) {
     return new KnopflerfishRunProperties(properties);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected String getOsgiFrameworkName() {
     return "Knopflerfish";

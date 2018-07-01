@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -42,8 +43,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultFormatterFactory;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkIntegrator;
@@ -229,16 +229,16 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
     }
   }
 
-  @NotNull
+  @Nonnull
   public List<SelectedBundle> getCurrentlySelectedBundles() {
     return getBundlesToRun();
   }
 
-  public void addBundle(@NotNull SelectedBundle bundle) {
+  public void addBundle(@Nonnull SelectedBundle bundle) {
     getTableModel().addBundle(bundle);
   }
 
-  public void removeBundle(@NotNull SelectedBundle bundle) {
+  public void removeBundle(@Nonnull SelectedBundle bundle) {
     getTableModel().removeBundle(bundle);
   }
 
@@ -317,7 +317,7 @@ public class OsgiRunConfigurationEditor extends SettingsEditor<OsgiRunConfigurat
   }
 
 
-  @NotNull
+  @Nonnull
   protected JComponent createEditor() {
     return root;
   }

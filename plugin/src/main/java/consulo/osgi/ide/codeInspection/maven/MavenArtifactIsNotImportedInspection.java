@@ -1,8 +1,10 @@
 package consulo.osgi.ide.codeInspection.maven;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.jetbrains.idea.maven.model.MavenArtifact;
 import org.osmorc.BundleManager;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
@@ -28,7 +30,7 @@ import consulo.osgi.module.OSGiModuleExtensionUtil;
 public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspection
 {
 	@Nls
-	@NotNull
+	@Nonnull
 	@Override
 	public String getDisplayName()
 	{
@@ -72,23 +74,23 @@ public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspect
 		problemsHolder.registerProblem(xmlTag, getDisplayName(), new LocalQuickFixAndIntentionActionOnPsiElement(xmlTag)
 		{
 			@Override
-			public void invoke(@NotNull Project project,
-					@NotNull PsiFile file,
-					@Nullable("is null when called from inspection") Editor editor,
-					@NotNull PsiElement startElement,
-					@NotNull PsiElement endElement)
+			public void invoke(@Nonnull Project project,
+					@Nonnull PsiFile file,
+					@Nullable Editor editor,
+					@Nonnull PsiElement startElement,
+					@Nonnull PsiElement endElement)
 			{
 				startElement.delete();
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
 			public String getText()
 			{
 				return "Remove artifact";
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
 			public String getFamilyName()
 			{
@@ -97,7 +99,7 @@ public class MavenArtifactIsNotImportedInspection extends MavenDependencyInspect
 		});
 	}
 
-	private static Library findLibrary(@NotNull Module module, @NotNull final MavenArtifact artifact)
+	private static Library findLibrary(@Nonnull Module module, @Nonnull final MavenArtifact artifact)
 	{
 		final String name = artifact.getLibraryName();
 		final Ref<Library> result = Ref.create(null);

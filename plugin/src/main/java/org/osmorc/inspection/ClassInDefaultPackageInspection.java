@@ -32,7 +32,7 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 
 /**
@@ -45,7 +45,7 @@ import consulo.osgi.module.OSGiModuleExtensionUtil;
 public class ClassInDefaultPackageInspection extends LocalInspectionTool {
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return "OSGi";
   }
@@ -54,25 +54,25 @@ public class ClassInDefaultPackageInspection extends LocalInspectionTool {
     return true;
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return "Class is in default package";
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "osmorcClassInDefaultPackage";
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new JavaElementVisitor() {
       @Override
       public void visitClass(PsiClass psiClass) {

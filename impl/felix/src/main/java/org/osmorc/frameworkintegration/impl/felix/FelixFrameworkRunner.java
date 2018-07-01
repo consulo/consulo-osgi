@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.felix;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 
 import java.util.Map;
@@ -40,13 +40,13 @@ public class FelixFrameworkRunner extends AbstractPaxBasedFrameworkRunner<FelixR
   protected FelixFrameworkRunner() {
   }
 
-  @NotNull
+  @Nonnull
   protected FelixRunProperties convertProperties(Map<String, String> properties) {
     return new FelixRunProperties(properties);
   }
 
 
-  @NotNull
+  @Nonnull
   @Override
   protected String getOsgiFrameworkName() {
     return "Felix";

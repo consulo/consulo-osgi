@@ -26,8 +26,8 @@ package consulo.osgi.manifest;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.ManifestFile;
 import org.osmorc.manifest.lang.valueparser.impl.valueobject.Version;
 import com.intellij.openapi.util.ModificationTracker;
@@ -50,16 +50,16 @@ public interface BundleManifest extends ModificationTracker
 	ManifestFile getManifestFile();
 
 	@Nullable
-	NavigatablePsiElement getNavigateTargetByHeaderName(@NotNull String name);
+	NavigatablePsiElement getNavigateTargetByHeaderName(@Nonnull String name);
 
-	void setHeaderValue(@NotNull String key, @NotNull String value);
+	void setHeaderValue(@Nonnull String key, @Nonnull String value);
 
 	/**
 	 * Gets the bundle version.
 	 *
 	 * @return the bundle version. If there is no bundle version, returns 0.0.0
 	 */
-	@NotNull
+	@Nonnull
 	Version getBundleVersion();
 
 	/**
@@ -85,7 +85,7 @@ public interface BundleManifest extends ModificationTracker
 	 * @param packageSpec a package specification, e.g org.example.foo;version:=2.4.0
 	 * @return true, if this bundle exports the given package, false otherwise.
 	 */
-	boolean exportsPackage(@NotNull String packageSpec);
+	boolean exportsPackage(@Nonnull String packageSpec);
 
 	/**
 	 * Returns a list of package specs that represent the imports of this bundle. Each package spec can be fed to {@link #exportsPackage(String)}
@@ -93,10 +93,10 @@ public interface BundleManifest extends ModificationTracker
 	 *
 	 * @return a list of import package specs.
 	 */
-	@NotNull
+	@Nonnull
 	List<String> getImports();
 
-	@NotNull
+	@Nonnull
 	List<String> getExports();
 
 	/**
@@ -105,7 +105,7 @@ public interface BundleManifest extends ModificationTracker
 	 *
 	 * @return the list of required bundles. If no bundles are required returns the empty list.
 	 */
-	@NotNull
+	@Nonnull
 	List<String> getRequiredBundles();
 
 	/**
@@ -113,7 +113,7 @@ public interface BundleManifest extends ModificationTracker
 	 *
 	 * @return a list of entries. If the header does not exist, or does not have entries, returns an empty list.
 	 */
-	@NotNull
+	@Nonnull
 	List<String> getBundleClassPathEntries();
 
 	/**
@@ -122,7 +122,7 @@ public interface BundleManifest extends ModificationTracker
 	 * @param bundleSpec the bundle specification as in the "Require-Bundle" header.
 	 * @return true if this bundle could satisfy the spec, false otherwise.
 	 */
-	boolean isRequiredBundle(@NotNull String bundleSpec);
+	boolean isRequiredBundle(@Nonnull String bundleSpec);
 
 	/**
 	 * Returns true, if this bundle re-exports the given bundle. This is the case if this bundle has a Require-Bundle
@@ -131,7 +131,7 @@ public interface BundleManifest extends ModificationTracker
 	 * @param
 	 * @return true, if this bundle re-exports the given bundle, false otherwise.
 	 */
-	boolean reExportsBundle(@NotNull BundleManifest otherBundle);
+	boolean reExportsBundle(@Nonnull BundleManifest otherBundle);
 
 	/**
 	 * Returns true if this manifest represents a fragment bundle.
@@ -146,7 +146,7 @@ public interface BundleManifest extends ModificationTracker
 	 * @param fragmentBundle the fragment bundle
 	 * @return
 	 */
-	boolean isFragmentHostFor(@NotNull BundleManifest fragmentBundle);
+	boolean isFragmentHostFor(@Nonnull BundleManifest fragmentBundle);
 
 
 	/**
@@ -154,6 +154,6 @@ public interface BundleManifest extends ModificationTracker
 	 *
 	 * @return a list of exported bundles. If no bundles are re-exported the list is empty.
 	 */
-	@NotNull
+	@Nonnull
 	List<String> getReExportedBundles();
 }

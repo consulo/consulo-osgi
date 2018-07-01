@@ -1,7 +1,7 @@
 package consulo.osgi.module;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -18,13 +18,13 @@ import consulo.osgi.module.extension.OSGiModuleExtension;
 public class OSGiModuleExtensionUtil
 {
 	@Nullable
-	public static OSGiModuleExtension findExtension(@NotNull Module module)
+	public static OSGiModuleExtension findExtension(@Nonnull Module module)
 	{
 		return ModuleUtilCore.getExtension(module, OSGiModuleExtension.class);
 	}
 
 	@Nullable
-	public static OSGiModuleExtension findExtension(@NotNull PsiElement psiElement)
+	public static OSGiModuleExtension findExtension(@Nonnull PsiElement psiElement)
 	{
 		Module moduleForPsiElement = ModuleUtil.findModuleForPsiElement(psiElement);
 		if(moduleForPsiElement == null)
@@ -35,7 +35,7 @@ public class OSGiModuleExtensionUtil
 	}
 
 	@Nullable
-	public static VirtualFile getOSGiInf(@NotNull Module module)
+	public static VirtualFile getOSGiInf(@Nonnull Module module)
 	{
 		OSGiModuleExtension facet = findExtension(module);
 		if(facet == null)

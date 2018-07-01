@@ -1,6 +1,6 @@
 package org.osmorc.util;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.*;
 
@@ -17,8 +17,8 @@ public class OrderedProperties extends Properties {
    * @param map the map
    * @return the OrderedProperties instance.
    */
-  @NotNull
-  public static OrderedProperties fromMap(@NotNull Map<String,String> map) {
+  @Nonnull
+  public static OrderedProperties fromMap(@Nonnull Map<String,String> map) {
     OrderedProperties result = new OrderedProperties();
     for (Map.Entry<String, String> entry : map.entrySet()) {
       result.setProperty(entry.getKey(), entry.getValue());
@@ -32,7 +32,7 @@ public class OrderedProperties extends Properties {
    * 
    * @return the created map.
    */
-  @NotNull
+  @Nonnull
   public Map<String,String> toMap() {
     LinkedHashMap<String,String> result = new LinkedHashMap<String, String>(size());
     for (String name : stringPropertyNames()) {

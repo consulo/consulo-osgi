@@ -29,8 +29,9 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.libraries.Library;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import consulo.osgi.manifest.BundleManifest;
 
 import java.util.Collection;
@@ -45,7 +46,7 @@ import java.util.Set;
  */
 public abstract class BundleManager {
 
-  public static BundleManager getInstance(@NotNull Project project) {
+  public static BundleManager getInstance(@Nonnull Project project) {
     return ServiceManager.getService(project, BundleManager.class);
   }
 
@@ -66,14 +67,14 @@ public abstract class BundleManager {
    * @return the manifest or null if no manifest for the given object is known.
    */
   @Nullable
-  public abstract BundleManifest getManifestByObject(@NotNull Object object);
+  public abstract BundleManifest getManifestByObject(@Nonnull Object object);
 
   /**
    * Adds the given module and it's dependencies to the list of known bundles.If it exists, it's entries are updated.
    *
    * @param module the module to be added
    */
-  public abstract void reindex(@NotNull Module module);
+  public abstract void reindex(@Nonnull Module module);
 
   /**
    * Does a complete project reindex. Cleans all data from the bundle manager and replaces it with the data from the given project instance.
@@ -87,8 +88,8 @@ public abstract class BundleManager {
    * @param module the module to resolve the dependencies for
    * @return a list of dependencies.
    */
-  @NotNull
-  public abstract Set<Object> resolveDependenciesOf(@NotNull Module module);
+  @Nonnull
+  public abstract Set<Object> resolveDependenciesOf(@Nonnull Module module);
 
   /**
    * Checks if the given dependency is re-exported by the given module. This is only the case, if the module has a Require-Bundle-Header
@@ -98,7 +99,7 @@ public abstract class BundleManager {
    * @param module     the module
    * @return true if the module reexports the dependency.
    */
-  public abstract boolean isReExported(@NotNull Object dependency, @NotNull Module module);
+  public abstract boolean isReExported(@Nonnull Object dependency, @Nonnull Module module);
 
   /**
    * Checks if the given host module/library is a fragment host of the given fragment module/library
@@ -107,12 +108,12 @@ public abstract class BundleManager {
    * @param fragment the fragment bundle
    * @return
    */
-  public abstract boolean isFragmentHost(@NotNull Object host, @NotNull Object fragment);
+  public abstract boolean isFragmentHost(@Nonnull Object host, @Nonnull Object fragment);
 
   /**
    * Adds the given libraries to the bundle index.
    *
    * @param libraries
    */
-  public abstract void reindex(@NotNull Collection<Library> libraries);
+  public abstract void reindex(@Nonnull Collection<Library> libraries);
 }

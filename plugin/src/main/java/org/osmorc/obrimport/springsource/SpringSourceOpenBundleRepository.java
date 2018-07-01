@@ -30,7 +30,7 @@ import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.util.io.StreamUtil;
 import com.intellij.util.io.UrlConnectionUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.obrimport.MavenRepository;
 import org.osmorc.obrimport.OpenBundleRepository;
 
@@ -60,9 +60,9 @@ public class SpringSourceOpenBundleRepository implements OpenBundleRepository {
     return true;
   }
 
-  @NotNull
-  public ObrMavenResult[] queryForMavenArtifact(@NotNull String queryString,
-                                                @NotNull ProgressIndicator progressIndicator) throws
+  @Nonnull
+  public ObrMavenResult[] queryForMavenArtifact(@Nonnull String queryString,
+                                                @Nonnull ProgressIndicator progressIndicator) throws
                                                                                               IOException {
     try {
       // TODO: make this more robust against URL changes.
@@ -169,7 +169,7 @@ public class SpringSourceOpenBundleRepository implements OpenBundleRepository {
    * @return
    * @throws IOException
    */
-  private static InputStream getInputStream(@NotNull String url, @NotNull ProgressIndicator progressIndicator)
+  private static InputStream getInputStream(@Nonnull String url, @Nonnull ProgressIndicator progressIndicator)
     throws IOException {
     HttpURLConnection urlConnection =
       (HttpURLConnection)new URL(url).openConnection();
@@ -187,7 +187,7 @@ public class SpringSourceOpenBundleRepository implements OpenBundleRepository {
     return is;
   }
 
-  @NotNull
+  @Nonnull
   public MavenRepository[] getMavenRepositories() {
     return SPRINGSOURCE_REPOS;
   }

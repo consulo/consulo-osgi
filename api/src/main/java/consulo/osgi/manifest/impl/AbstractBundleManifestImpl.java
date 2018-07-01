@@ -7,14 +7,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.felix.framework.util.manifestparser.Capability;
 import org.apache.felix.framework.util.manifestparser.ManifestParser;
 import org.apache.felix.framework.util.manifestparser.R4Attribute;
 import org.apache.felix.framework.util.manifestparser.R4Directive;
 import org.apache.felix.moduleloader.ICapability;
 import org.apache.felix.moduleloader.IRequirement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.osmorc.manifest.lang.psi.Clause;
 import org.osmorc.manifest.lang.psi.Directive;
 import org.osmorc.manifest.lang.psi.Header;
@@ -29,10 +31,10 @@ import consulo.osgi.manifest.BundleManifest;
 public abstract class AbstractBundleManifestImpl implements BundleManifest
 {
 	@Nullable
-	protected abstract Header getHeaderByName(@NotNull String heaaderName);
+	protected abstract Header getHeaderByName(@Nonnull String heaaderName);
 
 	@Nullable
-	protected Object getHeaderValue(@NotNull String headerName)
+	protected Object getHeaderValue(@Nonnull String headerName)
 	{
 		Header headerByName = getHeaderByName(headerName);
 		if(headerByName == null)
@@ -42,7 +44,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return headerByName.getSimpleConvertedValue();
 	}
 
-	@NotNull
+	@Nonnull
 	public Version getBundleVersion()
 	{
 		Version headerValue = (Version) getHeaderValue(BUNDLE_VERSION);
@@ -65,7 +67,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return (String) getHeaderValue(BUNDLE_ACTIVATOR);
 	}
 
-	public boolean exportsPackage(@NotNull String packageSpec)
+	public boolean exportsPackage(@Nonnull String packageSpec)
 	{
 		Header header = getHeaderByName(EXPORT_PACKAGE);
 		if(header == null)
@@ -121,7 +123,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return true;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<String> getImports()
 	{
@@ -143,7 +145,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return result;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<String> getExports()
 	{
@@ -166,7 +168,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public List<String> getRequiredBundles()
 	{
 		Header header = getHeaderByName(REQUIRE_BUNDLE);
@@ -183,7 +185,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return result;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<String> getReExportedBundles()
 	{
@@ -206,7 +208,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 	}
 
 	@Override
-	public boolean isRequiredBundle(@NotNull String bundleSpec)
+	public boolean isRequiredBundle(@Nonnull String bundleSpec)
 	{
 
 		IRequirement[] requirements;
@@ -247,7 +249,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 	}
 
 	@Override
-	public boolean reExportsBundle(@NotNull BundleManifest otherBundle)
+	public boolean reExportsBundle(@Nonnull BundleManifest otherBundle)
 	{
 		Header header = getHeaderByName(REQUIRE_BUNDLE);
 		if(header == null)
@@ -283,7 +285,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 		return header != null;
 	}
 
-	@NotNull
+	@Nonnull
 	public List<String> getBundleClassPathEntries()
 	{
 		Header header = getHeaderByName(BUNDLE_CLASSPATH);
@@ -303,7 +305,7 @@ public abstract class AbstractBundleManifestImpl implements BundleManifest
 
 
 	@Override
-	public boolean isFragmentHostFor(@NotNull BundleManifest fragmentBundle)
+	public boolean isFragmentHostFor(@Nonnull BundleManifest fragmentBundle)
 	{
 		Header header = fragmentBundle.getManifestFile().getHeaderByName(FRAGMENT_HOST);
 		if(header == null)

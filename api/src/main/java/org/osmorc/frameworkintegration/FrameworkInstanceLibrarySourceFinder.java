@@ -27,14 +27,15 @@ package org.osmorc.frameworkintegration;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.vfs.VirtualFile;
 
 /**
  * Author: Robert F. Beeger (robert@beeger.net)
  */
 public interface FrameworkInstanceLibrarySourceFinder {
-  List<VirtualFile> getSourceForLibraryClasses(@NotNull VirtualFile libraryClasses);
+  List<VirtualFile> getSourceForLibraryClasses(@Nonnull VirtualFile libraryClasses);
 
   /**
    * Is the file actually a source only file that does not contain any compiled classes?
@@ -42,5 +43,5 @@ public interface FrameworkInstanceLibrarySourceFinder {
    * @param libraryClassesCondidate The candidate file that may contain compiled classes
    * @return true if the file only contains sources and no compiled classes.
    */
-  boolean containsOnlySources(@NotNull VirtualFile libraryClassesCondidate);
+  boolean containsOnlySources(@Nonnull VirtualFile libraryClassesCondidate);
 }

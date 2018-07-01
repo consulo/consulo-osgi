@@ -1,12 +1,12 @@
 package org.osmorc.frameworkintegration;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class FrameworkIntegratorUtil {
 
   @Nullable
-  public static FrameworkIntegrator findIntegratorByName(@NotNull final String name) {
+  public static FrameworkIntegrator findIntegratorByName(@Nonnull final String name) {
     FrameworkIntegrator result = null;
 
     for (FrameworkIntegrator frameworkIntegrator : FrameworkIntegrator.EP_NAME.getExtensions()) {
@@ -20,7 +20,7 @@ public class FrameworkIntegratorUtil {
   }
 
   @Nullable
-  public static FrameworkIntegrator findIntegratorByInstanceDefinition(@NotNull final FrameworkInstanceDefinition frameworkInstanceDefinition) {
+  public static FrameworkIntegrator findIntegratorByInstanceDefinition(@Nonnull final FrameworkInstanceDefinition frameworkInstanceDefinition) {
     return findIntegratorByName(frameworkInstanceDefinition.getFrameworkIntegratorName());
   }
 }

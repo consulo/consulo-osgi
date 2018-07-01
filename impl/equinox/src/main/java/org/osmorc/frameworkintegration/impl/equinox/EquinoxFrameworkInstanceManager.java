@@ -29,8 +29,8 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.frameworkintegration.AbstractFrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkLibraryCollector;
@@ -57,8 +57,8 @@ public class EquinoxFrameworkInstanceManager extends AbstractFrameworkInstanceMa
   }
 
   @Override
-  public void collectLibraries(@NotNull final FrameworkInstanceDefinition frameworkInstanceDefinition,
-                               @NotNull final FrameworkLibraryCollector collector) {
+  public void collectLibraries(@Nonnull final FrameworkInstanceDefinition frameworkInstanceDefinition,
+                               @Nonnull final FrameworkLibraryCollector collector) {
 
     VirtualFile equinoxFolder = LocalFileSystem.getInstance().findFileByPath(frameworkInstanceDefinition.getBaseFolder());
     if (equinoxFolder == null) {
@@ -82,7 +82,7 @@ public class EquinoxFrameworkInstanceManager extends AbstractFrameworkInstanceMa
   }
 
   @Nullable
-  public String checkValidity(@NotNull FrameworkInstanceDefinition frameworkInstanceDefinition) {
+  public String checkValidity(@Nonnull FrameworkInstanceDefinition frameworkInstanceDefinition) {
     if (frameworkInstanceDefinition.getName() == null || frameworkInstanceDefinition.getName().trim().length() == 0) {
       return "A name for the framework instance needs to be given.";
     }

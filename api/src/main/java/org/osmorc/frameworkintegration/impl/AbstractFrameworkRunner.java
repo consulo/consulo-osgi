@@ -31,8 +31,9 @@ import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.frameworkintegration.util.PropertiesWrapper;
 import org.osmorc.run.OsgiRunConfiguration;
@@ -61,7 +62,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
   private File frameworkDir;
 
 
-  public void init(@NotNull final Project project, @NotNull final OsgiRunConfiguration runConfiguration, RunnerSettings runnerSettings) {
+  public void init(@Nonnull final Project project, @Nonnull final OsgiRunConfiguration runConfiguration, RunnerSettings runnerSettings) {
     this.myProject = project;
     this.myRunConfiguration = runConfiguration;
     myRunnerSettings = runnerSettings;
@@ -106,7 +107,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
    *
    * @return the debug port that is in use, or -1 if this is not a debug run.
    */
-  @NotNull
+  @Nonnull
   protected String getDebugPort() {
     if (!isDebugRun()) {
       return "-1";
@@ -115,7 +116,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     return data.getDebugPort();
   }
 
-  @NotNull
+  @Nonnull
   public File getWorkingDir() {
     if (workingDir == null) {
       String path;
@@ -142,14 +143,14 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     }
   }
 
-  @NotNull
+  @Nonnull
   protected abstract P convertProperties(final Map<String, String> properties);
 
   protected Project getProject() {
     return myProject;
   }
 
-  @NotNull
+  @Nonnull
   protected OsgiRunConfiguration getRunConfiguration() {
     return myRunConfiguration;
   }
@@ -159,7 +160,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     return myRunnerSettings;
   }
 
-  @NotNull
+  @Nonnull
   public List<VirtualFile> getFrameworkStarterLibraries() {
     final List<VirtualFile> result = new ArrayList<VirtualFile>();
 
@@ -172,8 +173,8 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
 
         frameworkInstanceManager.collectLibraries(definition, new JarFileLibraryCollector() {
           @Override
-          protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
-                                              @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
+          protected void collectFrameworkJars(@Nonnull Collection<VirtualFile> jarFiles,
+                                              @Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder) {
             for (VirtualFile virtualFile : jarFiles) {
               if (starterClasspathPattern == null || starterClasspathPattern.matcher(virtualFile.getName()).matches()) {
                 result.add(virtualFile);

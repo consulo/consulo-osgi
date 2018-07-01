@@ -25,8 +25,8 @@
 
 package org.osmorc.run.ui;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Class representing a bundle that has been selected for running. This can either be some pre-jarred bundle from the
@@ -44,7 +44,7 @@ public class SelectedBundle {
   private boolean myStartAfterInstallation;
   private final BundleType myBundleType;
 
-  public SelectedBundle(@NotNull String displayName, @Nullable String path, @NotNull BundleType bundleType) {
+  public SelectedBundle(@Nonnull String displayName, @Nullable String path, @Nonnull BundleType bundleType) {
     this.myDisplayName = displayName;
     myBundlePath = path;
     this.myBundleType = bundleType;
@@ -52,12 +52,12 @@ public class SelectedBundle {
     myStartLevel = 1;
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return myDisplayName;
   }
 
-  public void setName(@NotNull String displayName) {
+  public void setName(@Nonnull String displayName) {
     this.myDisplayName = displayName;
   }
 

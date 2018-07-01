@@ -1,6 +1,6 @@
 package consulo.osgi.module.manifest;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.options.UnnamedConfigurable;
 
 /**
@@ -21,6 +21,6 @@ public abstract class ManifestProviderConfigurable<T> implements UnnamedConfigur
 
 	}
 
-	@NotNull
+	@Nonnull
 	public abstract String getHeaderName();
 }

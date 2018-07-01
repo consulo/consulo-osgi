@@ -28,8 +28,9 @@ package org.osmorc.frameworkintegration.impl.equinox;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.run.LegacyOsgiRunConfigurationLoader;
 import org.osmorc.run.OsgiRunConfiguration;
@@ -81,14 +82,14 @@ public class LegacyEquinoxOsgiRunConfigurationLoader implements LegacyOsgiRunCon
   }
 
   private void addFrameworkBundle(final List<SelectedBundle> bundlesToDeploy,
-                                  @NotNull FrameworkInstanceDefinition frameworkInstanceDefinition) {
+                                  @Nonnull FrameworkInstanceDefinition frameworkInstanceDefinition) {
     FrameworkIntegrator frameworkIntegrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(frameworkInstanceDefinition);
     FrameworkInstanceManager frameworkInstanceManager = frameworkIntegrator.getInstanceManager();
 
     frameworkInstanceManager.collectLibraries(frameworkInstanceDefinition, new JarFileLibraryCollector() {
       @Override
-      protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
-                                          @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
+      protected void collectFrameworkJars(@Nonnull Collection<VirtualFile> jarFiles,
+                                          @Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder) {
         for (VirtualFile jarFile : jarFiles) {
           String url = jarFile.getUrl();
           if (url.contains("org.eclipse.equinox.common_")) {

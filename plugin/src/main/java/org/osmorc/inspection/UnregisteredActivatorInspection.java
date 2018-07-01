@@ -24,6 +24,8 @@
  */
 package org.osmorc.inspection;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInspection.*;
 import com.intellij.openapi.project.Project;
@@ -33,7 +35,6 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiType;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import consulo.osgi.module.OSGiModuleExtensionUtil;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.module.extension.OSGiModuleExtension;
@@ -51,7 +52,7 @@ import org.osgi.framework.Constants;
 public class UnregisteredActivatorInspection extends LocalInspectionTool {
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return "OSGi";
   }
@@ -60,25 +61,25 @@ public class UnregisteredActivatorInspection extends LocalInspectionTool {
     return true;
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return "Bundle Activator not registered";
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "osmorcUnregisteredActivator";
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new JavaElementVisitor() {
       @Override
       public void visitClass(PsiClass psiClass) {
@@ -110,22 +111,22 @@ public class UnregisteredActivatorInspection extends LocalInspectionTool {
     private final String activatorClassName;
     private final BundleManifest myBundleManifest;
 
-    private RegisterActivatorInManifestQuickfix(@NotNull final String activatorClassName, @NotNull final BundleManifest bundleManifest) {
+    private RegisterActivatorInManifestQuickfix(@Nonnull final String activatorClassName, @Nonnull final BundleManifest bundleManifest) {
       this.activatorClassName = activatorClassName;
       this.myBundleManifest = bundleManifest;
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
       return NAME;
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return FAMILY;
     }
 
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
       myBundleManifest.setHeaderValue(Constants.BUNDLE_ACTIVATOR, activatorClassName);
     }
   }

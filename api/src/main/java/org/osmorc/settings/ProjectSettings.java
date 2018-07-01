@@ -27,8 +27,8 @@ package org.osmorc.settings;
 
 import java.util.EventListener;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
@@ -54,7 +54,8 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
   private EventDispatcher<ProjectSettingsListener> dispatcher = EventDispatcher.create(ProjectSettingsListener.class);
   private @Nullable String _frameworkInstanceName;
   private boolean _createFrameworkInstanceModule;
-  private @NotNull String _defaultManifestFileLocation = "META-INF/MANIFEST.MF";
+  private @Nonnull
+  String _defaultManifestFileLocation = "META-INF/MANIFEST.MF";
   private @Nullable String _bundlesOutputPath;
 
 
@@ -64,7 +65,7 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    * @param project the project for wich the output path should be returned
    * @return the output path.
    */
-  @NotNull
+  @Nonnull
   public static String getDefaultBundlesOutputPath(Project project) {
       CompilerConfiguration instance = CompilerConfiguration.getInstance(project);
     final VirtualFilePointer compilerOutput = instance.getCompilerOutputPointer();
@@ -81,7 +82,7 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    * @param project the project
    * @return an instance of the project settings for the given prject.
    */
-  public static ProjectSettings getInstance(@NotNull Project project) {
+  public static ProjectSettings getInstance(@Nonnull Project project) {
     return ServiceManager.getService(project, ProjectSettings.class);
   }
 
@@ -115,12 +116,12 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
     dispatcher.getMulticaster().projectSettingsChanged();
   }
 
-  @NotNull
+  @Nonnull
   public ProjectSettings getState() {
     return this;
   }
 
-  public void loadState(@NotNull ProjectSettings state) {
+  public void loadState(@Nonnull ProjectSettings state) {
     XmlSerializerUtil.copyBean(state, this);
   }
 
@@ -138,7 +139,7 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
     return _createFrameworkInstanceModule;
   }
 
-  public void setDefaultManifestFileLocation(@NotNull String defaultManifestFileLocation) {
+  public void setDefaultManifestFileLocation(@Nonnull String defaultManifestFileLocation) {
     _defaultManifestFileLocation = defaultManifestFileLocation;
     if (_defaultManifestFileLocation.equals("META-INF")) {
       // we specify full names, so to work with older projects, we have to convert this
@@ -152,7 +153,7 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    *
    * @param listener the listener to be added
    */
-  public void addProjectSettingsListener(@NotNull ProjectSettingsListener listener) {
+  public void addProjectSettingsListener(@Nonnull ProjectSettingsListener listener) {
     dispatcher.addListener(listener);
   }
 
@@ -161,11 +162,11 @@ public class ProjectSettings implements PersistentStateComponent<ProjectSettings
    *
    * @param listener the listener to be removed.
    */
-  public void removeProjectSettingsListener(@NotNull ProjectSettingsListener listener) {
+  public void removeProjectSettingsListener(@Nonnull ProjectSettingsListener listener) {
     dispatcher.removeListener(listener);
   }
 
-  @NotNull
+  @Nonnull
   public String getDefaultManifestFileLocation() {
     return _defaultManifestFileLocation;
   }

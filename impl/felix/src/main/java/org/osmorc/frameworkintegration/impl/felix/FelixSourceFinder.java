@@ -26,7 +26,7 @@
 package org.osmorc.frameworkintegration.impl.felix;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibrarySourceFinder;
 import org.osmorc.frameworkintegration.util.FileUtil;
 
@@ -37,7 +37,7 @@ import java.util.List;
  * Author: Robert F. Beeger (robert@beeger.net)
  */
 public class FelixSourceFinder implements FrameworkInstanceLibrarySourceFinder {
-  public List<VirtualFile> getSourceForLibraryClasses(@NotNull VirtualFile libraryClasses) {
+  public List<VirtualFile> getSourceForLibraryClasses(@Nonnull VirtualFile libraryClasses) {
     List<VirtualFile> result = new ArrayList<VirtualFile>();
 
     VirtualFile bundleFolder = libraryClasses.getParent();
@@ -70,7 +70,7 @@ public class FelixSourceFinder implements FrameworkInstanceLibrarySourceFinder {
     return result;
   }
 
-  public boolean containsOnlySources(@NotNull VirtualFile libraryClassesCondidate) {
+  public boolean containsOnlySources(@Nonnull VirtualFile libraryClassesCondidate) {
     return false;
   }
 

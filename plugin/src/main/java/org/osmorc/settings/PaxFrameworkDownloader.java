@@ -3,8 +3,9 @@ package org.osmorc.settings;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.ParametersList;
@@ -42,12 +43,12 @@ public class PaxFrameworkDownloader
 	private boolean myIsSuccessful;
 	private String myErrorMessage;
 
-	public PaxFrameworkDownloader(@NotNull String frameworkType,
-			@NotNull String version,
-			@NotNull String targetFolder,
-			@NotNull String profiles,
+	public PaxFrameworkDownloader(@Nonnull String frameworkType,
+			@Nonnull String version,
+			@Nonnull String targetFolder,
+			@Nonnull String profiles,
 			boolean clearDownloadFolder,
-			@NotNull DownloaderCallback callback)
+			@Nonnull DownloaderCallback callback)
 	{
 		myFrameworkType = frameworkType;
 		myVersion = version;
@@ -66,7 +67,7 @@ public class PaxFrameworkDownloader
 		ProgressManager.getInstance().run(new Task.Modal(null, "Downloading OSGi framework", true)
 		{
 			@Override
-			public void run(@NotNull ProgressIndicator indicator)
+			public void run(@Nonnull ProgressIndicator indicator)
 			{
 				perform(indicator);
 				myCallback.downloadFinished(myIsSuccessful, myErrorMessage);

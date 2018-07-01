@@ -28,7 +28,7 @@ package org.osmorc.frameworkintegration.impl.knopflerfish;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.HashMap;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibrarySourceFinder;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.Map;
  * Author: Robert F. Beeger (robert@beeger.net)
  */
 public class KnopflerfishSourceFinder implements FrameworkInstanceLibrarySourceFinder {
-  public KnopflerfishSourceFinder(@NotNull VirtualFile osgiFolder) {
+  public KnopflerfishSourceFinder(@Nonnull VirtualFile osgiFolder) {
     _sourceMapping = new HashMap<String, VirtualFile>();
 
     VirtualFile bundlesFolder = osgiFolder.findChild("bundles");
@@ -67,7 +67,7 @@ public class KnopflerfishSourceFinder implements FrameworkInstanceLibrarySourceF
     }
   }
 
-  public List<VirtualFile> getSourceForLibraryClasses(@NotNull VirtualFile libraryClasses) {
+  public List<VirtualFile> getSourceForLibraryClasses(@Nonnull VirtualFile libraryClasses) {
     List<VirtualFile> result = new ArrayList<VirtualFile>();
     if (libraryClasses.getNameWithoutExtension().equals("framework")) {
       VirtualFile frameworkSources = _sourceMapping.get("framework");
@@ -85,7 +85,7 @@ public class KnopflerfishSourceFinder implements FrameworkInstanceLibrarySourceF
     return result;
   }
 
-  public boolean containsOnlySources(@NotNull VirtualFile libraryClassesCondidate) {
+  public boolean containsOnlySources(@Nonnull VirtualFile libraryClassesCondidate) {
     return false;
   }
 

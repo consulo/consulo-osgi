@@ -27,8 +27,8 @@ package org.osmorc.obrimport;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.osmorc.obrimport.springsource.ObrMavenResult;
 
 import javax.swing.*;
@@ -51,7 +51,7 @@ public class ObrSearchDialog extends DialogWrapper {
    */
   public static
   @Nullable
-  ObrMavenResult queryForMavenArtifact(@NotNull Project project, @Nullable String queryString) {
+  ObrMavenResult queryForMavenArtifact(@Nonnull Project project, @Nullable String queryString) {
     ObrSearchDialog dialog = new ObrSearchDialog(project, QueryType.Maven);
     dialog.setQueryString(queryString);
     dialog.show();

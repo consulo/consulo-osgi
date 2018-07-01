@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.jetbrains.idea.maven.dom.MavenDomUtil;
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
@@ -64,7 +64,7 @@ import com.intellij.util.xml.DomManager;
  */
 public class NonOsgiMavenDependencyInspection extends MavenDependencyInspection {
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return "Non-OSGi dependency";
   }
@@ -99,17 +99,17 @@ public class NonOsgiMavenDependencyInspection extends MavenDependencyInspection 
    */
   private static class FindOsgiCapableMavenDependencyQuickFix implements LocalQuickFix {
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return "OSGi";
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
       return "Find OSGi-ready version";
     }
 
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor) {
       final MavenDomDependency dependency = getDependency((XmlTag)problemDescriptor.getPsiElement());
       final ObrMavenResult mavenResult = ObrSearchDialog.queryForMavenArtifact(project, dependency.getArtifactId().toString());
       if (mavenResult != null) {

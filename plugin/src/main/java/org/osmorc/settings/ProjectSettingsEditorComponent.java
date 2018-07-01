@@ -34,7 +34,7 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 
 import javax.swing.JButton;
@@ -230,7 +230,7 @@ public class ProjectSettingsEditorComponent implements ApplicationSettings.Appli
   private static class SynchronizationItem {
     private ProjectSettings.ManifestSynchronizationType myType;
 
-    public SynchronizationItem(@NotNull ProjectSettings.ManifestSynchronizationType type) {
+    public SynchronizationItem(@Nonnull ProjectSettings.ManifestSynchronizationType type) {
       myType = type;
     }
 

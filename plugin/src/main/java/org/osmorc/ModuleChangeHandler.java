@@ -25,6 +25,15 @@
 
 package org.osmorc;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import org.osmorc.run.OsgiConfigurationType;
+import org.osmorc.run.OsgiRunConfiguration;
+import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.ProjectTopics;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.configurations.ConfigurationTypeUtil;
@@ -35,25 +44,17 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.ModuleAdapter;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.messages.MessageBusConnection;
-import org.jetbrains.annotations.NotNull;
-import org.osmorc.run.OsgiConfigurationType;
-import org.osmorc.run.OsgiRunConfiguration;
-import org.osmorc.run.ui.SelectedBundle;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class ModuleChangeHandler implements ProjectComponent {
-  @NotNull
+  @Nonnull
   private final Project project;
-  @NotNull
+  @Nonnull
   private final Map<Module, String> moduleNames;
 
-  public ModuleChangeHandler(@NotNull Project project) {
+  public ModuleChangeHandler(@Nonnull Project project) {
     this.project = project;
     moduleNames = new HashMap<Module, String>();
   }
@@ -64,7 +65,7 @@ public class ModuleChangeHandler implements ProjectComponent {
   public void projectClosed() {
   }
 
-  @NotNull
+  @Nonnull
   public String getComponentName() {
     return "ModuleChangeHandler";
   }
@@ -102,7 +103,7 @@ public class ModuleChangeHandler implements ProjectComponent {
     });
   }
 
-  private void fireModuleRenamed(@NotNull final Module module, @NotNull String oldName) {
+  private void fireModuleRenamed(@Nonnull final Module module, @Nonnull String oldName) {
     Project project = module.getProject();
     RunConfiguration[] runConfigurations = RunManager.getInstance(project).getConfigurations(ConfigurationTypeUtil.findConfigurationType(OsgiConfigurationType.class));
     for (RunConfiguration runConfiguration : runConfigurations) {

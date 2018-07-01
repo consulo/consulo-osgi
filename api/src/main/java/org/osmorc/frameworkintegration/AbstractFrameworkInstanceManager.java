@@ -2,8 +2,8 @@ package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.text.MessageFormat;
 
@@ -21,7 +21,7 @@ public abstract class AbstractFrameworkInstanceManager implements FrameworkInsta
    * @return null if the given definition has {@link FrameworkInstanceDefinition#isDownloadedByPaxRunner()} set to true and the downloaded file structure is ok Otherwise returns an error message.
    */
   @Nullable
-  protected String checkDownloadedFolderStructure(@NotNull FrameworkInstanceDefinition frameworkInstanceDefinition) {
+  protected String checkDownloadedFolderStructure(@Nonnull FrameworkInstanceDefinition frameworkInstanceDefinition) {
     if (!frameworkInstanceDefinition.isDownloadedByPaxRunner()) {
       return "The framework is not downloaded by Pax Runner.";
     }

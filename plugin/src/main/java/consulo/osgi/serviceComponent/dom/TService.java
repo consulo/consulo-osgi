@@ -5,7 +5,8 @@ package consulo.osgi.serviceComponent.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface TService extends DomElement
 	 *
 	 * @return the value of the servicefactory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getServicefactory();
 
 
@@ -32,7 +33,7 @@ public interface TService extends DomElement
 	 *
 	 * @return the list of provide children.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	List<TProvide> getProvides();
 

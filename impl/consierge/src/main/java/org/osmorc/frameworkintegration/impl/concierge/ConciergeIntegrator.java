@@ -24,7 +24,7 @@
  */
 package org.osmorc.frameworkintegration.impl.concierge;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.BundleSelectionAction;
 import org.osmorc.frameworkintegration.FrameworkRunner;
 import org.osmorc.frameworkintegration.impl.AbstractFrameworkIntegrator;
@@ -46,13 +46,13 @@ public class ConciergeIntegrator extends AbstractFrameworkIntegrator<ConciergeFr
     super(new ConciergeFrameworkInstanceManager());
   }
 
-  @NotNull
+  @Nonnull
   public FrameworkRunner createFrameworkRunner() {
     return new ConciergeFrameworkRunner();
   }
 
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return FRAMEWORK_NAME;
   }
@@ -62,7 +62,7 @@ public class ConciergeIntegrator extends AbstractFrameworkIntegrator<ConciergeFr
     return new ConciergeRunPropertiesEditor();
   }
 
-  @NotNull
+  @Nonnull
   public List<BundleSelectionAction> getBundleSelectionActions() {
     return Collections.emptyList();
   }

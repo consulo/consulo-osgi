@@ -1,9 +1,10 @@
 package consulo.osgi.module.manifest.impl;
 
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.components.PathMacroManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
@@ -40,7 +41,7 @@ public class SimpleConfigurableWithLocation extends ManifestProviderConfigurable
 		myPanel.setEnabled(val);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getHeaderName()
 	{

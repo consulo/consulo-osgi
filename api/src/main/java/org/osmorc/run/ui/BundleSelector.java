@@ -34,8 +34,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.ui.DocumentAdapter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import consulo.osgi.compiler.artifact.OSGiArtifactType;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.i18n.OsmorcBundle;
@@ -144,8 +144,8 @@ public class BundleSelector extends JDialog {
       FrameworkIntegrator integrator = FrameworkIntegratorUtil.findIntegratorByInstanceDefinition(usedFramework);
       integrator.getInstanceManager().collectLibraries(usedFramework, new JarFileLibraryCollector() {
         @Override
-        protected void collectFrameworkJars(@NotNull Collection<VirtualFile> jarFiles,
-                                            @NotNull FrameworkInstanceLibrarySourceFinder sourceFinder) {
+        protected void collectFrameworkJars(@Nonnull Collection<VirtualFile> jarFiles,
+                                            @Nonnull FrameworkInstanceLibrarySourceFinder sourceFinder) {
           for (VirtualFile jarFile : jarFiles) {
 
             final String jarFilePath = jarFile.getPath();
@@ -211,7 +211,7 @@ public class BundleSelector extends JDialog {
     dispose();
   }
 
-  public void setUp(@Nullable FrameworkInstanceDefinition usedFramework, @NotNull List<SelectedBundle> hideBundles) {
+  public void setUp(@Nullable FrameworkInstanceDefinition usedFramework, @Nonnull List<SelectedBundle> hideBundles) {
     this.usedFramework = usedFramework;
     this.hideBundles = hideBundles;
     createList();

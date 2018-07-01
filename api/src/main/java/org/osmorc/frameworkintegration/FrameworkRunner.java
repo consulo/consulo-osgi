@@ -27,7 +27,7 @@ package org.osmorc.frameworkintegration;
 import java.io.File;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osmorc.run.OsgiRunConfiguration;
 import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.execution.ExecutionException;
@@ -61,7 +61,7 @@ public interface FrameworkRunner extends Disposable {
    *
    * @return a list containing all needed library virtual files.
    */
-  @NotNull
+  @Nonnull
   List<VirtualFile> getFrameworkStarterLibraries();
 
   /**
@@ -70,7 +70,7 @@ public interface FrameworkRunner extends Disposable {
    * @param vmParameters     the list where to fill the vm parameters in.
    * @param bundlesToInstall the list of bundles to install.
    */
-  void fillVmParameters(ParametersList vmParameters, @NotNull SelectedBundle[] bundlesToInstall);
+  void fillVmParameters(ParametersList vmParameters, @Nonnull SelectedBundle[] bundlesToInstall);
 
   /**
    * Runs any custom installation steps (like preparing directories etc, prior to launching the framework).
@@ -78,12 +78,12 @@ public interface FrameworkRunner extends Disposable {
    * @param bundlesToInstall the list of bundles to install
    * @throws ExecutionException in case preparation fails.
    */
-  void runCustomInstallationSteps(@NotNull SelectedBundle[] bundlesToInstall) throws ExecutionException;
+  void runCustomInstallationSteps(@Nonnull SelectedBundle[] bundlesToInstall) throws ExecutionException;
 
   /**
    * @return the main class of the framework to run.
    */
-  @NotNull
+  @Nonnull
   String getMainClass();
 
   /**
@@ -91,7 +91,7 @@ public interface FrameworkRunner extends Disposable {
    *
    * @return the working directory
    */
-  @NotNull
+  @Nonnull
   File getWorkingDir();
 
   /**
@@ -100,5 +100,5 @@ public interface FrameworkRunner extends Disposable {
    * @param commandLineParameters the list where to fill the command line parameters in.
    * @param bundlesToInstall      the list of bundles to install.
    */
-  void fillCommandLineParameters(@NotNull ParametersList commandLineParameters, @NotNull SelectedBundle[] bundlesToInstall);
+  void fillCommandLineParameters(@Nonnull ParametersList commandLineParameters, @Nonnull SelectedBundle[] bundlesToInstall);
 }

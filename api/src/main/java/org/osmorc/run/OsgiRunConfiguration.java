@@ -31,11 +31,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.impl.GenericRunProperties;
 import org.osmorc.i18n.OsmorcBundle;
@@ -293,7 +295,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     return new OsgiRunConfigurationEditor(getProject());
   }
 
-  public RunProfileState getState(@NotNull final Executor executor, @NotNull final ExecutionEnvironment env) throws ExecutionException {
+  public RunProfileState getState(@Nonnull final Executor executor, @Nonnull final ExecutionEnvironment env) throws ExecutionException {
     // prepare the state
 
     return new OsgiRunState(executor, env, this, getProject(), null);
@@ -318,7 +320,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     }
   }
 
-  @NotNull
+  @Nonnull
   public Module[] getModules() {
     final List<Module> modules = new ArrayList<Module>();
     for (SelectedBundle selectedBundle : getBundlesToDeploy()) {
@@ -335,7 +337,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     return modules.toArray(new Module[modules.size()]);
   }
 
-  @NotNull
+  @Nonnull
   public Map<String, String> getAdditionalProperties() {
     return Collections.unmodifiableMap(additionalProperties);
   }
@@ -344,7 +346,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     return alternativeJrePath;
   }
 
-  @NotNull
+  @Nonnull
   public List<SelectedBundle> getBundlesToDeploy() {
     return bundlesToDeploy;
   }
@@ -362,7 +364,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     return programParameters != null ? programParameters : "";
   }
 
-  @NotNull
+  @Nonnull
   public String getVmParameters() {
     return vmParameters != null ? vmParameters : "";
   }
@@ -383,7 +385,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     return useAlternativeJre;
   }
 
-  public void putAdditionalProperties(@NotNull final Map<String, String> props) {
+  public void putAdditionalProperties(@Nonnull final Map<String, String> props) {
     additionalProperties.putAll(props);
   }
 
@@ -407,7 +409,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase implements Module
     this.includeAllBundlesInClassPath = includeAllBundlesInClassPath;
   }
 
-  public void setInstanceToUse(@NotNull final FrameworkInstanceDefinition instanceToUse) {
+  public void setInstanceToUse(@Nonnull final FrameworkInstanceDefinition instanceToUse) {
     this.instanceToUse = instanceToUse;
   }
 

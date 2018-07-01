@@ -26,7 +26,7 @@ package org.osmorc.frameworkintegration;
 
 import com.intellij.util.xmlb.annotations.Transient;
 import com.jgoodies.binding.beans.Model;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.osgi.framework.Constants;
 
 import java.beans.PropertyChangeEvent;
@@ -100,7 +100,7 @@ public class LibraryBundlificationRule extends Model {
    * @param libraryName the name of the library to check against.
    * @return true, if this rule applies to the library, false otherwise.
    */
-  public boolean appliesTo(@NotNull String libraryName) {
+  public boolean appliesTo(@Nonnull String libraryName) {
     try {
       // we skip compiling the pattern for .* regex as they match anything.
       return ".*".equals(getRuleRegex()) ||
