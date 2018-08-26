@@ -52,21 +52,21 @@ public class OSGiArtifactTemplate extends ArtifactTemplate
 		return doCreateArtifactTemplate(facet);
 	}
 
-	public static NewArtifactConfiguration doCreateArtifactTemplate(OSGiModuleExtension facet)
+	public static NewArtifactConfiguration doCreateArtifactTemplate(OSGiModuleExtension extension)
 	{
-		final Module module = facet.getModule();
+		final Module module = extension.getModule();
 		final String name = module.getName();
 
-		final PackagingElementFactory factory = PackagingElementFactory.getInstance();
-		final CompositePackagingElement<?> archive = OSGiArtifactType.getInstance().createRootElement(name);
+		final PackagingElementFactory factory = PackagingElementFactory.getInstance(extension.getProject());
+		final CompositePackagingElement<?> archive = OSGiArtifactType.getInstance().createRootElement(factory, name);
 
 		archive.addOrFindChild(factory.createModuleOutput(module));
 
 		final CompositePackagingElement<?> osgiRoot = archive.addOrFindChild(factory.createDirectory(OSGiConstants.OSGI_INFO_ROOT));
-		osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getOSGiInf(), "/"));
+		osgiRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(extension.getOSGiInf(), "/"));
 
 		final CompositePackagingElement<?> metaRoot = archive.addOrFindChild(factory.createDirectory(SpecialDirUtil.META_INF));
-		metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(facet.getMETAInf(), "/"));
+		metaRoot.addOrFindChild(factory.createDirectoryCopyWithParentDirectories(extension.getMETAInf(), "/"));
 
 		return new NewArtifactConfiguration(archive, "OSGi:" + name, OSGiArtifactType.getInstance());
 	}
