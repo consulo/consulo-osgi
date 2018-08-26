@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.packaging.artifacts.Artifact;
+import com.intellij.packaging.artifacts.ArtifactManager;
 import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import com.intellij.packaging.impl.artifacts.DefaultPackagingElementResolvingContext;
 import com.intellij.packaging.impl.elements.ModuleOutputPackagingElement;
@@ -23,7 +24,7 @@ public class OSGiArtifactUtil
 	@Nonnull
 	public static Module[] collectModules(@Nonnull Project project, @Nonnull Artifact artifact)
 	{
-		final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(project);
+		final DefaultPackagingElementResolvingContext context = new DefaultPackagingElementResolvingContext(project, ArtifactManager.getInstance(project));
 		final List<Module> list = new ArrayList<Module>();
 		ArtifactUtil.processPackagingElements(artifact, ProductionModuleOutputElementType.getInstance(), new Processor<ModuleOutputPackagingElement>()
 		{
