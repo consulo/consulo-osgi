@@ -27,13 +27,12 @@ package org.osmorc.frameworkintegration;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-import javax.swing.Icon;
-
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.openapi.actionSystem.AnAction;
+import consulo.ui.image.Image;
 
 /**
  * A specialized action type that is used while editing an OSGi run configuration
@@ -51,7 +50,7 @@ public abstract class BundleSelectionAction extends AnAction {
     super(text);
   }
 
-  protected BundleSelectionAction(String text, String description, Icon icon) {
+  protected BundleSelectionAction(String text, String description, Image icon) {
     super(text, description, icon);
   }
 

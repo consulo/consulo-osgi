@@ -15,15 +15,13 @@
  */
 package consulo.osgi.psi;
 
-import javax.swing.Icon;
-
 import com.intellij.openapi.util.TextRange;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.impl.RenameableFakePsiElement;
-import consulo.awt.TargetAWT;
 import consulo.osgi.OSGiIcons;
+import consulo.ui.image.Image;
 
 /**
  * @see org.jetbrains.idea.maven.dom.references.MavenPsiElementWrapper
@@ -67,9 +65,9 @@ public class NavigatablePsiElementWrapper extends RenameableFakePsiElement
 		return "Property";
 	}
 
-	public Icon getIcon()
+	public Image getIcon()
 	{
-		return TargetAWT.to(OSGiIcons.OsgiComponentFile);
+		return OSGiIcons.OsgiComponentFile;
 	}
 
 	@Override
