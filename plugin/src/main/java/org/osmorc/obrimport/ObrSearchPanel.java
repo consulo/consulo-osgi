@@ -45,12 +45,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.progress.util.ProgressIndicatorBase;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.CollectionListModel;
 import com.intellij.ui.ListCellRendererWrapper;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.net.HttpConfigurable;
+import com.intellij.util.net.HttpProxyConfigurable;
 import com.intellij.util.ui.UIUtil;
 
 /**
@@ -135,7 +136,7 @@ public class ObrSearchPanel extends ProgressIndicatorBase
 										switch(dialogResult)
 										{
 											case 2:
-												HttpConfigurable.editConfigurable(_obrBox);
+												ShowSettingsUtil.getInstance().editConfigurable(_obrBox, new HttpProxyConfigurable());
 											case 0:
 												search();
 												break;
