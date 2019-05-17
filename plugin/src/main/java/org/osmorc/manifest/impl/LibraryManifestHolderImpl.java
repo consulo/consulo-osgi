@@ -24,22 +24,8 @@
  */
 package org.osmorc.manifest.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.osmorc.manifest.ManifestHolder;
-import org.osmorc.manifest.ManifestHolderDisposedException;
-import org.osmorc.manifest.lang.psi.ManifestFile;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.application.Result;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.impl.libraries.LibraryEx;
@@ -51,6 +37,13 @@ import com.intellij.psi.PsiManager;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.manifest.impl.BundleManifestImpl;
 import consulo.vfs.util.ArchiveVfsUtil;
+import org.osmorc.manifest.ManifestHolder;
+import org.osmorc.manifest.ManifestHolderDisposedException;
+import org.osmorc.manifest.lang.psi.ManifestFile;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * Author: Robert F. Beeger (robert@beeger.net)
@@ -91,12 +84,7 @@ public class LibraryManifestHolderImpl extends AbstractManifestHolderImpl<Librar
           if (classDir != null) {
             final VirtualFile manifestFile = classDir.findFileByRelativePath("META-INF/MANIFEST.MF");
             if (manifestFile != null) {
-              PsiFile psiFile = new ReadAction<PsiFile>() {
-                @Override
-                protected void run(Result<PsiFile> psiFileResult) throws Throwable {
-                  psiFileResult.setResult(PsiManager.getInstance(myProject).findFile(manifestFile));
-                }
-              }.execute().getResultObject();
+              PsiFile psiFile = ReadAction.compute(() -> PsiManager.getInstance(myProject).findFile(manifestFile));
               myBundleManifest = new BundleManifestImpl((ManifestFile)psiFile);
             }
           }
