@@ -25,8 +25,6 @@
 
 package org.osmorc.settings;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
@@ -35,6 +33,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.EditorTextField;
 import com.intellij.util.ui.UIUtil;
 import org.osmorc.manifest.lang.ManifestFileType;
+
+import javax.annotation.Nonnull;
 
 /**
  * Editor component for editing a Manifest with syntax highlighting and code completion. This is used in various settings dialogs.
@@ -49,6 +49,7 @@ public class ManifestEditor extends EditorTextField implements Disposable {
   public ManifestEditor(Project project, final String text) {
     super("", project, ManifestFileType.INSTANCE);
     addDocumentListener(listener);
+    setOneLineMode(false);
     UIUtil.invokeLaterIfNeeded(new Runnable() {
       public void run() {
         setText(text);
@@ -70,15 +71,9 @@ public class ManifestEditor extends EditorTextField implements Disposable {
     return editor;
   }
 
-  @Override
-  protected boolean isOneLineMode() {
-    return false;
-  }
-
   public void dispose() {
     removeDocumentListener(listener);
   }
-
 
   private class MyDocumentAdapter extends DocumentAdapter {
     @Override
