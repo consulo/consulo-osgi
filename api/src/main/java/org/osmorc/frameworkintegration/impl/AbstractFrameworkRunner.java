@@ -27,18 +27,17 @@ package org.osmorc.frameworkintegration.impl;
 
 import com.intellij.execution.configurations.DebuggingRunnerData;
 import com.intellij.execution.configurations.RunnerSettings;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.container.boot.ContainerPathManager;
 import org.osmorc.frameworkintegration.*;
 import org.osmorc.frameworkintegration.util.PropertiesWrapper;
 import org.osmorc.run.OsgiRunConfiguration;
 import org.osmorc.run.ui.SelectedBundle;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -121,7 +120,7 @@ public abstract class AbstractFrameworkRunner<P extends PropertiesWrapper> imple
     if (workingDir == null) {
       String path;
       if (getRunConfiguration().isGenerateWorkingDir()) {
-        path = PathManager.getSystemPath() + File.separator + "osmorc" + File.separator + "runtmp" + System.currentTimeMillis();
+        path = ContainerPathManager.get().getSystemPath() + File.separator + "osmorc" + File.separator + "runtmp" + System.currentTimeMillis();
       }
       else {
         path = getRunConfiguration().getWorkingDir();

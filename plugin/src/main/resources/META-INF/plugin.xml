@@ -1,4 +1,4 @@
-<idea-plugin>
+<consulo-plugin>
 	<id>org.jetbrains.osgi</id>
 	<name>OSGi support</name>
 	<version>SNAPSHOT</version>
@@ -147,4 +147,4 @@
 	<extensions defaultExtensionNs="com.intellij.xml.dom">
 		<fileDescription implementation="consulo.osgi.serviceComponent.ServiceComponentDomFileDescription"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
