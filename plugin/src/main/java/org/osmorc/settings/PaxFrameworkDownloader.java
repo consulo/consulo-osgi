@@ -1,12 +1,5 @@
 package org.osmorc.settings;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.ParametersList;
 import com.intellij.execution.process.OSProcessHandler;
@@ -18,11 +11,17 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.projectRoots.JavaSdk;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.PathsList;
 import consulo.java.execution.configurations.OwnJavaParameters;
+import consulo.util.dataholder.Key;
+import org.osmorc.frameworkintegration.impl.AbstractPaxBasedFrameworkRunner;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper class which downloads an OSGi fraemwork using PAX Runner.
