@@ -33,9 +33,9 @@ import org.osmorc.run.ui.SelectedBundle;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.ParametersList;
 import com.intellij.execution.configurations.RunnerSettings;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import consulo.disposer.Disposable;
 
 /**
  * This interface encapsulates framework-specific runtime configuration.
@@ -44,7 +44,8 @@ import com.intellij.openapi.vfs.VirtualFile;
  * @author Robert F. Beeger (robert@beeger.net)
  * @version $Id$
  */
-public interface FrameworkRunner extends Disposable {
+public interface FrameworkRunner extends Disposable
+{
 
   /**
    * Initializes the framework runner for the next execution

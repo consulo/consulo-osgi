@@ -25,13 +25,13 @@
 
 package org.osmorc.settings;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.EditorTextField;
 import com.intellij.util.ui.UIUtil;
+import consulo.disposer.Disposable;
 import org.osmorc.manifest.lang.ManifestFileType;
 
 import javax.annotation.Nonnull;
@@ -42,7 +42,8 @@ import javax.annotation.Nonnull;
  * @author <a href="janthomae@janthomae.de">Jan Thom&auml;</a>
  * @version $Id:$
  */
-public class ManifestEditor extends EditorTextField implements Disposable {
+public class ManifestEditor extends EditorTextField implements Disposable
+{
   private final ManifestEditor.MyDocumentAdapter listener = new MyDocumentAdapter();
 
 

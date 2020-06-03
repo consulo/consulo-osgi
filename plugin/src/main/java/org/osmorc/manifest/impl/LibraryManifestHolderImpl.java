@@ -24,16 +24,16 @@
  */
 package org.osmorc.manifest.impl;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.manifest.impl.BundleManifestImpl;
 import consulo.vfs.util.ArchiveVfsUtil;
