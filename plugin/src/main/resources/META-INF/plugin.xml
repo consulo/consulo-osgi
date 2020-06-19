@@ -117,8 +117,7 @@
 		<!--<framework.detector implementation="org.osmorc.facet.OsmorcFrameworkDetector"/>-->
 
 
-		<projectConfigurable instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings"
-							 displayName="OSGi"/>
+		<projectConfigurable parentId="osmorc.ide.settings" instance="org.osmorc.settings.ProjectSettingsEditor" id="reference.settings.project.osgi.project.settings" nonDefaultProject="true" displayName="Project"/>
 
 		<applicationConfigurable instance="org.osmorc.settings.ApplicationSettingsEditor" id="osmorc.ide.settings" displayName="OSGi">
 			<configurable instance="org.osmorc.settings.FrameworkDefinitionsEditor" id="reference.settings.project.osgi.framework.definitions"

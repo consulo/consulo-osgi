@@ -1,14 +1,14 @@
 package consulo.osgi.module.extension;
 
-import javax.annotation.Nonnull;
-
-import consulo.extension.impl.ModuleExtensionImpl;
 import consulo.java.roots.SpecialDirUtil;
+import consulo.module.extension.impl.ModuleExtensionImpl;
 import consulo.osgi.OSGiConstants;
 import consulo.osgi.manifest.BundleManifest;
 import consulo.osgi.module.manifest.ManifestProvider;
 import consulo.osgi.module.manifest.impl.ui.UseExistingManifestManifestProvider;
 import consulo.roots.ModuleRootLayer;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
