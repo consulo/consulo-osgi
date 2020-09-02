@@ -25,34 +25,30 @@
 
 package org.osmorc.settings;
 
-import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JCheckBox;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.osmorc.frameworkintegration.LibraryBundlificationRule;
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
-import consulo.disposer.Disposer;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
-import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.UIUtil;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
+import consulo.disposer.Disposer;
+import org.osmorc.frameworkintegration.LibraryBundlificationRule;
+
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="mailto:janthomae@janthomae.de">Jan Thom&auml;</a>
@@ -187,7 +183,7 @@ public class LibraryBundlingEditorComponent {
             notifyChanged();
           }
         }
-      }).addExtraAction(new AnActionButton("Copy", PlatformIcons.COPY_ICON) {
+      }).addExtraAction(new AnActionButton("Copy", AllIcons.Actions.Copy) {
         @Override
         public void actionPerformed(AnActionEvent e) {
           LibraryBundlificationRule rule = selectedRule.getSelection();
