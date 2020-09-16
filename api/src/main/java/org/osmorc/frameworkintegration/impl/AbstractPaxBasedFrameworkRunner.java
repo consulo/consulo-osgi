@@ -25,24 +25,23 @@
 
 package org.osmorc.frameworkintegration.impl;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.configurations.ParametersList;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.net.HttpConfigurable;
+import consulo.container.plugin.PluginManager;
 import org.jetbrains.annotations.NonNls;
 import org.osmorc.frameworkintegration.CachingBundleInfoProvider;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.run.ExternalVMFrameworkRunner;
 import org.osmorc.run.ui.SelectedBundle;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.ParametersList;
-import com.intellij.ide.plugins.PluginManager;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.net.HttpConfigurable;
+
+import javax.annotation.Nonnull;
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Framework runner implementation for using the PAX runner. This is an abstract base class that can be extended for the
@@ -190,7 +189,6 @@ public abstract class AbstractPaxBasedFrameworkRunner<P extends GenericRunProper
 
 
 	@Nonnull
-	@NonNls
 	public final String getMainClass()
 	{
 		return PaxRunnerMainClass;

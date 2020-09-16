@@ -1,20 +1,16 @@
 package org.osmorc.run;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.debugger.engine.DebuggerUtils;
 import com.intellij.debugger.impl.GenericDebuggerRunner;
 import com.intellij.debugger.settings.DebuggerSettings;
 import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.DebuggingRunnerData;
-import com.intellij.execution.configurations.RemoteConnection;
-import com.intellij.execution.configurations.RunProfile;
-import com.intellij.execution.configurations.RunProfileState;
-import com.intellij.execution.configurations.RunnerSettings;
+import com.intellij.execution.configurations.*;
 import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.ui.RunContentDescriptor;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
+
+import javax.annotation.Nonnull;
 
 /**
  * Implementation of {@link GenericDebuggerRunner}
@@ -24,7 +20,7 @@ import com.intellij.openapi.diagnostic.Logger;
  */
 public class OsgiDebuggerRunner extends GenericDebuggerRunner
 {
-	private final Logger logger = Logger.getInstance("#org.osmorc.run.OsgiDebuggerRunner");
+	private final Logger logger = Logger.getInstance(OsgiDebuggerRunner.class);
 
 	@Override
 	public boolean canRun(@Nonnull String executorId, @Nonnull RunProfile profile)

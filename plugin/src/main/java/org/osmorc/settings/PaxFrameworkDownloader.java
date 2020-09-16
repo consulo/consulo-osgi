@@ -4,7 +4,7 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.ParametersList;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  */
 public class PaxFrameworkDownloader
 {
-	private static final Logger LOG = Logger.getInstance("#org.osmorc.settings.PaxFrameworkDownloader");
+	private static final Logger LOG = Logger.getInstance(PaxFrameworkDownloader.class);
 
 	private Pattern errorMessagePattern = Pattern.compile("^ */[ _]{2}/ *(.*)");
 	private String myFrameworkType;

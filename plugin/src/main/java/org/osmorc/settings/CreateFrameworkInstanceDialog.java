@@ -80,9 +80,8 @@ public class CreateFrameworkInstanceDialog extends DialogWrapper implements Pane
       myNameTextField.setText(frameworkInstanceName);
     }
 
-    FrameworkIntegrator[] integrators = FrameworkIntegrator.EP_NAME.getExtensions();
     myIntegratorComboBox.removeAllItems();
-    for (FrameworkIntegrator integrator : integrators) {
+    for (FrameworkIntegrator integrator : FrameworkIntegrator.EP_NAME.getExtensionList()) {
       myIntegratorComboBox.addItem(integrator);
     }
 

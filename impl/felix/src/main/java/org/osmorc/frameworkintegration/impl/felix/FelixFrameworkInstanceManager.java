@@ -26,7 +26,7 @@
 package org.osmorc.frameworkintegration.impl.felix;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import javax.annotation.Nonnull;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class FelixFrameworkInstanceManager extends AbstractFrameworkInstanceManager {
-  private static final Logger LOG = Logger.getInstance("#org.osmorc.frameworkintegration.impl.felix.FelixFrameworkInstanceManager");
+  private static final Logger LOG = Logger.getInstance(FelixFrameworkInstanceManager.class);
 
   private final FelixSourceFinder myFelixsourcefinder;
   protected static final String FOLDER_DOES_NOT_EXIST =

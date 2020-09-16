@@ -1,6 +1,6 @@
 package org.osmorc.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleServiceManager;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * Re-implementation of the bundle manager.
  */
 public class MyBundleManager extends BundleManager {
-  private static final Logger LOG = Logger.getInstance("#org.osmorc.impl.MyBundleManager");
+  private static final Logger LOG = Logger.getInstance(MyBundleManager.class);
   public final static Topic<BundleModificationListener> BUNDLE_INDEX_CHANGE_TOPIC =
     Topic.create("Bundle Index Changed", BundleModificationListener.class);
   private BundleCache myBundleCache;

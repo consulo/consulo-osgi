@@ -26,10 +26,11 @@
 package org.osmorc.frameworkintegration.impl.knopflerfish;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import javax.annotation.Nonnull;
+
+import consulo.logging.Logger;
 import org.osmorc.frameworkintegration.AbstractFrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkLibraryCollector;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
  */
 public class KnopflerfishFrameworkInstanceManager extends AbstractFrameworkInstanceManager {
   private static final Logger LOG =
-    Logger.getInstance("#org.osmorc.frameworkintegration.impl.knopflerfish.KnopflerfishFrameworkInstanceManager");
+    Logger.getInstance(KnopflerfishFrameworkInstanceManager.class);
 
   public KnopflerfishFrameworkInstanceManager() {
 

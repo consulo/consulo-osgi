@@ -26,15 +26,15 @@
 package org.osmorc.frameworkintegration.impl.equinox;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.osmorc.frameworkintegration.AbstractFrameworkInstanceManager;
 import org.osmorc.frameworkintegration.FrameworkInstanceDefinition;
 import org.osmorc.frameworkintegration.FrameworkLibraryCollector;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.text.MessageFormat;
 import java.util.Collections;
 
@@ -42,7 +42,7 @@ import java.util.Collections;
  * @author Robert F. Beeger (robert@beeger.net)
  */
 public class EquinoxFrameworkInstanceManager extends AbstractFrameworkInstanceManager {
-  private static final Logger LOG = Logger.getInstance("#org.osmorc.frameworkintegration.impl.equinox.EquinoxFrameworkInstanceManager");
+  private static final Logger LOG = Logger.getInstance(EquinoxFrameworkInstanceManager.class);
   private final EquinoxSourceFinder myEquinoxSourceFinder;
   protected static final String FOLDER_DOES_NOT_EXIST =
     "The folder <strong>{0}</strong> does not exist or is not a folder. The folder should be an existing folder containing a <strong>plugins</strong> folder which contains the bundles of your Equinox installation. ";

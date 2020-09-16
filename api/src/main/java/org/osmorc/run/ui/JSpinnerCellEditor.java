@@ -1,25 +1,21 @@
 package org.osmorc.run.ui;
 
-import java.awt.Component;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.util.EventObject;
+import consulo.logging.Logger;
 
-import javax.swing.AbstractCellEditor;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
+import javax.annotation.Nonnull;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
-
-import javax.annotation.Nonnull;
-import com.intellij.openapi.diagnostic.Logger;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.EventObject;
 
 /**
  * @author <a href="janthomae@janthomae.de">Jan Thom&auml;</a>
@@ -28,7 +24,7 @@ import com.intellij.openapi.diagnostic.Logger;
 public class JSpinnerCellEditor extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
   final JSpinner spinner = new JSpinner();
 
-  private static final Logger LOG = Logger.getInstance("#org.osmorc.run.ui.JSpinnerCellEditor");
+  private static final Logger LOG = Logger.getInstance(JSpinnerCellEditor.class);
 
 
   public JSpinnerCellEditor() {

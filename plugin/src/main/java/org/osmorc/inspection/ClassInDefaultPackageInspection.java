@@ -65,7 +65,6 @@ public class ClassInDefaultPackageInspection extends LocalInspectionTool {
     return "Class is in default package";
   }
 
-  @NonNls
   @Nonnull
   public String getShortName() {
     return "osmorcClassInDefaultPackage";
