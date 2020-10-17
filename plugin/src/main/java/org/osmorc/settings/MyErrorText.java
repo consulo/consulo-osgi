@@ -26,6 +26,7 @@
 package org.osmorc.settings;
 
 import com.intellij.icons.AllIcons;
+import consulo.awt.TargetAWT;
 
 import javax.annotation.Nullable;
 import javax.swing.*;
@@ -66,7 +67,7 @@ public class MyErrorText extends JPanel {
     else {
       myLabel.setText((new StringBuilder()).append("<html><body><font color=red><left>").append(text)
                         .append("</left></b></font></body></html>").toString());
-      myLabel.setIcon(AllIcons.Actions.Lightning);
+      myLabel.setIcon(TargetAWT.to(AllIcons.Actions.Lightning));
       myLabel.setBorder(new EmptyBorder(2, 2, 0, 0));
       myPrefSize = myLabel.getPreferredSize();
     }

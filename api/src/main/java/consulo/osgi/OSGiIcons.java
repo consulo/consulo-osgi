@@ -1,6 +1,6 @@
 package consulo.osgi;
 
-import com.intellij.openapi.util.IconLoader;
+import consulo.osgi.icon.OSGiIconGroup;
 import consulo.ui.image.Image;
 
 /**
@@ -9,11 +9,11 @@ import consulo.ui.image.Image;
  */
 public interface OSGiIcons
 {
-	Image FacetType = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiFacet.png");
-	Image ExportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/exportPackage.png");
-	Image ImportPackage = IconLoader.findIcon("/org/jetbrains/osgi/icons/importPackage.png");
-	Image OsgiComponentFile = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentFile.png");
-	Image OsgiComponentImplementation = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentImplementation.png");
-	Image OsgiComponentInterface = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiComponentInterface.png");
-	Image OsgiBundleActivator = IconLoader.findIcon("/org/jetbrains/osgi/icons/osgiBundleActivator.png");
+	Image FacetType = OSGiIconGroup.osgiFacet();
+	Image ExportPackage = OSGiIconGroup.exportPackage();
+	Image ImportPackage = OSGiIconGroup.importPackage();
+	Image OsgiComponentFile = OSGiIconGroup.osgiComponentFile();
+	Image OsgiComponentImplementation = OSGiIconGroup.osgiComponentImplementation();
+	Image OsgiComponentInterface = OSGiIconGroup.osgiComponentInterface();
+	Image OsgiBundleActivator = OSGiIconGroup.osgiBundleActivator();
 }

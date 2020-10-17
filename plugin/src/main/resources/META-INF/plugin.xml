@@ -110,7 +110,7 @@
 
 		<moduleExtensionProvider key="osgi"
 								 parentKey="java"
-								 icon="/org/jetbrains/osgi/icons/osgiFacet.png"
+								 icon="consulo.osgi.OSGiIconGroup@osgifacet"
 								 name="OSGi"
 								 immutableClass="consulo.osgi.module.extension.OSGiModuleExtension"
 								 mutableClass="consulo.osgi.module.extension.OSGiMutableModuleExtension"/>
