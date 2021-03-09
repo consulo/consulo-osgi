@@ -1,11 +1,11 @@
 package org.osmorc.frameworkintegration;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.HashSet;
-import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.util.FileUtil;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**

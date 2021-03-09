@@ -1,13 +1,12 @@
 package org.osmorc.impl;
 
-import com.intellij.util.containers.HashSet;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import consulo.osgi.manifest.BundleManifest;
 import org.osmorc.manifest.ManifestHolder;
 import org.osmorc.manifest.ManifestHolderDisposedException;
 import org.osmorc.manifest.lang.valueparser.impl.valueobject.Version;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**

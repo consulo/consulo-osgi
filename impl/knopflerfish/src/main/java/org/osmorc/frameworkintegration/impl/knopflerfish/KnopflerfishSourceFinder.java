@@ -26,12 +26,12 @@
 package org.osmorc.frameworkintegration.impl.knopflerfish;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.HashMap;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 import org.osmorc.frameworkintegration.FrameworkInstanceLibrarySourceFinder;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
