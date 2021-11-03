@@ -5,6 +5,9 @@
 	<depends>com.intellij.xml</depends>
 	<depends>consulo.java</depends>
 	<depends>org.jetbrains.idea.maven</depends>
+	<tags>
+		<tag>software.framework</tag>
+	</tags>
 
 	<project-components>
 		<component>
