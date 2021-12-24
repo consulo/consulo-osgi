@@ -1,4 +1,4 @@
-<consulo-plugin>
+<consulo-plugin url="https://github.com/consulo/consulo-osgi">
 	<id>org.jetbrains.osgi</id>
 	<name>OSGi support</name>
 	<version>SNAPSHOT</version>
